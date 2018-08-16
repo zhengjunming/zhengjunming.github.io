@@ -1,0 +1,657 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>对象的共享 | 小铭</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="ming">
+    
+
+    
+    <meta name="description" content="上一篇已经介绍了线程的安全性，包括原子性操作和锁机制等内容，如果还没了解此部分内容可参考线程安全性。 从上一篇线程的安全性我们可以知道同步代码块和同步方法可以确保以原子的方式执行操作，这一篇则是介绍同步的另外一个重要的方面：内存可见性 可见性 一个线程对共享变量值得修改，其他线程能够看到发生的状态变化。  下列清单说明了当多个线程在没有同步的情况下共享数据时出现的错误 12345678910111">
+<meta name="keywords" content="多线程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="对象的共享">
+<meta property="og:url" content="http://minsming.com/2018/08/16/对象的共享/index.html">
+<meta property="og:site_name" content="小铭">
+<meta property="og:description" content="上一篇已经介绍了线程的安全性，包括原子性操作和锁机制等内容，如果还没了解此部分内容可参考线程安全性。 从上一篇线程的安全性我们可以知道同步代码块和同步方法可以确保以原子的方式执行操作，这一篇则是介绍同步的另外一个重要的方面：内存可见性 可见性 一个线程对共享变量值得修改，其他线程能够看到发生的状态变化。  下列清单说明了当多个线程在没有同步的情况下共享数据时出现的错误 12345678910111">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://owbl44q3i.bkt.clouddn.com/Reordering.png">
+<meta property="og:image" content="http://owbl44q3i.bkt.clouddn.com/ThreadLocalResult.png">
+<meta property="og:updated_time" content="2018-03-17T07:42:13.720Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="对象的共享">
+<meta name="twitter:description" content="上一篇已经介绍了线程的安全性，包括原子性操作和锁机制等内容，如果还没了解此部分内容可参考线程安全性。 从上一篇线程的安全性我们可以知道同步代码块和同步方法可以确保以原子的方式执行操作，这一篇则是介绍同步的另外一个重要的方面：内存可见性 可见性 一个线程对共享变量值得修改，其他线程能够看到发生的状态变化。  下列清单说明了当多个线程在没有同步的情况下共享数据时出现的错误 12345678910111">
+<meta name="twitter:image" content="http://owbl44q3i.bkt.clouddn.com/Reordering.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="小铭" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/apple.jpg">
+    
+    
+    <link rel="apple-touch-icon" href="/img/apple.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/apple.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/apple.jpg" alt="小铭" title="小铭"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="小铭">小铭</a></h1>
+				<h2 class="blog-motto">春生，夏糜，秋去，冬烬，春又来。</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+					<li>
+ 					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/08/16/对象的共享/" title="对象的共享" itemprop="url">对象的共享</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="ming" target="_blank" itemprop="author">ming</a>
+		
+  <p class="article-time">
+    <time datetime="2018-08-16T05:29:20.293Z" itemprop="datePublished"> 发表于 2018-08-16</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<p>上一篇已经介绍了线程的安全性，包括原子性操作和锁机制等内容，如果还没了解此部分内容可参考<a href="http://minsming.com/2018/02/03/%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E6%80%A7/">线程安全性</a>。</p>
+<p>从上一篇线程的安全性我们可以知道同步代码块和同步方法可以确保以原子的方式执行操作，这一篇则是介绍同步的另外一个重要的方面：<strong>内存可见性</strong></p>
+<h2 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h2><blockquote>
+<p>一个线程对共享变量值得修改，其他线程能够看到发生的状态变化。</p>
+</blockquote>
+<p>下列清单说明了当多个线程在没有同步的情况下共享数据时出现的错误</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">NoVisibility</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">boolean</span> ready;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> number;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">ReaderThread</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">while</span> (!ready) &#123;</span><br><span class="line">                Thread.yield();</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(number);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">new</span> ReaderThread().start();</span><br><span class="line">        number = <span class="number">42</span>;</span><br><span class="line">        ready = <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>NoVisibility可能会持续循环下去，因为读线程可能永远都看不到ready的值。也可能输出0，因为读线程可能看到了写入ready的值，但没有看到之后写入number的值，这种现象被称为“<strong>指令重排序</strong>”。</p>
+<h3 id="指令重排序"><a href="#指令重排序" class="headerlink" title="指令重排序"></a>指令重排序</h3><p>定义：编译器或运行时环境为了优化程序性能而采取的对指令进行重新排序执行的一种手段，所以程序指令的执行顺序有可能和代码的顺序不一致，这个过程就称之为指令的重排序。</p>
+<p>意义：JVM能根据处理器的特性，充分利用多级缓存，多核等进行适当的指令重排序，使程序在保证业务运行的同时，充分利用CPU的执行特点，最大的发挥机器的性能。</p>
+<p>指令重排序能够带来许多不好的影响，例如下列清单</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> 小铭</span></span><br><span class="line"><span class="comment"> * Date: 2018/2/4</span></span><br><span class="line"><span class="comment"> * Time: 17:41</span></span><br><span class="line"><span class="comment"> * No struggle, talent how to match the willfulness.</span></span><br><span class="line"><span class="comment"> * Description: 指令重排序</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PossibleReordering</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> x = <span class="number">0</span>, y = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> a = <span class="number">0</span>, b = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        Thread one = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            a = <span class="number">1</span>;</span><br><span class="line">            x = b;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        Thread other = <span class="keyword">new</span> Thread(() -&gt; &#123;</span><br><span class="line">            b = <span class="number">1</span>;</span><br><span class="line">            y = a;</span><br><span class="line">        &#125;);</span><br><span class="line">        one.start();</span><br><span class="line">        other.start();</span><br><span class="line">        one.join();</span><br><span class="line">        other.join();</span><br><span class="line">        System.out.println(<span class="string">"("</span> + x + <span class="string">", "</span> + y + <span class="string">")"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面程序在没有正确同步的情况下，我们可以看出程序可以输出(1, 0)或(0, 1)或(1, 1)，因为线程A可以在线程B开始之前就执行完成，线程B也可以在线程A开始之前执行完成，或者两个线程的操作交替执行。但是程序还可以输出(0, 0)，由于每个线程中的各个操作之间不存在<strong>数据流依赖性</strong>，所以操作可以进行指令重排（即使操作按照顺序执行了，但在将缓存刷新到主内存的不同时序中也可能出现这种情况。）指令重排如下图。</p>
+<p><img src="http://owbl44q3i.bkt.clouddn.com/Reordering.png" alt=""></p>
+<h3 id="加锁与可见性"><a href="#加锁与可见性" class="headerlink" title="加锁与可见性"></a>加锁与可见性</h3><blockquote>
+<p>内置锁可以用于确保某个线程以一种可预测的方式来查看另一个线程的执行结果。</p>
+</blockquote>
+<p>例如当线程A执行某个同步代码块时，线程B随后进入由同一个镇保护的同步代码块，在这种情况下可以保证，在锁被释放之前，A看到的变量值在B获得锁后同样可以由B看到。换句话说，当线程B执行由锁保护的同步代码块时,可以看到线程A之前在同一个同步代码块中的所有操作结果。如果没有同步，那么就无法实现上述保证。</p>
+<p>所以我们可以知道加锁的含义不仅仅局限于<strong>互斥行为</strong>，还包括<strong>内存可见性</strong>。为了确保所有线程都能看到共享变量的最新值，所有执行读操作或者写操作的线程都必须在<strong>同一个锁上同步</strong>。</p>
+<h3 id="volatile变量"><a href="#volatile变量" class="headerlink" title="volatile变量"></a>volatile变量</h3><blockquote>
+<p>一种稍弱的同步机制，用来确保将变量的更新操作通知到其他线程，volatile变量上的操作不会与其他内存操作一起重排序，因此在读取volatile类型的变量时总会返回最新写入的值。</p>
+</blockquote>
+<p>下列清单给出了volatile变量的典型用法：<strong>检查某个状态标记以判断是否退出循环</strong>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">volatile</span> <span class="keyword">boolean</span> asleep;</span><br><span class="line">...</span><br><span class="line">  <span class="keyword">while</span> (!asleep) countSomeSheep();</span><br></pre></td></tr></table></figure>
+<p>如果上述代码的asleep变量没有volatile修饰，当asleep被另外一个线程修改时，执行判断的线程却发现不了。</p>
+<p>当volatile却不能滥用，因为现在synchronized锁已经优化的很好，volatile只能在特定的情况下使用才比同步锁有效率，例如上述的情况。另外加锁机制既可以确保可见性又可以确保原子性，但是volatile变量只能确保可见性。</p>
+<p>所以只有满足以下所有条件时，才应该使用volatile变量。</p>
+<ul>
+<li>对变量的写入操作不依赖变量的当前值，或者能确保只有单个线程更新变量的值。</li>
+<li>该变量不会与其他状态变量一起纳入不变性条件中。</li>
+<li>在访问变量时不需要加锁。</li>
+</ul>
+<h2 id="发布与逸出"><a href="#发布与逸出" class="headerlink" title="发布与逸出"></a>发布与逸出</h2><blockquote>
+<p>“<strong>发布( Publish )</strong>”一个对象的意思是指，使对象能够在当前作用域之外的代码中使用。例如，将一个指向该对象的引用保存到其他代码可以访问的地方，或者在某一个非私有的方法中返回该引用，或者将引用传递到其他类的方法中。</p>
+</blockquote>
+<p>在许多情况中，我们要确保对象及其内部状态不被发布。而在某些情况下，我们又需要发布某个对象，但如果在发布时要确保线程安全性，则可能需要同步。发布内部状态可能会破坏封装性，并使得程序难以维持不变性条件。例如，如果在对象构造完成之前就发布该对象，就会破坏线程安全性。当某个不应该发布的对象被发布时，这种情况就被称为<strong>逸出( Escape )</strong>。</p>
+<p>发布一个对象</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Set&lt;Secret&gt; knownSecrets;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  	knownSecrets = <span class="keyword">new</span> HashSet&lt;Secret&gt;();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 其中Secret也被间接发布</span></span><br></pre></td></tr></table></figure>
+<p>不要使内部的可变状态逸出，如下列清单</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UnsafeStates</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String[] states = <span class="keyword">new</span> String[] &#123;</span><br><span class="line">		<span class="string">"AK"</span>, <span class="string">"AL"</span>, ...</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">public</span> String[] getStates() &#123;</span><br><span class="line">		<span class="keyword">return</span> states;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果states被发布，那么任何调用者都可以修改这个数组的内容。</p>
+<p>下列清单演示了this引用隐式逸出，当ThisEscape发布EventListener时，也隐式地发布了ThisEscape实例本身。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThisEscape</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ThisEscape</span><span class="params">(EventSource source)</span> </span>&#123;</span><br><span class="line">		source.registerListener(</span><br><span class="line">            <span class="keyword">new</span> EventListener() &#123;</span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent</span><span class="params">(Event e)</span> </span>&#123;</span><br><span class="line">					doSomething(e);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以不要在构造过程中使this引用逸出，我们可以使用<strong>工厂方法</strong>来防止this引用在构造过程中逸出。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SafeListener</span> </span>&#123;</span><br><span class="line">  	<span class="keyword">private</span> <span class="keyword">final</span> EventListener listener;</span><br><span class="line">  	</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">SafeListener</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		listener = <span class="keyword">new</span> EventListener() &#123;</span><br><span class="line">        	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onEvent</span><span class="params">(Event e)</span> </span>&#123;</span><br><span class="line">                doSomething(e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> SafeListener <span class="title">newInstance</span><span class="params">(EventSource source)</span> </span>&#123;</span><br><span class="line">		SafeListener safe = <span class="keyword">new</span> SafeListener();</span><br><span class="line">      	source.registerListener(safe.listener);</span><br><span class="line">      	<span class="keyword">return</span> safe;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="线程封闭"><a href="#线程封闭" class="headerlink" title="线程封闭"></a>线程封闭</h2><blockquote>
+<p>一种避免使用同步的方式就是不共享数据：如果仅在单线程内访问数据，就不需要同步，这种通过将数据封闭在线程中而避免使用同步的技术称为<strong>线程封闭</strong>。</p>
+</blockquote>
+<h3 id="一、Ad-hoc线程封闭"><a href="#一、Ad-hoc线程封闭" class="headerlink" title="一、Ad-hoc线程封闭"></a>一、Ad-hoc线程封闭</h3><blockquote>
+<p>Ad-hoc线程封闭是指，维护线程封闭性的职责完全由程序实现来承担。Ad-hoc线程封闭是非常脆弱的，因为没有任何一种语言特性，例如可见性修饰符或局部变量，能将对象封闭到目标线程上。</p>
+</blockquote>
+<h3 id="二、栈封闭"><a href="#二、栈封闭" class="headerlink" title="二、栈封闭"></a>二、栈封闭</h3><blockquote>
+<p>在栈封闭中，只能通过局部变量才能访问对象。局部变量的固有属性之一就是封闭在执行线程之中，他们位于执行线程的栈中，其它线程无法访问这个栈。栈封闭也称<strong>线程内部使用</strong>或者<strong>线程局部使用</strong>。</p>
+</blockquote>
+<p>下面是书里提供的例子：<strong>基本类型的局部变量与引用变量的线程封闭性</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">loadTheArk</span><span class="params">(Collection&lt;Animal&gt; candidates)</span> </span>&#123;</span><br><span class="line">    SortedSet&lt;Animal&gt; animals;</span><br><span class="line">    <span class="keyword">int</span> numPairs = <span class="number">0</span>;</span><br><span class="line">    Animal candidates = <span class="keyword">null</span>;</span><br><span class="line">    <span class="comment">// animals被封闭在方法中，不要使它们逸出!</span></span><br><span class="line">    animals = <span class="keyword">new</span> TreeSet&lt;Animal&gt;(<span class="keyword">new</span> SpeciesGenderComparator());</span><br><span class="line">    animals.addAll(candidates);</span><br><span class="line">    <span class="keyword">for</span> (Animal a : animals) &#123;</span><br><span class="line">        <span class="keyword">if</span> (candidates == <span class="keyword">null</span> || !candidates.isPotentialMate(a)) &#123;</span><br><span class="line">            candidates = a;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            ark.load(<span class="keyword">new</span> AnimalPair(candidates,a));</span><br><span class="line">            ++numPairs;</span><br><span class="line">            candidates = <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> numPairs;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="三、使用ThreadLocal类"><a href="#三、使用ThreadLocal类" class="headerlink" title="三、使用ThreadLocal类"></a>三、使用ThreadLocal类</h3><blockquote>
+<p>维持线程封闭性的一种更规范方法是使用<strong>ThreadLocal</strong>类，ThreadLocal能使线程中的某个值与保存值的对象关联起来。ThreadLocal提供了get与set等访问接口或方法，能够为每个使用该变量的线程提供独立的变量副本，所以每一个线程都可以独立地改变自己的副本，而不会影响其它线程所对应的副本。</p>
+</blockquote>
+<p>我们先来看一个例子</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> 小铭</span></span><br><span class="line"><span class="comment"> * Date: 2018/2/4</span></span><br><span class="line"><span class="comment"> * Time: 19:01</span></span><br><span class="line"><span class="comment"> * No struggle, talent how to match the willfulness.</span></span><br><span class="line"><span class="comment"> * Description: ThreadLocal实现线程封闭</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Task</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ThreadLocal&lt;String&gt; value = </span><br><span class="line">      	ThreadLocal.withInitial(() -&gt; String.valueOf(Math.random()));</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(value.get());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Task task = <span class="keyword">new</span> Task();</span><br><span class="line">        Thread thread1 = <span class="keyword">new</span> Thread(task);</span><br><span class="line">        Thread thread2 = <span class="keyword">new</span> Thread(task);</span><br><span class="line">        Thread thread3 = <span class="keyword">new</span> Thread(task);</span><br><span class="line">        thread1.start();</span><br><span class="line">        thread2.start();</span><br><span class="line">        thread3.start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果如下，从结果我们可以知道各个线程之间的变量是独立的，不会相互影响。</p>
+<p><img src="http://owbl44q3i.bkt.clouddn.com/ThreadLocalResult.png" alt=""></p>
+<p>并发编程实战书里也提供了一个实例</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> ThreadLocal&lt;Connection&gt; connectionHolder = <span class="keyword">new</span> ThreadLocal&lt;Connection&gt;() &#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> Connection <span class="title">initialValue</span><span class="params">()</span></span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> DriverManager.getConnection(DB_URL);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> connectionHolder.get();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>ThreadLocal类有以下四个重要的方法，源码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 返回此线程局部变量的当前线程的“初始值”。线程第一次使用get()方法访问变量时将调用此方法，但如果线程之前调用了set(T)方法，则不会对该线程再调用initialValue方法。通常，此方法对每个线程最多调用一次，但如果在调用get()后又调用了remove()，则可能再次调用此方法。*/</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> T <span class="title">initialValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> T <span class="title">get</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Thread t = Thread.currentThread(); <span class="comment">// 当前线程</span></span><br><span class="line">    ThreadLocalMap map = getMap(t); <span class="comment">// 返回ThreadLocalMap集合</span></span><br><span class="line">    <span class="keyword">if</span> (map != <span class="keyword">null</span>) &#123;</span><br><span class="line">        ThreadLocalMap.Entry e = map.getEntry(<span class="keyword">this</span>); <span class="comment">// 获得ThreadLocal的变量值</span></span><br><span class="line">        <span class="keyword">if</span> (e != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">            T result = (T)e.value;</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> setInitialValue(); <span class="comment">// 如果没有值则创建一个ThreadLocalMap，具体请看setInitialValue中的									 createMap方法</span></span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(T value)</span> </span>&#123;    </span><br><span class="line">  	Thread t = Thread.currentThread();</span><br><span class="line">    ThreadLocalMap map = getMap(t);</span><br><span class="line">    <span class="keyword">if</span> (map != <span class="keyword">null</span>)</span><br><span class="line">        map.set(<span class="keyword">this</span>, value);</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        createMap(t, value);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">()</span> </span>&#123;</span><br><span class="line">     ThreadLocalMap m = getMap(Thread.currentThread());</span><br><span class="line">     <span class="keyword">if</span> (m != <span class="keyword">null</span>)</span><br><span class="line">         m.remove(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当某个线程初次调用ThreadLocal.get方法时，就会调用initialValue来获取初始值。</p>
+<p>ThreadLocal类维护了一个ThreadLocalMap的实例变量，ThreadLocalMap是一个Map结构。</p>
+<p>ThreadLocal的set方法取到当前线程，拿到当前线程的ThreadLocalMap对象，然后把ThreadLocal对象作为key，把要放入的值作为value，放到ThreadLocalMap。ThreadLocal的get方法取到当前线程，拿到当前线程的ThreadLocalMap对象，然后把ThreadLocal对象作为key，拿到对应的value。</p>
+<h2 id="不变性"><a href="#不变性" class="headerlink" title="不变性"></a>不变性</h2><blockquote>
+<p>如果某个对象在被创建之后其状态就不能被修改，那么这个对象就称为不可变对象，不可变对象一定是线程安全的，它们的不变性条件是由构造函数创建的。</p>
+</blockquote>
+<p>满足以下条件，对象才是不可变的（<strong>不可变对象</strong>）：</p>
+<ul>
+<li>对象创建之后其状态就不能修改</li>
+<li>对象的所有域都是<code>final</code>类型</li>
+<li>对象时正确创建的（在创建对象期间，this引用没有逸出）</li>
+</ul>
+<h2 id="安全发布"><a href="#安全发布" class="headerlink" title="安全发布"></a>安全发布</h2><p>要安全地发布一个对象，对象的引用以及对象的状态必须同时对其他线程可见。一个正确构造的对象可以通过以下方式来安全地发布：</p>
+<ul>
+<li>在静态初始化函数中初始化一个对象引用。</li>
+<li>将对象的引用保存到 volatile 类型的城或者 Atomicreferance 对象中</li>
+<li>将对象的引用保存到某个正确构造对象的fnal类型域中</li>
+<li>将对象的引用保存到一个由锁保护的域中。</li>
+</ul>
+<h3 id="事实不可变对象"><a href="#事实不可变对象" class="headerlink" title="事实不可变对象"></a>事实不可变对象</h3><blockquote>
+<p>如果对象从技术上来看是可变的，但其状态在发布后不会再改吧改变，那么这种对象就是“<strong>事实不可变对象</strong>”。</p>
+</blockquote>
+<p>在没有额外的同步的情况下，任何线程都可以安全地使用被安全发布的事实不可变对象。</p>
+<p><strong>对象的发布需求取决于它的可变性</strong>：</p>
+<ul>
+<li>不可变对象可以通过任意机制来发布</li>
+<li>事实不可变对象必须通过安全方式来发布</li>
+<li>可变对象必须通过安全方式来发布，并且必须是线程安全的或者由某个锁保护起来</li>
+</ul>
+<p>参考书籍：<a href="http://product.dangdang.com/22606835.html" target="_blank" rel="noopener">《Java并发编程实战》</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/笔记/">笔记</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/多线程/">多线程</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://minsming.com/2018/08/16/对象的共享/" data-title="对象的共享 | 小铭" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2018/08/16/线程安全性/" title="线程安全性">
+  <strong>上一篇：</strong><br/>
+  <span>
+  线程安全性</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2018/08/16/Springboot打包成war包的404问题/"  title="Springboot打包成war包的404问题">
+ <strong>下一篇：</strong><br/> 
+ <span>Springboot打包成war包的404问题
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">我的Github</p>
+<div class="github-card" data-github="zhengjunming" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/数据结构/" title="数据结构">数据结构<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/笔记/" title="笔记">笔记<sup>21</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/问题/" title="问题">问题<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/多线程/" title="多线程">多线程<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Spring/" title="Spring">Spring<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/JVM/" title="JVM">JVM<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/404/" title="404">404<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Maven/" title="Maven">Maven<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Mybatis/" title="Mybatis">Mybatis<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/HTTP/" title="HTTP">HTTP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/GC/" title="GC">GC<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Springboot/" title="Springboot">Springboot<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/war包/" title="war包">war包<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/线程池/" title="线程池">线程池<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/线程/" title="线程">线程<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/单例模式/" title="单例模式">单例模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Socket/" title="Socket">Socket<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/平衡二叉树/" title="平衡二叉树">平衡二叉树<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/NIO/" title="NIO">NIO<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/404/" style="font-size: 12.5px;">404</a> <a href="/tags/B树/" style="font-size: 10px;">B树</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/JVM/" style="font-size: 12.5px;">JVM</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/Mybatis/" style="font-size: 10px;">Mybatis</a> <a href="/tags/NIO/" style="font-size: 10px;">NIO</a> <a href="/tags/Socket/" style="font-size: 10px;">Socket</a> <a href="/tags/Spring/" style="font-size: 17.5px;">Spring</a> <a href="/tags/Springboot/" style="font-size: 10px;">Springboot</a> <a href="/tags/war包/" style="font-size: 10px;">war包</a> <a href="/tags/单例模式/" style="font-size: 10px;">单例模式</a> <a href="/tags/多线程/" style="font-size: 20px;">多线程</a> <a href="/tags/平衡二叉树/" style="font-size: 10px;">平衡二叉树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/线程池/" style="font-size: 10px;">线程池</a>
+    </div>
+  </div>
+
+
+  
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> 认真做好每一件事 <br/>
+			记录生活，记录技术</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/6398887144" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/zhengjunming" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		<a href="http://www.zhihu.com/people/tou-guo-bo-li" target="_blank" class="icon-zhihu" title="知乎"></a>
+		
+		
+		
+		<a href="mailto:1594998836@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="ming">ming</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?5c5e9be8c140785b7522d4fe313c87d3";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

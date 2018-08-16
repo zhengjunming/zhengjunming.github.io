@@ -1,0 +1,818 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>MySQL支持的数据类型 | 小铭</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="ming">
+    
+
+    
+    <meta name="description" content="数值类型   整数类型 字节 最小值 最大值     tinyint 1 有符号-128无符号0 有符号127无符号255   smallint 2 有符号$-2^{15}$无符号0 有符号$2^{15} - 1$无符号$2^{16} - 1$   mediumint 3 有符号$-2^{23}$无符号0 有符号$2^{23} - 1$无符号$2^{24} - 1$   int、integer 4">
+<meta name="keywords" content="MySQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL支持的数据类型">
+<meta property="og:url" content="http://minsming.com/2018/08/16/MySQL支持的数据类型/index.html">
+<meta property="og:site_name" content="小铭">
+<meta property="og:description" content="数值类型   整数类型 字节 最小值 最大值     tinyint 1 有符号-128无符号0 有符号127无符号255   smallint 2 有符号$-2^{15}$无符号0 有符号$2^{15} - 1$无符号$2^{16} - 1$   mediumint 3 有符号$-2^{23}$无符号0 有符号$2^{23} - 1$无符号$2^{24} - 1$   int、integer 4">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-03-17T07:40:13.797Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL支持的数据类型">
+<meta name="twitter:description" content="数值类型   整数类型 字节 最小值 最大值     tinyint 1 有符号-128无符号0 有符号127无符号255   smallint 2 有符号$-2^{15}$无符号0 有符号$2^{15} - 1$无符号$2^{16} - 1$   mediumint 3 有符号$-2^{23}$无符号0 有符号$2^{23} - 1$无符号$2^{24} - 1$   int、integer 4">
+
+    
+    <link rel="alternative" href="/atom.xml" title="小铭" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/apple.jpg">
+    
+    
+    <link rel="apple-touch-icon" href="/img/apple.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/apple.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/apple.jpg" alt="小铭" title="小铭"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="小铭">小铭</a></h1>
+				<h2 class="blog-motto">春生，夏糜，秋去，冬烬，春又来。</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+					<li>
+ 					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/08/16/MySQL支持的数据类型/" title="MySQL支持的数据类型" itemprop="url">MySQL支持的数据类型</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="ming" target="_blank" itemprop="author">ming</a>
+		
+  <p class="article-time">
+    <time datetime="2018-08-16T05:29:20.357Z" itemprop="datePublished"> 发表于 2018-08-16</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<h2 id="数值类型"><a href="#数值类型" class="headerlink" title="数值类型"></a>数值类型</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">整数类型</th>
+<th style="text-align:center">字节</th>
+<th>最小值</th>
+<th>最大值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">tinyint</td>
+<td style="text-align:center">1</td>
+<td>有符号-128<br>无符号0</td>
+<td>有符号127<br>无符号255</td>
+</tr>
+<tr>
+<td style="text-align:center">smallint</td>
+<td style="text-align:center">2</td>
+<td>有符号$-2^{15}$<br>无符号0</td>
+<td>有符号$2^{15} - 1$<br>无符号$2^{16} - 1$</td>
+</tr>
+<tr>
+<td style="text-align:center">mediumint</td>
+<td style="text-align:center">3</td>
+<td>有符号$-2^{23}$<br>无符号0</td>
+<td>有符号$2^{23} - 1$<br>无符号$2^{24} - 1$</td>
+</tr>
+<tr>
+<td style="text-align:center">int、integer</td>
+<td style="text-align:center">4</td>
+<td>有符号$-2^{31}$<br>无符号0</td>
+<td>有符号$2^{31} - 1$<br>无符号$2^{32} - 1$</td>
+</tr>
+<tr>
+<td style="text-align:center">bigint</td>
+<td style="text-align:center">8</td>
+<td>有符号$-2^{63}$<br>无符号0</td>
+<td>有符号$2^{63} - 1$<br>无符号$2^{64} - 1$</td>
+</tr>
+</tbody>
+</table>
+<p>整数类型可以在类型名称后面的小括号内指定宽度，例如<code>int(11)</code>，默认宽度是<code>int(11)</code></p>
+<p><code>zerofill</code>关键字表示用“0”填充，也就是如果整数还没达到位宽，就用0填充前面的位宽，例如类型为<code>int(5)</code>存储一个数字1，则在数据库是存储<code>00001</code>，默认不启用，如要启用，可以在创建字段时声明，如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE t (id int(11) zerofill);</span><br></pre></td></tr></table></figure>
+<p><strong>虽然指定了位宽，但是如果超过了位宽，数据库不会截断数据，而是存入正确的数据。</strong></p>
+<table>
+<thead>
+<tr>
+<th>浮点数类型</th>
+<th>字节</th>
+<th>最小值</th>
+<th>最大值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>float</td>
+<td>4</td>
+<td>$\pm1.175494351E-38$</td>
+<td>$\pm3.402823466E+38$</td>
+</tr>
+<tr>
+<td>double</td>
+<td>8</td>
+<td>$\pm2.2250738585072014E-308$</td>
+<td>$\pm1.7976931348623157E+38$</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>定点数类型</th>
+<th style="text-align:center">字节</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DEC(M, D)<br>DECIMAL(M, D)</td>
+<td style="text-align:center">M + 2</td>
+<td style="text-align:center">最大取值范围与double相同，给定DECIMAL的有效取值范围由M和D决定</td>
+</tr>
+</tbody>
+</table>
+<p>以上的浮点数和定点数都可以表示小数，但定点数在MySQL内部以字符串的形式存放，比浮点数精确。</p>
+<p>浮点数和定点数都可以用类型名称后加“(M, D)”的方式来表示，M称为精度，为有效数字，D为标度，为小数的位宽，<code>DECIMAL</code>不指定精度时，默认的整数位为10，默认的小数位为0，所以要用它存小数必须指定精度。而浮点数默认会按照实际的精度（由实际的硬件和操作系统决定）。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">位类型</th>
+<th style="text-align:center">字节</th>
+<th style="text-align:center">最小值</th>
+<th style="text-align:center">最大值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">BIT(M)</td>
+<td style="text-align:center">1~8</td>
+<td style="text-align:center">BIT(1)</td>
+<td style="text-align:center">BIT(64)</td>
+</tr>
+</tbody>
+</table>
+<p>对于BIT(位)类型,用于存放位字段值，BIT(M)可以用来存放多位二进制数，M范围从1~64，如果不写则默认为1位。对于位字段，直接使用 <code>SELECT</code>命令将不会看到结果，可以用<code>bin()</code>(显示为二进制格式)或者<code>hex()</code>(显示为十六进制格式)函数进行读取。</p>
+<h2 id="日期时间类型"><a href="#日期时间类型" class="headerlink" title="日期时间类型"></a>日期时间类型</h2><table>
+<thead>
+<tr>
+<th>日期和时间类型</th>
+<th>字节</th>
+<th>最小值</th>
+<th>最大值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DATE</td>
+<td>4</td>
+<td>1000-01-01</td>
+<td>9999-12-31</td>
+</tr>
+<tr>
+<td>DATETIME</td>
+<td>8</td>
+<td>1000-01-01 00:00:00</td>
+<td>9999-12-31 23:59:59</td>
+</tr>
+<tr>
+<td>TIMESTAMP</td>
+<td>4</td>
+<td>19700101080001</td>
+<td>2038年的某个时刻</td>
+</tr>
+<tr>
+<td>TIME</td>
+<td>3</td>
+<td>-838:59:59</td>
+<td>838:59:59</td>
+</tr>
+<tr>
+<td>YEAR</td>
+<td>1</td>
+<td>1901</td>
+<td>2155</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>如果要用来表示年月日，通常用<code>DATE</code>来表示</li>
+<li>如果要用来表示年月日时分秒，通常用 <code>DATETIME</code>表示</li>
+<li>如果只用来表示时分秒，通常用<code>TIME</code>来表示</li>
+<li>如果需要经常插入或者更新日期为当前系统时间，则通常使用 <code>TIMESTAMP</code>来表示TIMESTAMP值返回后显示为<code>yyyy-mn-DDHH:MM:SS</code>格式的字符串，显示宽度固定为19个字符。</li>
+<li>如果只是表示年份，可以用<code>YEAR</code>来表示，它比<code>DAT</code>E占用更少的空间，YEAR有2位或4位格式的年。默认是4位格式。在4位格式中，允许的值是1901~2155和00000在2位格式中，允许的值是70~69,表示从1970~2069年，MYSQL以YYYY格式显示YEAR值(<strong>从5.5.27开始,2位格式的year已经不被支持</strong>)。</li>
+</ul>
+<p>其中<code>TIMESTAMP</code>有一个重要特点，就是和时区相关。当插入日期时，会先转换为本地时区后存放；而从数据库里面取出时，也同样需要将日期转换为本地时区后显示。而<code>DATETIME</code>则不会。</p>
+<h2 id="字符串类型"><a href="#字符串类型" class="headerlink" title="字符串类型"></a>字符串类型</h2><table>
+<thead>
+<tr>
+<th>字符串类型</th>
+<th style="text-align:center">字节</th>
+<th>描述及存储需求</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CHAR(M)</td>
+<td style="text-align:center">M</td>
+<td>M为0~255之间的整数</td>
+</tr>
+<tr>
+<td>VARCHAR(M)</td>
+<td style="text-align:center"></td>
+<td>M为0~65535之间的整数，值的长度+1个字节</td>
+</tr>
+<tr>
+<td>TINYBLOB</td>
+<td style="text-align:center"></td>
+<td>允许长度0~255字节，值的长度+1个字节</td>
+</tr>
+<tr>
+<td>BLOB</td>
+<td style="text-align:center"></td>
+<td>允许长度0~65535字节，值的长度+2个字节</td>
+</tr>
+<tr>
+<td>MEDIUMBLOB</td>
+<td style="text-align:center"></td>
+<td>允许长度0~167772150字节，值的长度+3个字节</td>
+</tr>
+<tr>
+<td>LONGBLOB</td>
+<td style="text-align:center"></td>
+<td>允许长度0~4294967295字节，值的长度+4个字节</td>
+</tr>
+<tr>
+<td>TINYTIEX</td>
+<td style="text-align:center"></td>
+<td>允许长度0~255字节，值的长度+2个字节</td>
+</tr>
+<tr>
+<td>TEXT</td>
+<td style="text-align:center"></td>
+<td>允许长度0~65535字节，值的长度+2个字节</td>
+</tr>
+<tr>
+<td>MEDIUMTEXT</td>
+<td style="text-align:center"></td>
+<td>允许长度0~16772150字节，值的长度+3个字节</td>
+</tr>
+<tr>
+<td>LONGTEXT</td>
+<td style="text-align:center"></td>
+<td>允许长度0~4294967295字节，值的长度+4个字节</td>
+</tr>
+<tr>
+<td>VARBINARY(M)</td>
+<td style="text-align:center"></td>
+<td>允许长度0~M个字节的变长字节字符串，值的长度+1个字节</td>
+</tr>
+<tr>
+<td>BINARY(M)</td>
+<td style="text-align:center">M</td>
+<td>允许长度0~M个字节的定长字节字符串</td>
+</tr>
+</tbody>
+</table>
+<h3 id="CHAR和VARCHAR类型"><a href="#CHAR和VARCHAR类型" class="headerlink" title="CHAR和VARCHAR类型"></a>CHAR和VARCHAR类型</h3><p><code>CHAR</code>和 <code>VARCHAR</code>很类似，都用来保存 MySQL中较短的字符串。二者的主要区别在于存储方式的不同</p>
+<ul>
+<li><code>CHAR</code>列的长度固定为创建表时声明的长度，长度可以为从0~255的任何值</li>
+<li><code>VARCHAR</code>列中的值为可变长字符串，长度可以指定为0~255( MySQL5.0.3版本以前)或者65535( MySQL5.0.3版本以后)之间的值。</li>
+</ul>
+<p>在检索的时候</p>
+<ul>
+<li><code>CHAR</code>列删除了尾部的空格</li>
+<li><code>VARCHAR</code>保留这些空格</li>
+</ul>
+<h3 id="BINARY和VARBINARY类型"><a href="#BINARY和VARBINARY类型" class="headerlink" title="BINARY和VARBINARY类型"></a>BINARY和VARBINARY类型</h3><blockquote>
+<p><code>BINARY</code>和·<code>VARBINARY</code>类似于<code>CHAR</code>和·<code>VARCHAR</code>，只不过存储的是二进制字符串。</p>
+</blockquote>
+<p>例如存入字符’a’，会自动先在值后面填充<code>0x00</code>再存储到数据库。</p>
+<h3 id="ENUM类型"><a href="#ENUM类型" class="headerlink" title="ENUM类型"></a>ENUM类型</h3><blockquote>
+<p>它的值范围需要在创建表时通过枚举方式显式指定，对1~255个成员的枚举需要1个字节存储；对于255~65535个成员，需要2个字节存储。最多允许65535个成员。</p>
+</blockquote>
+<p>创建表，gender为枚举类型，成员只有“M”和“F”</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE t (gender ENUM(&apos;M&apos;, &apos;F&apos;));</span><br></pre></td></tr></table></figure>
+<p>上列的<code>gender</code>只会接收’M’和’F’或者NULL，ENUM类型忽略大小写。另外，ENUM类型只允许从值集合中选取单个值。</p>
+<h3 id="SET类型"><a href="#SET类型" class="headerlink" title="SET类型"></a>SET类型</h3><blockquote>
+<p><code>SET</code>和<code>ENUM</code>类型非常类似，也是一个字符串对象，里面可以包含0~64个成员。</p>
+</blockquote>
+<p>根据成员的不同，存储上也有所不同</p>
+<ul>
+<li>1-8成员的集合，占1个字节</li>
+<li>9-16成员的集合，占2个字节</li>
+<li>17-24成员的集合，占3个字节</li>
+<li>25-32成员的集合，占4个字节</li>
+<li>33-64成员的集合，占8个字节</li>
+</ul>
+<p>SET类型可以从允许值集合中选择任意1个或多个元素进行组合，所以对于输入的值只要是在允许值的组合范围内，都可以正确地注入到SET类型的列中。对于超出允许值范围的值将不允许注入到SET类型列中。</p>
+<p>参考书籍：<a href="http://product.dangdang.com/23399217.html" target="_blank" rel="noopener">《深入浅出MySQL》</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/笔记/">笔记</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/MySQL/">MySQL</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://minsming.com/2018/08/16/MySQL支持的数据类型/" data-title="MySQL支持的数据类型 | 小铭" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2018/08/16/MySQL逻辑运算符/" title="MySQL中的运算符">
+  <strong>上一篇：</strong><br/>
+  <span>
+  MySQL中的运算符</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2018/08/16/单例模式/"  title="单例模式">
+ <strong>下一篇：</strong><br/> 
+ <span>单例模式
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">我的Github</p>
+<div class="github-card" data-github="zhengjunming" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/数据结构/" title="数据结构">数据结构<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/笔记/" title="笔记">笔记<sup>21</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/问题/" title="问题">问题<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/多线程/" title="多线程">多线程<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Spring/" title="Spring">Spring<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/JVM/" title="JVM">JVM<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/404/" title="404">404<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Maven/" title="Maven">Maven<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Mybatis/" title="Mybatis">Mybatis<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/HTTP/" title="HTTP">HTTP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/GC/" title="GC">GC<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Springboot/" title="Springboot">Springboot<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/war包/" title="war包">war包<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/线程池/" title="线程池">线程池<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/线程/" title="线程">线程<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/单例模式/" title="单例模式">单例模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Socket/" title="Socket">Socket<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/平衡二叉树/" title="平衡二叉树">平衡二叉树<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/NIO/" title="NIO">NIO<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/404/" style="font-size: 12.5px;">404</a> <a href="/tags/B树/" style="font-size: 10px;">B树</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/JVM/" style="font-size: 12.5px;">JVM</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/Mybatis/" style="font-size: 10px;">Mybatis</a> <a href="/tags/NIO/" style="font-size: 10px;">NIO</a> <a href="/tags/Socket/" style="font-size: 10px;">Socket</a> <a href="/tags/Spring/" style="font-size: 17.5px;">Spring</a> <a href="/tags/Springboot/" style="font-size: 10px;">Springboot</a> <a href="/tags/war包/" style="font-size: 10px;">war包</a> <a href="/tags/单例模式/" style="font-size: 10px;">单例模式</a> <a href="/tags/多线程/" style="font-size: 20px;">多线程</a> <a href="/tags/平衡二叉树/" style="font-size: 10px;">平衡二叉树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/线程池/" style="font-size: 10px;">线程池</a>
+    </div>
+  </div>
+
+
+  
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> 认真做好每一件事 <br/>
+			记录生活，记录技术</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/6398887144" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/zhengjunming" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		<a href="http://www.zhihu.com/people/tou-guo-bo-li" target="_blank" class="icon-zhihu" title="知乎"></a>
+		
+		
+		
+		<a href="mailto:1594998836@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="ming">ming</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?5c5e9be8c140785b7522d4fe313c87d3";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

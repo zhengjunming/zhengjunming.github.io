@@ -1,0 +1,665 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>SQL基础语句 | 小铭</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="ming">
+    
+
+    
+    <meta name="description" content="SQL分类SQL语句主要可以划分为3个类别。  DML（数据操作语句）：用于添加、删除、更新和查询数据库记录，并检查数据完整性。常用关键字有 insert、update、delete和select等。 DDL（数据定义语句）：用于定义了不同的数据段、数据库、表、列、索引等数据库对象。常用关键字有create、alter、drop、truncate等。 DCL（数据控制语句）：用于控制不同数据段直接">
+<meta name="keywords" content="MySQL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SQL基础语句">
+<meta property="og:url" content="http://minsming.com/2018/08/16/SQL语句/index.html">
+<meta property="og:site_name" content="小铭">
+<meta property="og:description" content="SQL分类SQL语句主要可以划分为3个类别。  DML（数据操作语句）：用于添加、删除、更新和查询数据库记录，并检查数据完整性。常用关键字有 insert、update、delete和select等。 DDL（数据定义语句）：用于定义了不同的数据段、数据库、表、列、索引等数据库对象。常用关键字有create、alter、drop、truncate等。 DCL（数据控制语句）：用于控制不同数据段直接">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-03-17T07:41:41.371Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SQL基础语句">
+<meta name="twitter:description" content="SQL分类SQL语句主要可以划分为3个类别。  DML（数据操作语句）：用于添加、删除、更新和查询数据库记录，并检查数据完整性。常用关键字有 insert、update、delete和select等。 DDL（数据定义语句）：用于定义了不同的数据段、数据库、表、列、索引等数据库对象。常用关键字有create、alter、drop、truncate等。 DCL（数据控制语句）：用于控制不同数据段直接">
+
+    
+    <link rel="alternative" href="/atom.xml" title="小铭" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/apple.jpg">
+    
+    
+    <link rel="apple-touch-icon" href="/img/apple.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/apple.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/apple.jpg" alt="小铭" title="小铭"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="小铭">小铭</a></h1>
+				<h2 class="blog-motto">春生，夏糜，秋去，冬烬，春又来。</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+					<li>
+ 					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/08/16/SQL语句/" title="SQL基础语句" itemprop="url">SQL基础语句</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="ming" target="_blank" itemprop="author">ming</a>
+		
+  <p class="article-time">
+    <time datetime="2018-08-16T05:29:20.317Z" itemprop="datePublished"> 发表于 2018-08-16</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#SQL分类"><span class="toc-number">1.</span> <span class="toc-text">SQL分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DDL语句"><span class="toc-number">2.</span> <span class="toc-text">DDL语句</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#创建数据库"><span class="toc-number">2.1.</span> <span class="toc-text">创建数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除数据库"><span class="toc-number">2.2.</span> <span class="toc-text">删除数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建表"><span class="toc-number">2.3.</span> <span class="toc-text">创建表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除表"><span class="toc-number">2.4.</span> <span class="toc-text">删除表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#修改表"><span class="toc-number">2.5.</span> <span class="toc-text">修改表</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DML语句"><span class="toc-number">3.</span> <span class="toc-text">DML语句</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#插入记录"><span class="toc-number">3.1.</span> <span class="toc-text">插入记录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#更新记录"><span class="toc-number">3.2.</span> <span class="toc-text">更新记录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除记录"><span class="toc-number">3.3.</span> <span class="toc-text">删除记录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查询记录"><span class="toc-number">3.4.</span> <span class="toc-text">查询记录</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h2 id="SQL分类"><a href="#SQL分类" class="headerlink" title="SQL分类"></a>SQL分类</h2><p>SQL语句主要可以划分为3个类别。</p>
+<ol>
+<li><strong>DML（数据操作语句）</strong>：用于添加、删除、更新和查询数据库记录，并检查数据完整性。常用关键字有 <strong>insert</strong>、<strong>update</strong>、<strong>delete</strong>和<strong>select</strong>等。</li>
+<li><strong>DDL（数据定义语句）</strong>：用于定义了不同的数据段、数据库、表、列、索引等数据库对象。常用关键字有<strong>create</strong>、<strong>alter</strong>、<strong>drop</strong>、<strong>truncate</strong>等。</li>
+<li><strong>DCL（数据控制语句）</strong>：用于控制不同数据段直接的许可和访问级别的语句，这些语句定义了数据库、表、字段、用户的访问权限和安全级别。主要的关键字有<strong>grant</strong>、<strong>revoke</strong>等。</li>
+</ol>
+<h2 id="DDL语句"><a href="#DDL语句" class="headerlink" title="DDL语句"></a>DDL语句</h2><blockquote>
+<p>用于定义了不同的数据段、数据库、表、列、索引等数据库对象</p>
+</blockquote>
+<h3 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h3><p>创建数据库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CREATE DATABASE dbname;</span><br></pre></td></tr></table></figure>
+<p>显示所有数据库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW DATABASES;</span><br></pre></td></tr></table></figure>
+<p>选择要操作的数据库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">USE dbname;</span><br></pre></td></tr></table></figure>
+<p>显示一个数据库的所有表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SHOW TABLES;</span><br></pre></td></tr></table></figure>
+<h3 id="删除数据库"><a href="#删除数据库" class="headerlink" title="删除数据库"></a>删除数据库</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP DATABASE dbname;</span><br></pre></td></tr></table></figure>
+<h3 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h3><p>创建表语句</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE tablename(</span><br><span class="line">	column_name_1 column_type_1 constraints, # column_name是列的名字</span><br><span class="line">  	column_name_1 column_type_1 constraints, # column_type是列的数据类型</span><br><span class="line">  	... </span><br><span class="line">  	column_name_1 column_type_1 constraints  # constraints是列的约束条件</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>查看表的定义</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DESC tablename;</span><br></pre></td></tr></table></figure>
+<h3 id="删除表"><a href="#删除表" class="headerlink" title="删除表"></a>删除表</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DROP TABLE tablename;</span><br></pre></td></tr></table></figure>
+<h3 id="修改表"><a href="#修改表" class="headerlink" title="修改表"></a>修改表</h3><ul>
+<li>修改表类型</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE tablename MODIFY [COLUMN] column_definition [FIRST|AFTER col_name];</span><br></pre></td></tr></table></figure>
+<p>例如将student表的name字段类型由varchar(10)改为varchar(20)</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> student <span class="keyword">MODIFY</span> <span class="keyword">name</span> <span class="built_in">varchar</span>(<span class="number">20</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>增加表字段</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE tablename ADD [COLUMN] column_definition [FIRST|AFTER col_name];</span><br></pre></td></tr></table></figure>
+<p>例如在student表增加一个sex字段，类型为varchar(2)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE student ADD column sex varchar(2);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>删除表字段</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE tablename DROP [COLUMN] col_name;</span><br></pre></td></tr></table></figure>
+<p>例如删除刚刚的sex</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE student DROP COLUMN sex;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>字段改名</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE tablename CHANGE [COLUMN] old_name column_definition [FIRST|AFTER col_name];</span><br></pre></td></tr></table></figure>
+<p>例如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE student CHANGE name student_name varchar(20);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>修改字段排序顺序</li>
+</ul>
+<p>增加一个字段放在最前面</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE student ADD age int(4) FIRST;</span><br></pre></td></tr></table></figure>
+<p>增加一个字段放在name前面</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE student ADD age int(4) AFTER name;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>更改表名</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ALTER TABLE tablename RENAME [TO] new_tablename;</span><br></pre></td></tr></table></figure>
+<h2 id="DML语句"><a href="#DML语句" class="headerlink" title="DML语句"></a>DML语句</h2><blockquote>
+<p>用于添加、删除、更新和查询数据库记录，并检查数据完整性。</p>
+</blockquote>
+<h3 id="插入记录"><a href="#插入记录" class="headerlink" title="插入记录"></a>插入记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO tablename(field1, field2, ..., fieldn) VALUES(value1, value2, ..., valuen);</span><br></pre></td></tr></table></figure>
+<p>也可以一次插入多条记录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO tablename(field1, field2, ..., fieldn) </span><br><span class="line">VALUES</span><br><span class="line">(record1_value1, record1_value2, ..., record1_valuen),</span><br><span class="line">(record2_value1, record2_value2, ..., record2_valuen),</span><br><span class="line">...</span><br><span class="line">(recordn_value1, recordn_value2, ..., recordn_valuen)</span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+<h3 id="更新记录"><a href="#更新记录" class="headerlink" title="更新记录"></a>更新记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UPDATE tablename SET field1 = value1, field2 = value2, ..., fieldn = valuen [WHERE CONDITION];</span><br></pre></td></tr></table></figure>
+<p>更新多个表中的数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UPDATE t1, t2, ..., tn SET t1.field1 = expr1, tn.fieldn = exprn [WHERE CONDITION];</span><br></pre></td></tr></table></figure>
+<h3 id="删除记录"><a href="#删除记录" class="headerlink" title="删除记录"></a>删除记录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DELETE FROM tablename [WHERE CONDITION];</span><br></pre></td></tr></table></figure>
+<p>删除多个表中的记录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DELETE t1, t2, ..., tn FROM t1, t2, ..., tn [WHERE CONDITION];</span><br></pre></td></tr></table></figure>
+<h3 id="查询记录"><a href="#查询记录" class="headerlink" title="查询记录"></a>查询记录</h3><p>最基本的查询</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM tablename [WHERE CONDITION]; # *表示查找所有，也可以查找特定的字段</span><br></pre></td></tr></table></figure>
+<ul>
+<li>查找不重复的记录，利用<code>DISTINCT</code>关键字</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT DISTINCT name FROM student;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>条件查询，利用<code>WHERE</code>关键字</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM WHERE name = &apos;zheng&apos;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>排序与限制</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM tablename [WHERE CONDITION] [ORDER BY field1 [DESC|ASC], field2 [DESC|ASC],..., fieldn [DESC|ASC]];</span><br><span class="line"># 数据库的排序操作可以用关键字ORDER BY实现</span><br><span class="line"># DESC和ASC是排序顺序关键字，DESC表示按照字段进行降序排序，ASC则表示升序排序，默认为升序</span><br></pre></td></tr></table></figure>
+<p>排序后若只想显示一部分，则可以用<code>LIMIT</code>关键字实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM tablename [WHERE CONDITION] [ORDER BY field1 [DESC|ASC], field2 [DESC|ASC],..., fieldn [DESC|ASC]] [LIMIT offset_start, row_count];</span><br></pre></td></tr></table></figure>
+<ul>
+<li>聚合</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 一般用于汇总查询</span><br><span class="line">SELECT [field1, field2, ..., fieldn] fun_name</span><br><span class="line">FROM tablename</span><br><span class="line">[WHERE CONDITION] # 聚合前过滤</span><br><span class="line">[GROUP BY field1, field2, ..., fieldn</span><br><span class="line">[WITH ROLLUP]]</span><br><span class="line">[HAVING CONDITION]; # 聚合后过滤</span><br><span class="line"># fun_name表示要做的聚合操作，也就是聚合函数，常用的有SUM（求和）、COUNT(*)（记录数）、max（最大值）、min（最小值）。</span><br><span class="line"># GROUP BY关键字表示要进行分类聚合的字段，比如按照班级分类统计学生数量，班级就应该写在GROUP BY后面。</span><br><span class="line"># WITH ROLLUP是可选语法，标明是否对分类聚合后的结果进行再汇总。</span><br><span class="line"># HAVING关键字表示对分类后的结果再进行条件的过滤。</span><br></pre></td></tr></table></figure>
+<ul>
+<li>子查询</li>
+</ul>
+<blockquote>
+<p>进行查询时，需要的条件是另外一个SELECT语句的结果，这个时候就要用到子查询，主要的关键字有IN、NOT IN、 =、 !=、EXISTS、NOT EXISTS等。</p>
+</blockquote>
+<ul>
+<li>记录联合</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 将两个表的数据按照一定的查询条件查询出来后，将结果合并到一起显示出来，这个时候就需要用到UNION和UNION ALL关键字。</span><br><span class="line">SELECT * FROM t1</span><br><span class="line">UNION|UNION ALL</span><br><span class="line">SELECT * FROM t2</span><br><span class="line">UNION|UNION ALL</span><br><span class="line">...</span><br><span class="line">SELECT * FROM tn</span><br><span class="line"># UNION ALL是把结果集直接合并在一起，而UNION是将UNION ALL后的结果进行一次DISTINCT去重。</span><br></pre></td></tr></table></figure>
+<p>参考书籍：<a href="http://product.dangdang.com/23399217.html" target="_blank" rel="noopener">《深入浅出MySQL》</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/笔记/">笔记</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/MySQL/">MySQL</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://minsming.com/2018/08/16/SQL语句/" data-title="SQL基础语句 | 小铭" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2018/08/16/解决Mybatis有查询结果但存不进实体类的问题/" title="解决Mybatis有查询结果但存不进实体类的问题">
+  <strong>上一篇：</strong><br/>
+  <span>
+  解决Mybatis有查询结果但存不进实体类的问题</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2018/08/16/线程安全性/"  title="线程安全性">
+ <strong>下一篇：</strong><br/> 
+ <span>线程安全性
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">我的Github</p>
+<div class="github-card" data-github="zhengjunming" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/数据结构/" title="数据结构">数据结构<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/笔记/" title="笔记">笔记<sup>21</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/问题/" title="问题">问题<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/多线程/" title="多线程">多线程<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Spring/" title="Spring">Spring<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/JVM/" title="JVM">JVM<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/404/" title="404">404<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Maven/" title="Maven">Maven<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Mybatis/" title="Mybatis">Mybatis<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/HTTP/" title="HTTP">HTTP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/GC/" title="GC">GC<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Springboot/" title="Springboot">Springboot<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/war包/" title="war包">war包<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/线程池/" title="线程池">线程池<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/线程/" title="线程">线程<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/单例模式/" title="单例模式">单例模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Socket/" title="Socket">Socket<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/平衡二叉树/" title="平衡二叉树">平衡二叉树<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/NIO/" title="NIO">NIO<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/404/" style="font-size: 12.5px;">404</a> <a href="/tags/B树/" style="font-size: 10px;">B树</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/JVM/" style="font-size: 12.5px;">JVM</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/Mybatis/" style="font-size: 10px;">Mybatis</a> <a href="/tags/NIO/" style="font-size: 10px;">NIO</a> <a href="/tags/Socket/" style="font-size: 10px;">Socket</a> <a href="/tags/Spring/" style="font-size: 17.5px;">Spring</a> <a href="/tags/Springboot/" style="font-size: 10px;">Springboot</a> <a href="/tags/war包/" style="font-size: 10px;">war包</a> <a href="/tags/单例模式/" style="font-size: 10px;">单例模式</a> <a href="/tags/多线程/" style="font-size: 20px;">多线程</a> <a href="/tags/平衡二叉树/" style="font-size: 10px;">平衡二叉树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/线程池/" style="font-size: 10px;">线程池</a>
+    </div>
+  </div>
+
+
+  
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> 认真做好每一件事 <br/>
+			记录生活，记录技术</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/6398887144" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/zhengjunming" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		<a href="http://www.zhihu.com/people/tou-guo-bo-li" target="_blank" class="icon-zhihu" title="知乎"></a>
+		
+		
+		
+		<a href="mailto:1594998836@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="ming">ming</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?5c5e9be8c140785b7522d4fe313c87d3";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

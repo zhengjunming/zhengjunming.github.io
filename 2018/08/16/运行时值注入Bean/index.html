@@ -1,0 +1,667 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>运行时值注入Bean | 小铭</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="ming">
+    
+
+    
+    <meta name="description" content="bean装配的另外一个方面指的是将一个值注入到bean的属性或者构造器参数中。但如果是下面这种装配bean的话注入的值就是硬编码了。 123456@Beanpublic Student student() &amp;#123;    return new Student(    	&quot;zhengjunming&quot;,    	&quot;3116005120&quot;);&amp;#125; 使用XML装配bean也同样是硬编码 123">
+<meta name="keywords" content="Spring">
+<meta property="og:type" content="article">
+<meta property="og:title" content="运行时值注入Bean">
+<meta property="og:url" content="http://minsming.com/2018/08/16/运行时值注入Bean/index.html">
+<meta property="og:site_name" content="小铭">
+<meta property="og:description" content="bean装配的另外一个方面指的是将一个值注入到bean的属性或者构造器参数中。但如果是下面这种装配bean的话注入的值就是硬编码了。 123456@Beanpublic Student student() &amp;#123;    return new Student(    	&quot;zhengjunming&quot;,    	&quot;3116005120&quot;);&amp;#125; 使用XML装配bean也同样是硬编码 123">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-03-17T07:43:08.169Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="运行时值注入Bean">
+<meta name="twitter:description" content="bean装配的另外一个方面指的是将一个值注入到bean的属性或者构造器参数中。但如果是下面这种装配bean的话注入的值就是硬编码了。 123456@Beanpublic Student student() &amp;#123;    return new Student(    	&quot;zhengjunming&quot;,    	&quot;3116005120&quot;);&amp;#125; 使用XML装配bean也同样是硬编码 123">
+
+    
+    <link rel="alternative" href="/atom.xml" title="小铭" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/apple.jpg">
+    
+    
+    <link rel="apple-touch-icon" href="/img/apple.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/apple.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/apple.jpg" alt="小铭" title="小铭"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="小铭">小铭</a></h1>
+				<h2 class="blog-motto">春生，夏糜，秋去，冬烬，春又来。</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+					<li>
+ 					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/08/16/运行时值注入Bean/" title="运行时值注入Bean" itemprop="url">运行时值注入Bean</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="ming" target="_blank" itemprop="author">ming</a>
+		
+  <p class="article-time">
+    <time datetime="2018-08-16T05:29:20.261Z" itemprop="datePublished"> 发表于 2018-08-16</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#注入外部的值"><span class="toc-number">1.</span> <span class="toc-text">注入外部的值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#属性占位符"><span class="toc-number">1.1.</span> <span class="toc-text">属性占位符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解析属性占位符"><span class="toc-number">1.2.</span> <span class="toc-text">解析属性占位符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用Spring表达式语言-SpEL-进行装配"><span class="toc-number">1.3.</span> <span class="toc-text">使用Spring表达式语言(SpEL)进行装配</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<p>bean装配的另外一个方面指的是将一个值注入到bean的属性或者构造器参数中。但如果是下面这种装配bean的话注入的值就是硬编码了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Student <span class="title">student</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Student(</span><br><span class="line">    	<span class="string">"zhengjunming"</span>,</span><br><span class="line">    	<span class="string">"3116005120"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用XML装配bean也同样是硬编码</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"student"</span> <span class="attr">class</span>=<span class="string">"com.zheng.spring.Student"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">c:_name</span>=<span class="string">"zhengjunming"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">c:_studentId</span>=<span class="string">"3116005120"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>有时候硬编码是可以的，但有的时候，我们可能会希望避免硬编码值，而是想让这些值在运行时再确定。为了实现这些功能，Spring提供了两种在运行时求值的方式：</p>
+<ol>
+<li>属性占位符（Property placeholder）。</li>
+<li>Spring表达式语言（SpEL）。</li>
+</ol>
+<h2 id="注入外部的值"><a href="#注入外部的值" class="headerlink" title="注入外部的值"></a>注入外部的值</h2><h3 id="属性占位符"><a href="#属性占位符" class="headerlink" title="属性占位符"></a>属性占位符</h3><p><strong>使用@PropertySource注解和Environment</strong></p>
+<p>这种方法就在一定程度上消除了硬编码的情况</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.zheng.spring;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.PropertySource;</span><br><span class="line"><span class="keyword">import</span> org.springframework.core.env.Environment;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@PropertySource</span>(<span class="string">"classpath:student.properties"</span>) <span class="comment">// 声明属性源</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestProperty</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Environment env;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TestProperty</span><span class="params">(Environment env)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.env = env;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Student <span class="title">student</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      	<span class="comment">// 利用Environment对象检索属性值</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Student(env.getProperty(<span class="string">"student.name"</span>),</span><br><span class="line">                env.getProperty(<span class="string">"student.id"</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>student.properties</code>内容如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">student.name=zhengjunming</span><br><span class="line">student.id=3116005120</span><br></pre></td></tr></table></figure>
+<p><strong>深入Environment</strong></p>
+<p>getProperty()方法由四个重载的形式</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">String <span class="title">getProperty</span><span class="params">(String key)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">String <span class="title">getProperty</span><span class="params">(String key, String defaultValue)</span></span>;</span><br><span class="line"></span><br><span class="line">&lt;T&gt; <span class="function">T <span class="title">getProperty</span><span class="params">(String key, Class&lt;T&gt; type)</span></span>;</span><br><span class="line"></span><br><span class="line">&lt;T&gt; <span class="function">T <span class="title">getProperty</span><span class="params">(String key, Class&lt;T&gt; type, T defaultValue)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>我们首先看第二个重载的方法，根据参数我们可以很清楚的知道，如果指定属性不存在的时候，会使用一个默认值defaultValue。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Student <span class="title">student</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 利用Environment对象检索属性值</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Student(env.getProperty(<span class="string">"student.name"</span>, <span class="string">"zheng"</span>),</span><br><span class="line">           env.getProperty(<span class="string">"student.id"</span>, <span class="string">"3116005120"</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当我们希望得到的是Integer类型或者其他类型而不是String类型，我们就可以用到第三个和第四个的getProperty()方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> id = env.getProperty(<span class="string">"student.id"</span>, Integer.class, <span class="number">3116005120</span>);</span><br></pre></td></tr></table></figure>
+<p>Environment还提供了另外几个与属性相关的方法：</p>
+<ol>
+<li><strong>getRequiredProperty()</strong>方法：属性必须定义：不然抛出IllegalStateException异常。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Student <span class="title">student</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Student(env.getRequiredProperty(<span class="string">"student.name"</span>),</span><br><span class="line">           env.getRequiredProperty(<span class="string">"student.id"</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li><strong>containsProperty()</strong>方法：检查某个属性是否存在。</li>
+<li><strong>getPropertyAsClass()</strong>方法：将属性解析为类</li>
+</ol>
+<p>除了属性相关的功能以外，Environment还提供了一些方法来检查哪些profile处于激活状态：</p>
+<ol>
+<li><strong>String[] getActiveProfiles()</strong>：返回激活profile名称的数组；</li>
+<li><strong>String[] getDefaultProfiles()</strong>：返回默认profile名称的数组；</li>
+<li><strong>boolean acceptsProfiles(String… profiles)</strong>：如果environment支持给定profile的话，就返回true。</li>
+</ol>
+<h3 id="解析属性占位符"><a href="#解析属性占位符" class="headerlink" title="解析属性占位符"></a>解析属性占位符</h3><blockquote>
+<p>解析占位符的形式为使用“${ … }”包装的属性名称。</p>
+</blockquote>
+<p>在XML中解析占位符</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"student"</span> <span class="attr">class</span>=<span class="string">"com.zheng.spring.Student"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">c:_name</span>=<span class="string">"$&#123;student.name&#125;"</span></span></span><br><span class="line"><span class="tag">      <span class="attr">c:_id</span>=<span class="string">"$&#123;student.id&#125;"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如果我们依赖于组件扫描和自动装配来创建和初始化应用组件的话，那么就没有指定占位符的配置文件或类了。在这种情况下，我们可以使用<strong>@Value</strong>注解。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(@Value(<span class="string">"$student.name"</span>)</span> String name,</span></span><br><span class="line"><span class="function">               @<span class="title">Value</span><span class="params">(<span class="string">"$student.id"</span>)</span> String id) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">  	<span class="keyword">this</span>.id = id;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>为了使用占位符，我们必须要配置一个<strong>PropertyPlaceholderConfigurer bean</strong>或<strong>PropertySourcesPlaceholderConfigurer bean</strong>。从Spring 3.1开始，推荐使用PropertySourcesPlaceholderConfigurer，因为它能够基于Spring Environment及其属性源来解析占位符。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> PropertySourcesPlaceholderConfigurer <span class="title">placeholderConfigurer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> PropertySourcesPlaceholderConfigurer();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对应的XML配置如下</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">context:property-placeholder</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="使用Spring表达式语言-SpEL-进行装配"><a href="#使用Spring表达式语言-SpEL-进行装配" class="headerlink" title="使用Spring表达式语言(SpEL)进行装配"></a>使用Spring表达式语言(SpEL)进行装配</h3><p>SpEL拥有很多特性，包括：</p>
+<ul>
+<li>使用bean的ID来引用bean；</li>
+<li>调用方法和访问对象的属性；</li>
+<li>对值进行算术、关系和逻辑运算；</li>
+<li>正则表达式匹配；</li>
+<li>集合操作。</li>
+</ul>
+<p>SpEL表达式要放到“#{ … }”之中，例如<code>#{T(System).currentTimeMillis()}</code>: T()表达式会将java.lang.System视为Java中对应的类型，因此可以调用其static修饰的currentTimeMillis()方法。</p>
+<p>SpEL表达式也可以引用其他的bean或其他bean的属性。例如，如下的表达式会计算得到ID为student的bean的name属性：<code>#{student.name}</code></p>
+<p>通过<code>systemProperties</code>对象引用系统属性：<code>#{systemProperties[&#39;student.name&#39;]}</code></p>
+<p>如果通过组件扫描创建bean的话，在注入属性和构造器参数时，我们可以使用@Value注解。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Student</span><span class="params">(@Value(<span class="string">"#&#123;systemProperties['student.name']"</span>)</span> String name,</span></span><br><span class="line"><span class="function">               @<span class="title">Value</span><span class="params">(<span class="string">"#&#123;systemProperties['student.id']"</span>)</span> String id) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.name = name;</span><br><span class="line">  	<span class="keyword">this</span>.id = id;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>引用bean、属性和方法</strong></p>
+<p>student为bean的ID</p>
+<ul>
+<li>引用bean：<code>#{student}</code></li>
+<li>引用属性：<code>#{student.name}</code></li>
+<li>引用方法：<code>#{student.getName()}</code></li>
+<li>操作方法返回值：<code>#{student.getName().toUpperCase()}</code> 。则利用了返回值，然后使字符串变为大写。</li>
+<li>若上面返回值为null将引发空指针异常，为了避免这种情况发生，可以使用类型安全的运算符：<code>#{student.getName()?.toUpperCase()}</code>。如果为null将不会引用toUpperCase的方法，只会用到返回值null。</li>
+</ul>
+<p><strong>在表达式中使用类型</strong></p>
+<p>要在SpEL中访问类作用域的方法和常量的话，要依赖T()这个运算符。例如：<code>#{T(java.lang.Math)}</code></p>
+<p>T()运算符的结果会是一个Class对象。能够访问目标类型的静态方法和常量。例如：<code>#{T(java.lang.Math).PI}</code></p>
+<p>​                            　       <strong>用来操作表达式值的SpEL运算符</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">运 算 符 类 型</th>
+<th style="text-align:left">运 算 符</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">算 术 运 算</td>
+<td style="text-align:left">+ 、 - 、 * 、 / 、 % 、 ^</td>
+</tr>
+<tr>
+<td style="text-align:center">比较运算</td>
+<td style="text-align:left">&lt; 、 &gt; 、 == 、 &lt;= 、 &gt;= 、 lt 、 gt 、 eq 、 le 、 ge</td>
+</tr>
+<tr>
+<td style="text-align:center">逻辑运算</td>
+<td style="text-align:left">and 、 or 、 not 、│</td>
+</tr>
+<tr>
+<td style="text-align:center">条件运算</td>
+<td style="text-align:left">?:  (ternary) 、 ?:  (Elvis)</td>
+</tr>
+<tr>
+<td style="text-align:center">正则表达式</td>
+<td style="text-align:left">matches</td>
+</tr>
+</tbody>
+</table>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/笔记/">笔记</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Spring/">Spring</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://minsming.com/2018/08/16/运行时值注入Bean/" data-title="运行时值注入Bean | 小铭" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2018/08/16/B树之C语言实现/" title="B树之C语言实现（包含查找、删除、插入）">
+  <strong>上一篇：</strong><br/>
+  <span>
+  B树之C语言实现（包含查找、删除、插入）</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2018/08/16/平衡二叉树之C语言实现/"  title="平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码">
+ <strong>下一篇：</strong><br/> 
+ <span>平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">我的Github</p>
+<div class="github-card" data-github="zhengjunming" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/数据结构/" title="数据结构">数据结构<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/笔记/" title="笔记">笔记<sup>21</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/问题/" title="问题">问题<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/多线程/" title="多线程">多线程<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Spring/" title="Spring">Spring<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/JVM/" title="JVM">JVM<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/404/" title="404">404<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Maven/" title="Maven">Maven<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Mybatis/" title="Mybatis">Mybatis<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/HTTP/" title="HTTP">HTTP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/GC/" title="GC">GC<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Springboot/" title="Springboot">Springboot<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/war包/" title="war包">war包<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/线程池/" title="线程池">线程池<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/线程/" title="线程">线程<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/单例模式/" title="单例模式">单例模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Socket/" title="Socket">Socket<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/平衡二叉树/" title="平衡二叉树">平衡二叉树<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/NIO/" title="NIO">NIO<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/404/" style="font-size: 12.5px;">404</a> <a href="/tags/B树/" style="font-size: 10px;">B树</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/JVM/" style="font-size: 12.5px;">JVM</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/Mybatis/" style="font-size: 10px;">Mybatis</a> <a href="/tags/NIO/" style="font-size: 10px;">NIO</a> <a href="/tags/Socket/" style="font-size: 10px;">Socket</a> <a href="/tags/Spring/" style="font-size: 17.5px;">Spring</a> <a href="/tags/Springboot/" style="font-size: 10px;">Springboot</a> <a href="/tags/war包/" style="font-size: 10px;">war包</a> <a href="/tags/单例模式/" style="font-size: 10px;">单例模式</a> <a href="/tags/多线程/" style="font-size: 20px;">多线程</a> <a href="/tags/平衡二叉树/" style="font-size: 10px;">平衡二叉树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/线程池/" style="font-size: 10px;">线程池</a>
+    </div>
+  </div>
+
+
+  
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> 认真做好每一件事 <br/>
+			记录生活，记录技术</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/6398887144" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/zhengjunming" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		<a href="http://www.zhihu.com/people/tou-guo-bo-li" target="_blank" class="icon-zhihu" title="知乎"></a>
+		
+		
+		
+		<a href="mailto:1594998836@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="ming">ming</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?5c5e9be8c140785b7522d4fe313c87d3";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

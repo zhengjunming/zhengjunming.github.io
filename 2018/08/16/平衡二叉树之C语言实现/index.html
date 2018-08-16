@@ -1,0 +1,622 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码 | 小铭</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="ming">
+    
+
+    
+    <meta name="description" content="平衡二叉树的定义 平衡二叉查找树( Balanced Binary Sort Tree,BBST)简称平衡二叉树。平衡二又树有很多种,其中最著名的是由前苏联数学家 Adele- Veliki和 Landis在1962年提出的高度平衡的二叉树。根据提出者的英文名字首字母简称为AVL树 。 平衡二叉树或者是棵空树,或者是具有下列性质的二叉查找树：它的左子树和右子树都是平衡二叉树，且左子树和右子树的高度">
+<meta name="keywords" content="平衡二叉树">
+<meta property="og:type" content="article">
+<meta property="og:title" content="平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码">
+<meta property="og:url" content="http://minsming.com/2018/08/16/平衡二叉树之C语言实现/index.html">
+<meta property="og:site_name" content="小铭">
+<meta property="og:description" content="平衡二叉树的定义 平衡二叉查找树( Balanced Binary Sort Tree,BBST)简称平衡二叉树。平衡二又树有很多种,其中最著名的是由前苏联数学家 Adele- Veliki和 Landis在1962年提出的高度平衡的二叉树。根据提出者的英文名字首字母简称为AVL树 。 平衡二叉树或者是棵空树,或者是具有下列性质的二叉查找树：它的左子树和右子树都是平衡二叉树，且左子树和右子树的高度">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://owbl44q3i.bkt.clouddn.com/LL.jpg">
+<meta property="og:image" content="http://owbl44q3i.bkt.clouddn.com/RR.jpg">
+<meta property="og:image" content="http://owbl44q3i.bkt.clouddn.com/LR.jpg">
+<meta property="og:image" content="http://owbl44q3i.bkt.clouddn.com/RL.jpg">
+<meta property="og:updated_time" content="2018-04-25T05:11:26.494Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码">
+<meta name="twitter:description" content="平衡二叉树的定义 平衡二叉查找树( Balanced Binary Sort Tree,BBST)简称平衡二叉树。平衡二又树有很多种,其中最著名的是由前苏联数学家 Adele- Veliki和 Landis在1962年提出的高度平衡的二叉树。根据提出者的英文名字首字母简称为AVL树 。 平衡二叉树或者是棵空树,或者是具有下列性质的二叉查找树：它的左子树和右子树都是平衡二叉树，且左子树和右子树的高度">
+<meta name="twitter:image" content="http://owbl44q3i.bkt.clouddn.com/LL.jpg">
+
+    
+    <link rel="alternative" href="/atom.xml" title="小铭" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/apple.jpg">
+    
+    
+    <link rel="apple-touch-icon" href="/img/apple.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/apple.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/apple.jpg" alt="小铭" title="小铭"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="小铭">小铭</a></h1>
+				<h2 class="blog-motto">春生，夏糜，秋去，冬烬，春又来。</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+					<li>
+ 					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/08/16/平衡二叉树之C语言实现/" title="平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码" itemprop="url">平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="ming" target="_blank" itemprop="author">ming</a>
+		
+  <p class="article-time">
+    <time datetime="2018-08-16T05:29:20.249Z" itemprop="datePublished"> 发表于 2018-08-16</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<h2 id="平衡二叉树的定义"><a href="#平衡二叉树的定义" class="headerlink" title="平衡二叉树的定义"></a>平衡二叉树的定义</h2><blockquote>
+<p>平衡二叉查找树( Balanced Binary Sort Tree,BBST)简称平衡二叉树。平衡二又树有很多种,其中最著名的是由前苏联数学家 Adele- Veliki和 Landis在1962年提出的高度平衡的二叉树。根据提出者的英文名字首字母简称为<strong>AVL树</strong> 。</p>
+<p>平衡二叉树或者是棵空树,或者是具有下列性质的二叉查找树：它的左子树和右子树都是平衡二叉树，且左子树和右子树的高度之差的绝对值不超过1。若将二叉树结点的平衡因子( Balance Factor)定义为该结点的左子树的高度减去它的右子树的高度,则所有结点的平衡因子只可能为-1、0、1。只要有一个结点的平衡因子的绝对值大于1，那么这棵树就失去了平衡。</p>
+</blockquote>
+<h2 id="平衡二叉树的存储结构及宏定义"><a href="#平衡二叉树的存储结构及宏定义" class="headerlink" title="平衡二叉树的存储结构及宏定义"></a>平衡二叉树的存储结构及宏定义</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LH        +1     <span class="comment">// 左子树比右子树高</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> EH         0     <span class="comment">// 左、右子树等高</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> RH        -1     <span class="comment">// 右子树比左子树高</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> KeyType;    <span class="comment">// 关键字类型为整数类型</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    KeyType key;   <span class="comment">// 关键字项</span></span><br><span class="line">&#125; RecordType, RcdType;    <span class="comment">// 记录类型</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">BBSTNode</span> &#123;</span></span><br><span class="line">    RcdType data;</span><br><span class="line">    <span class="keyword">int</span> bf;         <span class="comment">// 结点平衡因子</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">BBSTNode</span> *<span class="title">lchild</span>, *<span class="title">rchild</span>;</span>  <span class="comment">// 左右孩子</span></span><br><span class="line">&#125; * BBSTree;  <span class="comment">// 平衡二叉树</span></span><br></pre></td></tr></table></figure>
+<h2 id="平衡二叉树的失衡及调整"><a href="#平衡二叉树的失衡及调整" class="headerlink" title="平衡二叉树的失衡及调整"></a>平衡二叉树的失衡及调整</h2><h3 id="最小失衡子树"><a href="#最小失衡子树" class="headerlink" title="最小失衡子树"></a>最小失衡子树</h3><blockquote>
+<p>在平衡二叉树中插入一个新结点后，从该结点起向上寻找第一个不平衡的结点(平衡因子bf变为了-2或2)，以确定该树是否失衡。若找到，则以该结点为根的子树称为最小失衡子树。</p>
+</blockquote>
+<p>平衡二叉树失衡后则需要调整，需要对失衡的情况进行分类，分为以下四种。</p>
+<h4 id="1-LL型"><a href="#1-LL型" class="headerlink" title="(1). LL型"></a>(1). LL型</h4><blockquote>
+<p>LL型指的是在最小失衡子树的左孩子的左子树上插入了新的结点。失衡调整如下图所示，先找到最小失衡子树的根A，以其左孩子结点B为轴，对不平衡结点A进行顺时针旋转(也称为右旋)。右旋是让B顶替A的位置，并置A为B的右孩子，如果B存在右子树$B_R$ ，则置$B_R$为A的左子树。</p>
+</blockquote>
+<p><img src="http://owbl44q3i.bkt.clouddn.com/LL.jpg" alt=""></p>
+<p>代码实现</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 对最小失衡子树p作右旋调整</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param p 最小失衡子树</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">R_Rotate</span><span class="params">(BBSTree &amp;p)</span> </span>&#123;</span><br><span class="line">    BBSTree lc = p-&gt;lchild; <span class="comment">// lc指向p结点的左孩子</span></span><br><span class="line">    p-&gt;lchild = lc-&gt;rchild; <span class="comment">// lc结点的右子树置为p结点的左子树</span></span><br><span class="line">    lc-&gt;rchild = p; <span class="comment">// 置p结点为lc结点的右孩子</span></span><br><span class="line">    p = lc; <span class="comment">// p指向新的根结点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-RR型"><a href="#2-RR型" class="headerlink" title="(2). RR型"></a>(2). RR型</h4><blockquote>
+<p>对于RR型。正好与LL型对称，对以A为根的最小失衡子树进行逆时针旋转（左旋），如下图所示。</p>
+</blockquote>
+<p><img src="http://owbl44q3i.bkt.clouddn.com/RR.jpg" alt=""></p>
+<p>实现代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 对最小失衡子树p作左旋调整</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param p 最小失衡子树</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">L_Rotate</span><span class="params">(BBSTree &amp;p)</span> </span>&#123;</span><br><span class="line">    BBSTree rc = p-&gt;rchild;</span><br><span class="line">    p-&gt;rchild = rc-&gt;lchild;</span><br><span class="line">    rc-&gt;lchild = p;</span><br><span class="line">    p = rc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3-LR型"><a href="#3-LR型" class="headerlink" title="(3). LR型"></a>(3). LR型</h4><blockquote>
+<p><strong>LR型</strong>指的是最小失衡子树的左孩子的右子树上插入了新的结点。处理办法如下图所示，首先找到以A为根的小失衡子树，以该子树的左孩子结点B为轴,对右子树结点C进行左旋调整，使之变为LL型。再以C为轴，对不平衡结点A进行右旋调整。</p>
+</blockquote>
+<p><img src="http://owbl44q3i.bkt.clouddn.com/LR.jpg" alt=""></p>
+<h4 id="4-RL型"><a href="#4-RL型" class="headerlink" title="(4). RL型"></a>(4). RL型</h4><blockquote>
+<p>RL型与LR型对称，需依次进行右旋处理和左旋处理，如下图所示</p>
+</blockquote>
+<p><img src="http://owbl44q3i.bkt.clouddn.com/RL.jpg" alt=""></p>
+<h2 id="平衡二叉树的插入"><a href="#平衡二叉树的插入" class="headerlink" title="平衡二叉树的插入"></a>平衡二叉树的插入</h2><p>构造平衙二又树可采用依次插人结点的方式，其递归步骤如下：</p>
+<ol>
+<li>若是空树，则插人结点作为根结点,树的高度增加1。</li>
+<li>若待插入结点和根结点相等，则无须插入。</li>
+<li>若待插人结点小于根结点，且在左子树中也不存在相等的结点，则在左子树插入，且若插入后的左子树高度增加1，分情况处理。<ul>
+<li>原根结点的平衡因子为-1(右子树高于左子树)，更改为0，树的高度不变。</li>
+<li>原根结点的平衡因子为0(左右子树高度相等)，更改为1，树的高度增加1。</li>
+<li>原根结点的平衡因子为1(左子树高于右子树)：若左子树根结点的平衡因子为1，则属于LL型,需进行右旋平衡调整，并在调整后将根结点及其右孩子的平衡因子更改为0，树的高度不变；若左子树根结点的平衡因子为-1，则属于LR型，需依次进行左旋和右旋处理，并在调整后修改根结点及其左、右孩子的平衡因子，树的高度不变。</li>
+</ul>
+</li>
+<li>若待插入结点大于根结点，且在右子树中不存在相等的结点，则在右子树插入，且当插入之后的右子树高度加1时，分情况处理<ul>
+<li>原根结点的平衡因子为1(左子树高于右子树)，更改为0，树的高度不变。</li>
+<li>原根结点的平衡因子为0(左右子树高度相等)，更改为-1，树的高度加1。</li>
+<li>原根结点的平衡因子为-1(右子树高于左子树)：若右子树根结点的平衡因子为1，则属于RL型，需依次进行右旋和左旋处理,并且在旋转处理之后，修改根结点及其左、右子树根结点的平衡因子，树的高度不变；若右子树根结点的平衡因子为-1，则属于RR型，需要进行一次左旋处理，并且在左旋之后，更新根结点和其左、右子树根结点的平衡因子，树的高度不变。</li>
+</ul>
+</li>
+</ol>
+<h3 id="左平衡处理操作"><a href="#左平衡处理操作" class="headerlink" title="左平衡处理操作"></a>左平衡处理操作</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 树T的左平衡处理</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param T 树T</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">LeftBalance</span><span class="params">(BBSTree &amp;T)</span> </span>&#123;</span><br><span class="line">    BBSTree lc, rd;</span><br><span class="line">    lc = T-&gt;lchild;</span><br><span class="line">    <span class="keyword">switch</span> (lc-&gt;bf) &#123;</span><br><span class="line">        <span class="keyword">case</span> LH: &#123;</span><br><span class="line">            T-&gt;bf = lc-&gt;bf = EH;</span><br><span class="line">            R_Rotate(T);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125; <span class="keyword">case</span> RH: &#123;</span><br><span class="line">            rd = lc-&gt;rchild;</span><br><span class="line">            <span class="keyword">switch</span> (rd-&gt;bf) &#123;</span><br><span class="line">                <span class="keyword">case</span> LH: &#123;</span><br><span class="line">                    T-&gt;bf = RH;</span><br><span class="line">                    lc-&gt;bf = EH;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125; <span class="keyword">case</span> EH: &#123;</span><br><span class="line">                    T-&gt;bf = lc-&gt;bf = EH;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125; <span class="keyword">case</span> RH: &#123;</span><br><span class="line">                    T-&gt;bf = EH;</span><br><span class="line">                    lc-&gt;bf = LH;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            rd-&gt;bf = EH;</span><br><span class="line">            L_Rotate(T-&gt;lchild);</span><br><span class="line">            R_Rotate(T);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="右平衡处理操作"><a href="#右平衡处理操作" class="headerlink" title="右平衡处理操作"></a>右平衡处理操作</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 树T的右平衡处理</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param T 树T</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">RightBalance</span><span class="params">(BBSTree &amp;T)</span> </span>&#123;</span><br><span class="line">    BBSTree rc, ld;</span><br><span class="line">    rc = T-&gt;rchild;</span><br><span class="line">    <span class="keyword">switch</span> (rc-&gt;bf) &#123;</span><br><span class="line">        <span class="keyword">case</span> RH:</span><br><span class="line">            T-&gt;bf = rc-&gt;bf = EH;</span><br><span class="line">            L_Rotate(T);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> LH:</span><br><span class="line">            ld = rc-&gt;lchild;</span><br><span class="line">            <span class="keyword">switch</span> (ld-&gt;bf) &#123;</span><br><span class="line">                <span class="keyword">case</span> RH: &#123;</span><br><span class="line">					T-&gt;bf = LH;</span><br><span class="line">                    rc-&gt;bf = EH;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125; <span class="keyword">case</span> EH: &#123;</span><br><span class="line">                  	T-&gt;bf = rc-&gt;bf = EH;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125; <span class="keyword">case</span> LH: &#123;</span><br><span class="line">                  	T-&gt;bf = EH;</span><br><span class="line">                    rc-&gt;bf = RH;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            ld-&gt;bf = EH;</span><br><span class="line">            R_Rotate(T-&gt;rchild);</span><br><span class="line">            L_Rotate(T);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="插入代码实现"><a href="#插入代码实现" class="headerlink" title="插入代码实现"></a>插入代码实现</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 平衡二叉树的插入操作</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param T 平衡二叉树T</span></span><br><span class="line"><span class="comment"> * @param e 待插入元素</span></span><br><span class="line"><span class="comment"> * @param taller 高度是否变高</span></span><br><span class="line"><span class="comment"> * @return 成功返回TRUE</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function">Status <span class="title">InsertAVL</span><span class="params">(BBSTree &amp;T, RcdType e, Status &amp;taller)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="literal">NULL</span> == T) &#123;</span><br><span class="line">        <span class="comment">// T为空，树长高</span></span><br><span class="line">        T = (BBSTree)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(BBSTNode));</span><br><span class="line">        T-&gt;data = e;</span><br><span class="line">        T-&gt;bf = EH;</span><br><span class="line">        T-&gt;lchild = <span class="literal">NULL</span>;</span><br><span class="line">        T-&gt;rchild = <span class="literal">NULL</span>;</span><br><span class="line">        taller = TRUE;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (e.key == T-&gt;data.key) &#123;</span><br><span class="line">        <span class="comment">// 已经存在该点</span></span><br><span class="line">        taller = FALSE;</span><br><span class="line">        <span class="keyword">return</span> FALSE;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (e.key &lt; T-&gt;data.key) &#123;</span><br><span class="line">        <span class="comment">// 插入到左子树</span></span><br><span class="line">        <span class="keyword">if</span> (FALSE == InsertAVL(T-&gt;lchild, e, taller)) &#123;</span><br><span class="line">            <span class="keyword">return</span> FALSE;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (TRUE == taller) &#123;</span><br><span class="line">            <span class="keyword">switch</span> (T-&gt;bf) &#123;</span><br><span class="line">                <span class="keyword">case</span> LH: &#123;</span><br><span class="line">                    LeftBalance(T);</span><br><span class="line">                    taller = FALSE;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125; <span class="keyword">case</span> EH: &#123;</span><br><span class="line">                    T-&gt;bf = LH;</span><br><span class="line">                    taller = TRUE;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125; <span class="keyword">case</span> RH: &#123;</span><br><span class="line">                    T-&gt;bf = EH;</span><br><span class="line">                    taller = FALSE;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (FALSE == InsertAVL(T-&gt;rchild, e, taller)) &#123;</span><br><span class="line">            <span class="keyword">return</span> FALSE;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (TRUE == taller) &#123;</span><br><span class="line">            <span class="keyword">switch</span> (T-&gt;bf) &#123;</span><br><span class="line">                <span class="keyword">case</span> LH: &#123;</span><br><span class="line">                    T-&gt;bf = EH;</span><br><span class="line">                    taller = FALSE;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125; <span class="keyword">case</span> EH: &#123;</span><br><span class="line">                    T-&gt;bf = RH;</span><br><span class="line">                    taller = TRUE;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125; <span class="keyword">case</span> RH: &#123;</span><br><span class="line">                    RightBalance(T);</span><br><span class="line">                    taller = FALSE;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="平衡二叉树的删除"><a href="#平衡二叉树的删除" class="headerlink" title="平衡二叉树的删除"></a>平衡二叉树的删除</h2><blockquote>
+<p>平衡二叉树的删除可以看做插入的反过程，所以调整的方向也是相反的，所以操作起来并不难。</p>
+<p>其中的查找前驱结点的依据是平衡二叉树的<strong>中序遍历是有序序列</strong>。且被删结点的直接前驱位于其左子树的右下角。用前驱结点的值代替被删结点的值，然后删除前驱结点，这样就跟简单的操作一样了。</p>
+</blockquote>
+<p>代码实现</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 平衡二叉树的删除操作</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param T</span></span><br><span class="line"><span class="comment"> * @param key</span></span><br><span class="line"><span class="comment"> * @param shorter</span></span><br><span class="line"><span class="comment"> * @return</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function">Status <span class="title">DeleteAVL</span><span class="params">(BBSTree &amp;T, KeyType key, Status &amp;shorter)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="literal">NULL</span> == T) &#123;</span><br><span class="line">        <span class="comment">// 树为空</span></span><br><span class="line">        <span class="keyword">return</span> FALSE;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (T-&gt;data.key == key) &#123;</span><br><span class="line">        <span class="comment">// 找到元素结点</span></span><br><span class="line">        BBSTree p = <span class="literal">NULL</span>;</span><br><span class="line">        <span class="keyword">if</span> (<span class="literal">NULL</span> == T-&gt;lchild) &#123;</span><br><span class="line">            <span class="comment">// 左子树为空</span></span><br><span class="line">            p = T;</span><br><span class="line">            T = T-&gt;rchild;</span><br><span class="line">            <span class="built_in">free</span>(p);</span><br><span class="line">            shorter = TRUE; <span class="comment">// 高度变矮</span></span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (T-&gt;rchild == <span class="literal">NULL</span>) &#123;</span><br><span class="line">            <span class="comment">// 右子树为空</span></span><br><span class="line">            p = T;</span><br><span class="line">            T = T-&gt;lchild;</span><br><span class="line">            <span class="built_in">free</span>(p);</span><br><span class="line">            shorter = TRUE; <span class="comment">// 高度变矮</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 左右子树都存在</span></span><br><span class="line">            p = T-&gt;lchild;</span><br><span class="line">            <span class="keyword">while</span> (p-&gt;rchild != <span class="literal">NULL</span>) &#123;</span><br><span class="line">                p = p-&gt;rchild;</span><br><span class="line">            &#125;</span><br><span class="line">            T-&gt;data = p-&gt;data;</span><br><span class="line">            <span class="comment">// 在左子树中删除前驱结点</span></span><br><span class="line">            DeleteAVL(T-&gt;lchild, p-&gt;data.key, shorter);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (T-&gt;data.key &gt; key) &#123;</span><br><span class="line">        <span class="keyword">if</span> (DeleteAVL(T-&gt;lchild, key, shorter) == FALSE) &#123;</span><br><span class="line">            <span class="keyword">return</span> FALSE;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (shorter == TRUE) &#123;</span><br><span class="line">            <span class="keyword">switch</span> (T-&gt;bf) &#123;</span><br><span class="line">                <span class="keyword">case</span> LH: &#123;</span><br><span class="line">                    T-&gt;bf = EH;</span><br><span class="line">                    shorter = TRUE;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125; <span class="keyword">case</span> EH: &#123;</span><br><span class="line">                    T-&gt;bf = RH;</span><br><span class="line">                    shorter = FALSE;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125; <span class="keyword">case</span> RH: &#123;</span><br><span class="line">                    RightBalance(T);</span><br><span class="line">                    <span class="keyword">if</span> (T-&gt;rchild-&gt;bf == EH) &#123;</span><br><span class="line">                        shorter = FALSE;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        shorter = TRUE;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (DeleteAVL(T-&gt;rchild, key, shorter) == FALSE) &#123;</span><br><span class="line">            <span class="keyword">return</span> FALSE;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (shorter == TRUE) &#123;</span><br><span class="line">            <span class="keyword">switch</span> (T-&gt;bf) &#123;</span><br><span class="line">                <span class="keyword">case</span> LH: &#123;</span><br><span class="line">                    LeftBalance(T);</span><br><span class="line">                    <span class="keyword">if</span> (T-&gt;lchild-&gt;bf == EH) &#123;</span><br><span class="line">                        shorter = FALSE;</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        shorter = TRUE;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125; <span class="keyword">case</span> EH: &#123;</span><br><span class="line">                    T-&gt;bf = LH;</span><br><span class="line">                    shorter = FALSE;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125; <span class="keyword">case</span> RH: &#123;</span><br><span class="line">                    T-&gt;bf = EH;</span><br><span class="line">                    shorter = TRUE;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> TRUE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="平衡二叉树的分裂和合并"><a href="#平衡二叉树的分裂和合并" class="headerlink" title="平衡二叉树的分裂和合并"></a>平衡二叉树的分裂和合并</h2><blockquote>
+<p>平衡二叉树的分裂和合并是根据插入操作来实现的，具体请看以下代码。</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 分裂平衡二叉树，分成大于key和小于key两棵树</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param T 待分裂的平衡二叉树</span></span><br><span class="line"><span class="comment"> * @param key 分裂的关键字</span></span><br><span class="line"><span class="comment"> * @param T1 关键字全部小于key的平衡二叉树</span></span><br><span class="line"><span class="comment"> * @param T2 关键字全部大于key的平衡二叉树</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">SpiltBBST</span><span class="params">(BBSTree T, KeyType key, BBSTree &amp;T1, BBSTree &amp;T2)</span> </span>&#123;</span><br><span class="line">    Status taller = FALSE;</span><br><span class="line">	<span class="keyword">if</span> (T != <span class="literal">NULL</span>) &#123;</span><br><span class="line">		SpiltBBST(T-&gt;lchild, key, T1, T2); <span class="comment">// 递归访问左子树</span></span><br><span class="line">		<span class="keyword">if</span>(T-&gt;data.key &gt; key) &#123;</span><br><span class="line">            InsertAVL(T1, T-&gt;data, taller);</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            InsertAVL(T2, T-&gt;data, taller);</span><br><span class="line">		&#125;</span><br><span class="line">		SpiltBBST(T-&gt;rchild, key, T1, T2);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 合并平衡二叉树</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * @param T1 合并后的平衡二叉树</span></span><br><span class="line"><span class="comment"> * @param T2 待合并的平衡二叉树</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">MergeBBST</span><span class="params">(BBSTree &amp;T1, BBSTree T2)</span> </span>&#123;</span><br><span class="line">    Status taller = FALSE;</span><br><span class="line">    <span class="keyword">if</span> (T2 != <span class="literal">NULL</span>) &#123;</span><br><span class="line">        MergeBBST(T1, T2-&gt;lchild);</span><br><span class="line">        InsertAVL(T1, T2-&gt;data, taller);</span><br><span class="line">        MergeBBST(T1, T2-&gt;rchild);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如需获取完整的代码以及测试函数，请到<a href="https://github.com/zhengjunming/ds/tree/master/avl-tree" target="_blank" rel="noopener">https://github.com/zhengjunming/ds/tree/master/avl-tree</a> 中clone。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/数据结构/">数据结构</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/平衡二叉树/">平衡二叉树</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://minsming.com/2018/08/16/平衡二叉树之C语言实现/" data-title="平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码 | 小铭" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2018/08/16/运行时值注入Bean/" title="运行时值注入Bean">
+  <strong>上一篇：</strong><br/>
+  <span>
+  运行时值注入Bean</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2018/08/16/NIO基础知识/"  title="NIO基础知识">
+ <strong>下一篇：</strong><br/> 
+ <span>NIO基础知识
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">我的Github</p>
+<div class="github-card" data-github="zhengjunming" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/数据结构/" title="数据结构">数据结构<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/笔记/" title="笔记">笔记<sup>21</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/问题/" title="问题">问题<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/多线程/" title="多线程">多线程<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Spring/" title="Spring">Spring<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/JVM/" title="JVM">JVM<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/404/" title="404">404<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Maven/" title="Maven">Maven<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Mybatis/" title="Mybatis">Mybatis<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/HTTP/" title="HTTP">HTTP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/GC/" title="GC">GC<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Springboot/" title="Springboot">Springboot<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/war包/" title="war包">war包<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/线程池/" title="线程池">线程池<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/线程/" title="线程">线程<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/单例模式/" title="单例模式">单例模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Socket/" title="Socket">Socket<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/平衡二叉树/" title="平衡二叉树">平衡二叉树<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/NIO/" title="NIO">NIO<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/404/" style="font-size: 12.5px;">404</a> <a href="/tags/B树/" style="font-size: 10px;">B树</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/JVM/" style="font-size: 12.5px;">JVM</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/Mybatis/" style="font-size: 10px;">Mybatis</a> <a href="/tags/NIO/" style="font-size: 10px;">NIO</a> <a href="/tags/Socket/" style="font-size: 10px;">Socket</a> <a href="/tags/Spring/" style="font-size: 17.5px;">Spring</a> <a href="/tags/Springboot/" style="font-size: 10px;">Springboot</a> <a href="/tags/war包/" style="font-size: 10px;">war包</a> <a href="/tags/单例模式/" style="font-size: 10px;">单例模式</a> <a href="/tags/多线程/" style="font-size: 20px;">多线程</a> <a href="/tags/平衡二叉树/" style="font-size: 10px;">平衡二叉树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/线程池/" style="font-size: 10px;">线程池</a>
+    </div>
+  </div>
+
+
+  
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> 认真做好每一件事 <br/>
+			记录生活，记录技术</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/6398887144" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		<a href="https://github.com/zhengjunming" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		<a href="http://www.zhihu.com/people/tou-guo-bo-li" target="_blank" class="icon-zhihu" title="知乎"></a>
+		
+		
+		
+		<a href="mailto:1594998836@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="ming">ming</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?5c5e9be8c140785b7522d4fe313c87d3";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
