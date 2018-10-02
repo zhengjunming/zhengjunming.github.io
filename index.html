@@ -172,14 +172,18 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/Maven导入本地包/" title="Maven导入本地包" itemprop="url">
+    <a href="/2018/08/16/Java多线程之线程池/" title="Java多线程之线程池" itemprop="url">
   
-    <h1 itemprop="name">Maven导入本地包</h1>
+    <h1 itemprop="name">Java多线程之线程池</h1>
     
      
-           <p itemprop="description" >项目开发的包基本都可以通过Maven来管理，包的依赖一般可以在https://mvnrepository.com/ 这个网站中找到，但是有一些包并没有上传到该网站上，这时候就需要导入本地包让Maven进行管理。
-首先先看一下包依赖的结构（以druid为例）
-12345&amp;lt;de</p>
+           <p itemprop="description" >线程池的一些好处
+
+通过重用线程池中的线程，来减少每个线程创建和销毁的性能开销。
+对线程进行一些维护和管理，比如定时开始，周期执行，并发数控制等等。
+
+Executor框架用于任务执行，接口有一个execute方法，用于提交任务。
+123public interface Exec</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -194,18 +198,14 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/Java多线程之线程池/" title="Java多线程之线程池" itemprop="url">
+    <a href="/2018/08/16/Maven导入本地包/" title="Maven导入本地包" itemprop="url">
   
-    <h1 itemprop="name">Java多线程之线程池</h1>
+    <h1 itemprop="name">Maven导入本地包</h1>
     
      
-           <p itemprop="description" >线程池的一些好处
-
-通过重用线程池中的线程，来减少每个线程创建和销毁的性能开销。
-对线程进行一些维护和管理，比如定时开始，周期执行，并发数控制等等。
-
-Executor框架用于任务执行，接口有一个execute方法，用于提交任务。
-123public interface Exec</p>
+           <p itemprop="description" >项目开发的包基本都可以通过Maven来管理，包的依赖一般可以在https://mvnrepository.com/ 这个网站中找到，但是有一些包并没有上传到该网站上，这时候就需要导入本地包让Maven进行管理。
+首先先看一下包依赖的结构（以druid为例）
+12345&amp;lt;de</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -233,40 +233,6 @@ Java创建多线程的方法
 继承Thread类，重写该类的run()方法。
 
 123456public class MyThread extends Thr</p>
-        
-    
-    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2018/08/16/MySQL逻辑运算符/" title="MySQL中的运算符" itemprop="url">
-  
-    <h1 itemprop="name">MySQL中的运算符</h1>
-    
-     
-           <p itemprop="description" >算数运算符
-+：加法
--：减法
-*：乘法
-/， DIV：除法
-%，MOD：模运算
-
-比较运算符
-当使用SELECT语句进行查询时，MySQL允许用户对表达式的左边操作数和右边的操作数进行比较，比较结果真，则返回1，为加则返回0，比较结果不确定则返回NULL。 
-
-
-
-
-运算符
-作</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -326,15 +292,49 @@ mediumint
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/SQL语句/" title="SQL基础语句" itemprop="url">
+    <a href="/2018/08/16/MySQL逻辑运算符/" title="MySQL中的运算符" itemprop="url">
   
-    <h1 itemprop="name">SQL基础语句</h1>
+    <h1 itemprop="name">MySQL中的运算符</h1>
     
      
-           <p itemprop="description" >SQL分类SQL语句主要可以划分为3个类别。
+           <p itemprop="description" >算数运算符
++：加法
+-：减法
+*：乘法
+/， DIV：除法
+%，MOD：模运算
 
-DML（数据操作语句）：用于添加、删除、更新和查询数据库记录，并检查数据完整性。常用关键字有 insert、update、delete和select等。
-DDL（数据定义语句）：用于定义了不同的数据段、数据库、表、列、索引等数据库对</p>
+比较运算符
+当使用SELECT语句进行查询时，MySQL允许用户对表达式的左边操作数和右边的操作数进行比较，比较结果真，则返回1，为加则返回0，比较结果不确定则返回NULL。 
+
+
+
+
+运算符
+作</p>
+        
+    
+    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2018/08/16/Profile详解/" title="Profile详解" itemprop="url">
+  
+    <h1 itemprop="name">Profile详解</h1>
+    
+     
+           <p itemprop="description" >在项目开发的过程中，我们在不同阶段可能需要不同的配置，而我们不可能花费两个项目去实现这样的功能，但Spring就提供了一个很好的特性，利用profile进行配置可以实现此目的。
+
+配置Profile Bean例如我们在开发和生产的过程中使用不同的数据库
+一、通过JavaConfi</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -372,15 +372,15 @@ DDL（数据定义语句）：用于定义了不同的数据段、数据库、�
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/Profile详解/" title="Profile详解" itemprop="url">
+    <a href="/2018/08/16/SQL语句/" title="SQL基础语句" itemprop="url">
   
-    <h1 itemprop="name">Profile详解</h1>
+    <h1 itemprop="name">SQL基础语句</h1>
     
      
-           <p itemprop="description" >在项目开发的过程中，我们在不同阶段可能需要不同的配置，而我们不可能花费两个项目去实现这样的功能，但Spring就提供了一个很好的特性，利用profile进行配置可以实现此目的。
+           <p itemprop="description" >SQL分类SQL语句主要可以划分为3个类别。
 
-配置Profile Bean例如我们在开发和生产的过程中使用不同的数据库
-一、通过JavaConfi</p>
+DML（数据操作语句）：用于添加、删除、更新和查询数据库记录，并检查数据完整性。常用关键字有 insert、update、delete和select等。
+DDL（数据定义语句）：用于定义了不同的数据段、数据库、表、列、索引等数据库对</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -437,16 +437,13 @@ DDL（数据定义语句）：用于定义了不同的数据段、数据库、�
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/B树之C语言实现/" title="B树之C语言实现（包含查找、删除、插入）" itemprop="url">
+    <a href="/2018/08/16/HTTP协议/" title="HTTP协议" itemprop="url">
   
-    <h1 itemprop="name">B树之C语言实现（包含查找、删除、插入）</h1>
+    <h1 itemprop="name">HTTP协议</h1>
     
      
-           <p itemprop="description" >我在大二上学期的数据结构实验设计中选择了B树这个题目，该B树的数据结构实现采用了C语言。趁现在寒假整理完写一篇博文记录我的学习。文末提供了项目源代码的地址。
-
-B树的定义一棵m阶B树（Balanced Tree of order m），或为空树，或为满足下列特性对的m叉树。
-
-树</p>
+           <p itemprop="description" >HTTP协议
+HTTP协议是Hyper Text Transfer Protocol（超文本传输协议）的缩写,是用于从万维网（WWW:World Wide Web ）服务器传输超文本到本地浏览器的传送协议。HTTP是一个基于TCP/IP通信协议来传递数据（HTML 文件, 图片文</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -534,11 +531,11 @@ B树的定义一棵m阶B树（Balanced Tree of order m），或为空树，或�
 			
 		
 			
-				<li><a href="/tags/线程池/" title="线程池">线程池<sup>1</sup></a></li>
+				<li><a href="/tags/NIO/" title="NIO">NIO<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/HTTP/" title="HTTP">HTTP<sup>1</sup></a></li>
+				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
 			
 		
 			
@@ -546,11 +543,11 @@ B树的定义一棵m阶B树（Balanced Tree of order m），或为空树，或�
 			
 		
 			
-				<li><a href="/tags/NIO/" title="NIO">NIO<sup>1</sup></a></li>
+				<li><a href="/tags/线程池/" title="线程池">线程池<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
+				<li><a href="/tags/HTTP/" title="HTTP">HTTP<sup>1</sup></a></li>
 			
 		
 			
@@ -582,11 +579,11 @@ B树的定义一棵m阶B树（Balanced Tree of order m），或为空树，或�
 			
 		
 			
-				<li><a href="/tags/Mybatis/" title="Mybatis">Mybatis<sup>1</sup></a></li>
+				<li><a href="/tags/平衡二叉树/" title="平衡二叉树">平衡二叉树<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/平衡二叉树/" title="平衡二叉树">平衡二叉树<sup>1</sup></a></li>
+				<li><a href="/tags/Mybatis/" title="Mybatis">Mybatis<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -633,7 +630,7 @@ B树的定义一棵m阶B树（Balanced Tree of order m），或为空树，或�
 		
 		
 		
-		<a href="mailto:1594998836@qq.com" target="_blank" class="icon-email" title="Email Me"></a>
+		<a href="mailto:gdutxming@163.com" target="_blank" class="icon-email" title="Email Me"></a>
 		
 	</div>
 			
