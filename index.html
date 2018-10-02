@@ -73,13 +73,64 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/Springboot打包成war包的404问题/" title="Springboot打包成war包的404问题" itemprop="url">
+    <a href="/2018/10/02/Ubuntu18.04搭建Hadoop3.0.3/" title="Ubuntu18.04搭建Hadoop3.0.3" itemprop="url">
   
-    <h1 itemprop="name">Springboot打包成war包的404问题</h1>
+    <h1 itemprop="name">Ubuntu18.04搭建Hadoop3.0.3</h1>
     
      
-           <p itemprop="description" >Springboot项目打包一般都是默认打包成jar包，但是最近做了一个小Demo，打包成jar包路径问题没法解决，所以就考虑打包成war包，但是打包成war包又有了访问404的问题，下面是从网上找到的方法，也是找了好多个然后综合起来才解决。
-首先在pom.xml中做出下列修改。</p>
+           <p itemprop="description" >1. 创建hadoop用户首先确保在root账号下，创建一个hadoop用户
+1sudo useradd -m hadoop -s /bin/bash
+设置密码
+1sudo passwd hadoop
+增加管理员权限
+1sudo adduser hadoop sudo
+使用su </p>
+        
+    
+    <time datetime="2018-10-02T08:23:59.387Z" itemprop="datePublished">2018-10-02</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2018/08/16/Socket的几种实现/" title="Socket的几种实现" itemprop="url">
+  
+    <h1 itemprop="name">Socket的几种实现</h1>
+    
+     
+           <p itemprop="description" >基于TCP协议的网络编程
+ TCP/IP通信协议是一种可靠的网络协议，它在通信的两端各建立一个Socket，从而在通信的两端之间形成网络虚拟链路。一旦建立了虚拟的网络链路，两端的成员就可以通过虚拟链路进行通信。Java是对基于TCP协议的网络通信提供了良好的封装，Java使用So</p>
+        
+    
+    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2018/08/16/Java内存区域/" title="Java内存区域" itemprop="url">
+  
+    <h1 itemprop="name">Java内存区域</h1>
+    
+     
+           <p itemprop="description" >1. 运行时数据区域
+  Java虚拟机在执行Java程序的过程中会把所管理的内存划分为若干个不同的数据区域。
+
+
+1.1. 程序计数器
+  程序计数器是一块较小的内存区域，它可以看作是当前线程所执行的字节码的行号指示器。字节码解释器工作时就是通过改变这个计数器的值来选取下一条需</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -130,58 +181,6 @@ B树的定义一棵m阶B树（Balanced Tree of order m），或为空树，或�
 
 Executor框架用于任务执行，接口有一个execute方法，用于提交任务。
 123public interface Exec</p>
-        
-    
-    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2018/08/16/JVM可回收垃圾判断算法/" title="JVM可回收垃圾判断算法" itemprop="url">
-  
-    <h1 itemprop="name">JVM可回收垃圾判断算法</h1>
-    
-     
-           <p itemprop="description" >GC需要完成的3件事情：
-
-哪些内存需要回收？
-什么时候回收？
-如何回收？
-
-今天这篇文章就是说明哪些内存需要回收。
-在Java内存区域 一篇已经说明Java内存的各个数据区域的特点，其中程序计数器、虚拟机栈、本地方法3个区域随线程而生，随线程而灭，所以这几个区域的内存分配和回收</p>
-        
-    
-    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2018/08/16/Java内存区域/" title="Java内存区域" itemprop="url">
-  
-    <h1 itemprop="name">Java内存区域</h1>
-    
-     
-           <p itemprop="description" >1. 运行时数据区域
-  Java虚拟机在执行Java程序的过程中会把所管理的内存划分为若干个不同的数据区域。
-
-
-1.1. 程序计数器
-  程序计数器是一块较小的内存区域，它可以看作是当前线程所执行的字节码的行号指示器。字节码解释器工作时就是通过改变这个计数器的值来选取下一条需</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -347,29 +346,6 @@ mediumint
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/NIO基础知识/" title="NIO基础知识" itemprop="url">
-  
-    <h1 itemprop="name">NIO基础知识</h1>
-    
-     
-           <p itemprop="description" >NIO和传统的IO有相同的作用和目的，但实现方式不同，NIO主要用到的是块，所以NIO的效率要比IO高很多。NIO和IO最大的区别是数据打包和传输方式。IO是以流的方式处理数据，而NIO是以块的方式处理数据。
-
-缓冲区Buffer
-  Buffer是一个对象，它包含一些要写入或读</p>
-        
-    
-    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
     <a href="/2018/08/16/SQL语句/" title="SQL基础语句" itemprop="url">
   
     <h1 itemprop="name">SQL基础语句</h1>
@@ -393,13 +369,15 @@ DDL（数据定义语句）：用于定义了不同的数据段、数据库、�
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/SpringBoot创建工程与运行/" title="SpringBoot创建工程与运行" itemprop="url">
+    <a href="/2018/08/16/NIO基础知识/" title="NIO基础知识" itemprop="url">
   
-    <h1 itemprop="name">SpringBoot创建工程与运行</h1>
+    <h1 itemprop="name">NIO基础知识</h1>
     
      
-           <p itemprop="description" >SpringBoot工程的构建1. 通过官网搭建在浏览器输入http://start.spring.io/ 即可进入以下界面。
-在这里你可以搭建一个最简单的SpringBoot项目，当然你如果想要更多的功能与支持，可以点击里面的Switch to the full version</p>
+           <p itemprop="description" >NIO和传统的IO有相同的作用和目的，但实现方式不同，NIO主要用到的是块，所以NIO的效率要比IO高很多。NIO和IO最大的区别是数据打包和传输方式。IO是以流的方式处理数据，而NIO是以块的方式处理数据。
+
+缓冲区Buffer
+  Buffer是一个对象，它包含一些要写入或读</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -435,13 +413,40 @@ HTTP协议是Hyper Text Transfer Protocol（超文本传输协议）的缩写,�
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/Socket的几种实现/" title="Socket的几种实现" itemprop="url">
+    <a href="/2018/08/16/Springboot打包成war包的404问题/" title="Springboot打包成war包的404问题" itemprop="url">
   
-    <h1 itemprop="name">Socket的几种实现</h1>
+    <h1 itemprop="name">Springboot打包成war包的404问题</h1>
     
      
-           <p itemprop="description" >基于TCP协议的网络编程
- TCP/IP通信协议是一种可靠的网络协议，它在通信的两端各建立一个Socket，从而在通信的两端之间形成网络虚拟链路。一旦建立了虚拟的网络链路，两端的成员就可以通过虚拟链路进行通信。Java是对基于TCP协议的网络通信提供了良好的封装，Java使用So</p>
+           <p itemprop="description" >Springboot项目打包一般都是默认打包成jar包，但是最近做了一个小Demo，打包成jar包路径问题没法解决，所以就考虑打包成war包，但是打包成war包又有了访问404的问题，下面是从网上找到的方法，也是找了好多个然后综合起来才解决。
+首先在pom.xml中做出下列修改。</p>
+        
+    
+    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2018/08/16/JVM可回收垃圾判断算法/" title="JVM可回收垃圾判断算法" itemprop="url">
+  
+    <h1 itemprop="name">JVM可回收垃圾判断算法</h1>
+    
+     
+           <p itemprop="description" >GC需要完成的3件事情：
+
+哪些内存需要回收？
+什么时候回收？
+如何回收？
+
+今天这篇文章就是说明哪些内存需要回收。
+在Java内存区域 一篇已经说明Java内存的各个数据区域的特点，其中程序计数器、虚拟机栈、本地方法3个区域随线程而生，随线程而灭，所以这几个区域的内存分配和回收</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -478,6 +483,10 @@ HTTP协议是Hyper Text Transfer Protocol（超文本传输协议）的缩写,�
 <div class="categorieslist">
 	<p class="asidetitle">分类</p>
 		<ul>
+		
+		  
+			<li><a href="/categories/分布式/" title="分布式">分布式<sup>1</sup></a></li>
+		  
 		
 		  
 			<li><a href="/categories/数据结构/" title="数据结构">数据结构<sup>2</sup></a></li>
@@ -529,11 +538,7 @@ HTTP协议是Hyper Text Transfer Protocol（超文本传输协议）的缩写,�
 			
 		
 			
-				<li><a href="/tags/线程池/" title="线程池">线程池<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
+				<li><a href="/tags/HTTP/" title="HTTP">HTTP<sup>1</sup></a></li>
 			
 		
 			
@@ -541,11 +546,15 @@ HTTP协议是Hyper Text Transfer Protocol（超文本传输协议）的缩写,�
 			
 		
 			
-				<li><a href="/tags/HTTP/" title="HTTP">HTTP<sup>1</sup></a></li>
+				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Springboot/" title="Springboot">Springboot<sup>1</sup></a></li>
+				<li><a href="/tags/线程池/" title="线程池">线程池<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hadoop/" title="hadoop">hadoop<sup>1</sup></a></li>
 			
 		
 			
@@ -561,11 +570,15 @@ HTTP协议是Hyper Text Transfer Protocol（超文本传输协议）的缩写,�
 			
 		
 			
-				<li><a href="/tags/线程/" title="线程">线程<sup>1</sup></a></li>
+				<li><a href="/tags/单例模式/" title="单例模式">单例模式<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/单例模式/" title="单例模式">单例模式<sup>1</sup></a></li>
+				<li><a href="/tags/Springboot/" title="Springboot">Springboot<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/线程/" title="线程">线程<sup>1</sup></a></li>
 			
 		
 			
@@ -584,7 +597,7 @@ HTTP协议是Hyper Text Transfer Protocol（超文本传输协议）的缩写,�
   <div class="tagcloudlist">
     <p class="asidetitle">标签云</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/404/" style="font-size: 12.5px;">404</a> <a href="/tags/B树/" style="font-size: 10px;">B树</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/JVM/" style="font-size: 12.5px;">JVM</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/Mybatis/" style="font-size: 10px;">Mybatis</a> <a href="/tags/NIO/" style="font-size: 10px;">NIO</a> <a href="/tags/Socket/" style="font-size: 10px;">Socket</a> <a href="/tags/Spring/" style="font-size: 17.5px;">Spring</a> <a href="/tags/Springboot/" style="font-size: 10px;">Springboot</a> <a href="/tags/war包/" style="font-size: 10px;">war包</a> <a href="/tags/单例模式/" style="font-size: 10px;">单例模式</a> <a href="/tags/多线程/" style="font-size: 20px;">多线程</a> <a href="/tags/平衡二叉树/" style="font-size: 10px;">平衡二叉树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/线程池/" style="font-size: 10px;">线程池</a>
+       <a href="/tags/404/" style="font-size: 12.5px;">404</a> <a href="/tags/B树/" style="font-size: 10px;">B树</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/JVM/" style="font-size: 12.5px;">JVM</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/Mybatis/" style="font-size: 10px;">Mybatis</a> <a href="/tags/NIO/" style="font-size: 10px;">NIO</a> <a href="/tags/Socket/" style="font-size: 10px;">Socket</a> <a href="/tags/Spring/" style="font-size: 17.5px;">Spring</a> <a href="/tags/Springboot/" style="font-size: 10px;">Springboot</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/war包/" style="font-size: 10px;">war包</a> <a href="/tags/单例模式/" style="font-size: 10px;">单例模式</a> <a href="/tags/多线程/" style="font-size: 20px;">多线程</a> <a href="/tags/平衡二叉树/" style="font-size: 10px;">平衡二叉树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/线程池/" style="font-size: 10px;">线程池</a>
     </div>
   </div>
 
