@@ -1,0 +1,635 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Redis——数据库 | 小铭</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="ming">
+    
+
+    
+    <meta name="description" content="服务器中的数据库12345678struct redisServer &amp;#123;  	// 一个数组，保存着服务器中的所有数据库    redisDb *db;        // 服务器的数据库数量    // 值由服务器配置的database选项决定，默认情况下是16个数据库    int dbnum;&amp;#125;; 切换数据库默认情况下，redis客户端的目标数据库为0号数据库，可以通过S">
+<meta name="keywords" content="redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis——数据库">
+<meta property="og:url" content="http://minsming.com/2018/12/11/Redis——数据库/index.html">
+<meta property="og:site_name" content="小铭">
+<meta property="og:description" content="服务器中的数据库12345678struct redisServer &amp;#123;  	// 一个数组，保存着服务器中的所有数据库    redisDb *db;        // 服务器的数据库数量    // 值由服务器配置的database选项决定，默认情况下是16个数据库    int dbnum;&amp;#125;; 切换数据库默认情况下，redis客户端的目标数据库为0号数据库，可以通过S">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://minsming.com/img/redis/expireIfNeeded.jpg">
+<meta property="og:updated_time" content="2018-12-11T13:17:03.921Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Redis——数据库">
+<meta name="twitter:description" content="服务器中的数据库12345678struct redisServer &amp;#123;  	// 一个数组，保存着服务器中的所有数据库    redisDb *db;        // 服务器的数据库数量    // 值由服务器配置的database选项决定，默认情况下是16个数据库    int dbnum;&amp;#125;; 切换数据库默认情况下，redis客户端的目标数据库为0号数据库，可以通过S">
+<meta name="twitter:image" content="http://minsming.com/img/redis/expireIfNeeded.jpg">
+
+    
+    <link rel="alternative" href="/atom.xml" title="小铭" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/apple.jpg">
+    
+    
+    <link rel="apple-touch-icon" href="/img/apple.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/apple.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/apple.jpg" alt="小铭" title="小铭"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="小铭">小铭</a></h1>
+				<h2 class="blog-motto">春生，夏糜，秋去，冬烬，春又来。</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">归档</a></li>
+					
+						<li><a href="/about">关于我</a></li>
+					
+					<li>
+ 					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/12/11/Redis——数据库/" title="Redis——数据库" itemprop="url">Redis——数据库</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="ming" target="_blank" itemprop="author">ming</a>
+		
+  <p class="article-time">
+    <time datetime="2018-12-11T13:17:03.921Z" itemprop="datePublished"> 发表于 2018-12-11</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#服务器中的数据库"><span class="toc-number">1.</span> <span class="toc-text">服务器中的数据库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#切换数据库"><span class="toc-number">2.</span> <span class="toc-text">切换数据库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库键空间"><span class="toc-number">3.</span> <span class="toc-text">数据库键空间</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#添加新键"><span class="toc-number">3.1.</span> <span class="toc-text">添加新键</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除键"><span class="toc-number">3.2.</span> <span class="toc-text">删除键</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其他键空间操作"><span class="toc-number">3.3.</span> <span class="toc-text">其他键空间操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#读写键空间时的维护操作"><span class="toc-number">3.4.</span> <span class="toc-text">读写键空间时的维护操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置键的生存时间或过期时间"><span class="toc-number">4.</span> <span class="toc-text">设置键的生存时间或过期时间</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#保存过期时间"><span class="toc-number">4.1.</span> <span class="toc-text">保存过期时间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#移除过期时间"><span class="toc-number">4.2.</span> <span class="toc-text">移除过期时间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#过期键的判定"><span class="toc-number">4.3.</span> <span class="toc-text">过期键的判定</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#过期键删除策略"><span class="toc-number">5.</span> <span class="toc-text">过期键删除策略</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#定时删除"><span class="toc-number">5.1.</span> <span class="toc-text">定时删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#惰性删除"><span class="toc-number">5.2.</span> <span class="toc-text">惰性删除</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#定期删除"><span class="toc-number">5.3.</span> <span class="toc-text">定期删除</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis的过期键删除策略"><span class="toc-number">6.</span> <span class="toc-text">Redis的过期键删除策略</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#惰性删除策略的实现"><span class="toc-number">6.1.</span> <span class="toc-text">惰性删除策略的实现</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h2 id="服务器中的数据库"><a href="#服务器中的数据库" class="headerlink" title="服务器中的数据库"></a>服务器中的数据库</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">redisServer</span> &#123;</span></span><br><span class="line">  	<span class="comment">// 一个数组，保存着服务器中的所有数据库</span></span><br><span class="line">    redisDb *db;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 服务器的数据库数量</span></span><br><span class="line">    <span class="comment">// 值由服务器配置的database选项决定，默认情况下是16个数据库</span></span><br><span class="line">    <span class="keyword">int</span> dbnum;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="切换数据库"><a href="#切换数据库" class="headerlink" title="切换数据库"></a>切换数据库</h2><p>默认情况下，redis客户端的目标数据库为0号数据库，可以通过<code>SELECT</code>命令来切换数据库</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">redis&gt; SET msg "hello world"</span><br><span class="line">OK</span><br><span class="line"></span><br><span class="line">redis&gt; GET msg</span><br><span class="line">"hello world"</span><br><span class="line"></span><br><span class="line">redis&gt; SELECT 2</span><br><span class="line">OK</span><br><span class="line"></span><br><span class="line">redis[2]&gt; GET msg</span><br><span class="line">(nil)</span><br></pre></td></tr></table></figure>
+<p>客户端状态<code>redisClient</code>结构的db属性记录了客户端当前的目标数据库，这是属性是一个指向<code>redisDb</code>结构的指针</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">redisClient</span> &#123;</span></span><br><span class="line">    <span class="comment">// 记录客户端当前正在使用的数据库</span></span><br><span class="line">    redisDb *db;</span><br><span class="line">&#125; redisClient;</span><br></pre></td></tr></table></figure>
+<p>通过修改<code>redisClient.db</code>指针，可以实现数据库的切换，即<code>SELECT</code>命令的实现</p>
+<h2 id="数据库键空间"><a href="#数据库键空间" class="headerlink" title="数据库键空间"></a>数据库键空间</h2><p><code>redisDb</code>结构的dict字典保存了数据库中所有键值对</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">redisDb</span> &#123;</span></span><br><span class="line">    dict *dict;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>键空间和用户所见的数据库是直接对应的：</p>
+<ul>
+<li>键空间的键也就是数据库的键， 每个键都是一个<strong>字符串对象。</strong></li>
+<li>键空间的值也就是数据库的值， 每个值可以是字符串对象、列表对象、哈希表对象、集合对象和有序集合对象在内的任意一种 Redis 对象。</li>
+</ul>
+<h3 id="添加新键"><a href="#添加新键" class="headerlink" title="添加新键"></a>添加新键</h3><p>添加一个新键值对到数据库，实际上就是将一个新键值对添加到键空间字典里面</p>
+<h3 id="删除键"><a href="#删除键" class="headerlink" title="删除键"></a>删除键</h3><p>删除数据库中的一个键，实际上就是在键空间里面删除键所对应的键值对对象</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DEL key [...]</span><br></pre></td></tr></table></figure>
+<h3 id="其他键空间操作"><a href="#其他键空间操作" class="headerlink" title="其他键空间操作"></a>其他键空间操作</h3><p><code>FLUSHDB</code>：清空整个数据库</p>
+<p><code>RANDOMKEY</code>：随机返回一个键</p>
+<p><code>DBSIZE</code>：数据库键数量</p>
+<h3 id="读写键空间时的维护操作"><a href="#读写键空间时的维护操作" class="headerlink" title="读写键空间时的维护操作"></a>读写键空间时的维护操作</h3><ul>
+<li>在读取一个键之后（读操作和写操作都要对键进行读取）， 服务器会根据键是否存在， 以此来更新服务器的键空间命中（hit）次数或键空间不命中（miss）次数， 这两个值可以在 INFO stats 命令的 <code>keyspace_hits</code> 属性和 <code>keyspace_misses</code> 属性中查看。</li>
+<li>在读取一个键之后， 服务器会更新键的 LRU （最后一次使用）时间， 这个值可以用于计算键的闲置时间， 使用命令 OBJECT idletime <key> 命令可以查看键 <code>key</code> 的闲置时间。</key></li>
+<li>如果服务器在读取一个键时， 发现该键已经过期， 那么服务器会先删除这个过期键， 然后才执行余下的其他操作。</li>
+<li>如果有客户端使用 WATCH 命令监视了某个键， 那么服务器在对被监视的键进行修改之后， 会将这个键标记为脏（dirty）， 从而让事务程序注意到这个键已经被修改过。</li>
+<li>服务器每次修改一个键之后， 都会对脏（dirty）键计数器的值增一， 这个计数器会触发服务器的持久化以及复制操作执行。</li>
+<li>如果服务器开启了数据库通知功能， 那么在对键进行修改之后， 服务器将按配置发送相应的数据库通知。</li>
+</ul>
+<h2 id="设置键的生存时间或过期时间"><a href="#设置键的生存时间或过期时间" class="headerlink" title="设置键的生存时间或过期时间"></a>设置键的生存时间或过期时间</h2><p><code>EXPIRE</code>：设置生存时间，单位：秒。<code>EXPIRE &lt;key&gt; &lt;ttl&gt;</code></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> <span class="keyword">key</span> <span class="keyword">value</span></span><br><span class="line">// 五秒的生存时间</span><br><span class="line"><span class="keyword">EXPIRE</span> <span class="keyword">key</span> <span class="number">5</span></span><br></pre></td></tr></table></figure>
+<p><code>PEXPIRE</code>：设置生存时间，单位：毫秒。<code>PEXPIRE &lt;key&gt; &lt;ttl&gt;</code></p>
+<p><code>EXPIREAT</code>：设置过期时间，单位秒（时间戳）<code>EXPIREAT &lt;key&gt; &lt;timestamp&gt;</code></p>
+<p><code>PEXPIREAT</code>：设置过期时间，单位毫秒。<code>PEXPIREAT &lt;key&gt; &lt;timestamp&gt;</code></p>
+<p><strong>上面四个命令最后都是使用<code>PEXPIREAT</code>命令来实现的</strong></p>
+<p><code>TTL</code>：接受一个带有生存时间的键，返回这个键的剩余生存时间</p>
+<p><code>PTTL</code>：接受一个带有过期时间的键，返回这个键的剩余生存时间</p>
+<h3 id="保存过期时间"><a href="#保存过期时间" class="headerlink" title="保存过期时间"></a>保存过期时间</h3><p>redisDb结构的<code>expires</code>字典保存了数据库中所有键的过期时间</p>
+<ul>
+<li>过期字典的键是一个指针，指向键空间中某个键对象。</li>
+<li>过期字典的值是一个long long类型的整数，即过期时间，是一个毫秒精度的UNIX时间戳</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">redisDb</span> &#123;</span></span><br><span class="line">    <span class="comment">// 过期字典，保存键的过期时间</span></span><br><span class="line">    dict *expires;</span><br><span class="line">&#125; redisDb;</span><br></pre></td></tr></table></figure>
+<h3 id="移除过期时间"><a href="#移除过期时间" class="headerlink" title="移除过期时间"></a>移除过期时间</h3><p><code>PERSIST &lt;key&gt;</code></p>
+<h3 id="过期键的判定"><a href="#过期键的判定" class="headerlink" title="过期键的判定"></a>过期键的判定</h3><p>通过过期字典，检查以下步骤</p>
+<ol>
+<li>判断键是否在过期字典中，如果存在则返回过期时间</li>
+<li>判断当前UNIX时间戳是否大于键的过期时间，如果是，那么键已经过期</li>
+</ol>
+<h2 id="过期键删除策略"><a href="#过期键删除策略" class="headerlink" title="过期键删除策略"></a>过期键删除策略</h2><h3 id="定时删除"><a href="#定时删除" class="headerlink" title="定时删除"></a>定时删除</h3><blockquote>
+<p>  在设置键的过期时间的同时，创建一个定时器，让定时器在键的过期时间来临时，立即执行对键的删除操作</p>
+</blockquote>
+<ol>
+<li>对内存友好，尽快释放过期键占用的内存</li>
+<li>对CPU不友好，特别在过期键比较多的情况下</li>
+</ol>
+<h3 id="惰性删除"><a href="#惰性删除" class="headerlink" title="惰性删除"></a>惰性删除</h3><blockquote>
+<p>  每次从键空间中获取键时，都检查取得的键是否过期，如果过期的话，就删除该键，如果没过期，就返回该键</p>
+</blockquote>
+<ol>
+<li>对CPU友好</li>
+<li>对内存不友好，特别是有很多过期键但又没有访问的时候</li>
+</ol>
+<h3 id="定期删除"><a href="#定期删除" class="headerlink" title="定期删除"></a>定期删除</h3><blockquote>
+<p>  每隔一段时间，程序就对数据库进行一次检查，删除里面的过期键。</p>
+</blockquote>
+<p>最主要的是合理地设置删除操作的执行时长和执行频率</p>
+<h2 id="Redis的过期键删除策略"><a href="#Redis的过期键删除策略" class="headerlink" title="Redis的过期键删除策略"></a>Redis的过期键删除策略</h2><h3 id="惰性删除策略的实现"><a href="#惰性删除策略的实现" class="headerlink" title="惰性删除策略的实现"></a>惰性删除策略的实现</h3><p>过期键的惰性删除策略由<code>db.c/expireIfNeeded</code>函数实现，所有读写数据库的Redis命令在执行之前都会调用该函数对输入键进行检查：</p>
+<p><img src="http://minsming.com/img/redis/expireIfNeeded.jpg" alt=""></p>
+<hr>
+<p>参考：Redis设计与实现</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/笔记/">笔记</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/redis/">redis</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://minsming.com/2018/12/11/Redis——数据库/" data-title="Redis——数据库 | 小铭" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/12/11/Redis/"  title="Redis底层数据结构">
+ <strong>下一篇：</strong><br/> 
+ <span>Redis底层数据结构
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">我的Github</p>
+<div class="github-card" data-github="zhengjunming" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+
+
+
+  
+<div class="categorieslist">
+	<p class="asidetitle">分类</p>
+		<ul>
+		
+		  
+			<li><a href="/categories/分布式/" title="分布式">分布式<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/数据结构/" title="数据结构">数据结构<sup>2</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/笔记/" title="笔记">笔记<sup>23</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+		  
+		
+		  
+			<li><a href="/categories/问题/" title="问题">问题<sup>3</sup></a></li>
+		  
+		
+		</ul>
+</div>
+
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/多线程/" title="多线程">多线程<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Spring/" title="Spring">Spring<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/MySQL/" title="MySQL">MySQL<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/redis/" title="redis">redis<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/JVM/" title="JVM">JVM<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/404/" title="404">404<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/HTTP/" title="HTTP">HTTP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/GC/" title="GC">GC<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Maven/" title="Maven">Maven<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/NIO/" title="NIO">NIO<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Springboot/" title="Springboot">Springboot<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/war包/" title="war包">war包<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/线程池/" title="线程池">线程池<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/线程/" title="线程">线程<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hadoop/" title="hadoop">hadoop<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Socket/" title="Socket">Socket<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/单例模式/" title="单例模式">单例模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/平衡二叉树/" title="平衡二叉树">平衡二叉树<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Mybatis/" title="Mybatis">Mybatis<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">标签云</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/404/" style="font-size: 12.5px;">404</a> <a href="/tags/B树/" style="font-size: 10px;">B树</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/JVM/" style="font-size: 12.5px;">JVM</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/Mybatis/" style="font-size: 10px;">Mybatis</a> <a href="/tags/NIO/" style="font-size: 10px;">NIO</a> <a href="/tags/Socket/" style="font-size: 10px;">Socket</a> <a href="/tags/Spring/" style="font-size: 17.5px;">Spring</a> <a href="/tags/Springboot/" style="font-size: 10px;">Springboot</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/redis/" style="font-size: 12.5px;">redis</a> <a href="/tags/war包/" style="font-size: 10px;">war包</a> <a href="/tags/单例模式/" style="font-size: 10px;">单例模式</a> <a href="/tags/多线程/" style="font-size: 20px;">多线程</a> <a href="/tags/平衡二叉树/" style="font-size: 10px;">平衡二叉树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/线程池/" style="font-size: 10px;">线程池</a>
+    </div>
+  </div>
+
+
+  
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> 认真做好每一件事 <br/>
+			记录生活，记录技术</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/zhengjunming" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<a href="mailto:gdutxming@163.com" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="ming">ming</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?5c5e9be8c140785b7522d4fe313c87d3";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
