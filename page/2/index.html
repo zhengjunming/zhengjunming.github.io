@@ -94,13 +94,17 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/Thread.stop()为何弃用/" title="Thread.stop()为何弃用" itemprop="url">
+    <a href="/2018/08/16/Java内存区域/" title="Java内存区域" itemprop="url">
   
-    <h1 itemprop="name">Thread.stop()为何弃用</h1>
+    <h1 itemprop="name">Java内存区域</h1>
     
      
-           <p itemprop="description" >官方给出的说明：
-12345678910111213141516171819/** @deprecated This method is inherently unsafe.  Stopping a thread with  *       Thread.stop causes </p>
+           <p itemprop="description" >1. 运行时数据区域
+  Java虚拟机在执行Java程序的过程中会把所管理的内存划分为若干个不同的数据区域。
+
+
+1.1. 程序计数器
+  程序计数器是一块较小的内存区域，它可以看作是当前线程所执行的字节码的行号指示器。字节码解释器工作时就是通过改变这个计数器的值来选取下一条需</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -115,19 +119,13 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/JVM可回收垃圾判断算法/" title="JVM可回收垃圾判断算法" itemprop="url">
+    <a href="/2018/08/16/Thread.stop()为何弃用/" title="Thread.stop()为何弃用" itemprop="url">
   
-    <h1 itemprop="name">JVM可回收垃圾判断算法</h1>
+    <h1 itemprop="name">Thread.stop()为何弃用</h1>
     
      
-           <p itemprop="description" >GC需要完成的3件事情：
-
-哪些内存需要回收？
-什么时候回收？
-如何回收？
-
-今天这篇文章就是说明哪些内存需要回收。
-在Java内存区域 一篇已经说明Java内存的各个数据区域的特点，其中程序计数器、虚拟机栈、本地方法3个区域随线程而生，随线程而灭，所以这几个区域的内存分配和回收</p>
+           <p itemprop="description" >官方给出的说明：
+12345678910111213141516171819/** @deprecated This method is inherently unsafe.  Stopping a thread with  *       Thread.stop causes </p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -211,6 +209,29 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
+    <a href="/2018/08/16/对象的共享/" title="对象的共享" itemprop="url">
+  
+    <h1 itemprop="name">对象的共享</h1>
+    
+     
+           <p itemprop="description" >上一篇已经介绍了线程的安全性，包括原子性操作和锁机制等内容，如果还没了解此部分内容可参考线程安全性。
+从上一篇线程的安全性我们可以知道同步代码块和同步方法可以确保以原子的方式执行操作，这一篇则是介绍同步的另外一个重要的方面：内存可见性
+可见性
+一个线程对共享变量值得修改，其他线程</p>
+        
+    
+    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
     <a href="/2018/08/16/对象的组合/" title="对象的组合" itemprop="url">
   
     <h1 itemprop="name">对象的组合</h1>
@@ -239,15 +260,13 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/对象的共享/" title="对象的共享" itemprop="url">
+    <a href="/2018/08/16/平衡二叉树之C语言实现/" title="平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码" itemprop="url">
   
-    <h1 itemprop="name">对象的共享</h1>
+    <h1 itemprop="name">平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码</h1>
     
      
-           <p itemprop="description" >上一篇已经介绍了线程的安全性，包括原子性操作和锁机制等内容，如果还没了解此部分内容可参考线程安全性。
-从上一篇线程的安全性我们可以知道同步代码块和同步方法可以确保以原子的方式执行操作，这一篇则是介绍同步的另外一个重要的方面：内存可见性
-可见性
-一个线程对共享变量值得修改，其他线程</p>
+           <p itemprop="description" >平衡二叉树的定义
+平衡二叉查找树( Balanced Binary Sort Tree,BBST)简称平衡二叉树。平衡二又树有很多种,其中最著名的是由前苏联数学家 Adele- Veliki和 Landis在1962年提出的高度平衡的二叉树。根据提出者的英文名字首字母简称为AVL</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -321,13 +340,16 @@ member_name
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/平衡二叉树之C语言实现/" title="平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码" itemprop="url">
+    <a href="/2018/08/16/解决Web项目因访问URL与Tomcat服务器文件夹相同导致404页面的问题/" title="解决Web项目因访问URL与Tomcat服务器文件夹相同导致404页面的问题" itemprop="url">
   
-    <h1 itemprop="name">平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码</h1>
+    <h1 itemprop="name">解决Web项目因访问URL与Tomcat服务器文件夹相同导致404页面的问题</h1>
     
      
-           <p itemprop="description" >平衡二叉树的定义
-平衡二叉查找树( Balanced Binary Sort Tree,BBST)简称平衡二叉树。平衡二又树有很多种,其中最著名的是由前苏联数学家 Adele- Veliki和 Landis在1962年提出的高度平衡的二叉树。根据提出者的英文名字首字母简称为AVL</p>
+           <p itemprop="description" >问题描述我们知道，客户端如果请求的URL不存在的话，会在页面显示一个404的错误，如下图
+
+但我在访问资源的时候出现了下面这种情况的404页面，显示以下的文字
+
+404 Not foundThe page you tried to access (/manager/addnews</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -349,30 +371,6 @@ member_name
      
            <p itemprop="description" >什么是线程安全性
 某个类的行为与其规范完全一致。当多个线程访问某个类时，这个类始终都能表现出正确的行为，那么就称这个类是线程安全的。换句话说就是当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步或协同，这个都能表</p>
-        
-    
-    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2018/08/16/解决Web项目因访问URL与Tomcat服务器文件夹相同导致404页面的问题/" title="解决Web项目因访问URL与Tomcat服务器文件夹相同导致404页面的问题" itemprop="url">
-  
-    <h1 itemprop="name">解决Web项目因访问URL与Tomcat服务器文件夹相同导致404页面的问题</h1>
-    
-     
-           <p itemprop="description" >问题描述我们知道，客户端如果请求的URL不存在的话，会在页面显示一个404的错误，如下图
-
-但我在访问资源的时候出现了下面这种情况的404页面，显示以下的文字
-
-404 Not foundThe page you tried to access (/manager/addnews</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -485,7 +483,7 @@ member_name
 			
 		
 			
-				<li><a href="/tags/Maven/" title="Maven">Maven<sup>1</sup></a></li>
+				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
 			
 		
 			
@@ -513,7 +511,7 @@ member_name
 			
 		
 			
-				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
+				<li><a href="/tags/Maven/" title="Maven">Maven<sup>1</sup></a></li>
 			
 		
 			
@@ -521,11 +519,11 @@ member_name
 			
 		
 			
-				<li><a href="/tags/线程/" title="线程">线程<sup>1</sup></a></li>
+				<li><a href="/tags/hadoop/" title="hadoop">hadoop<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/hadoop/" title="hadoop">hadoop<sup>1</sup></a></li>
+				<li><a href="/tags/线程/" title="线程">线程<sup>1</sup></a></li>
 			
 		
 			
@@ -533,11 +531,11 @@ member_name
 			
 		
 			
-				<li><a href="/tags/Mybatis/" title="Mybatis">Mybatis<sup>1</sup></a></li>
+				<li><a href="/tags/平衡二叉树/" title="平衡二叉树">平衡二叉树<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/平衡二叉树/" title="平衡二叉树">平衡二叉树<sup>1</sup></a></li>
+				<li><a href="/tags/Mybatis/" title="Mybatis">Mybatis<sup>1</sup></a></li>
 			
 		
 		</ul>
