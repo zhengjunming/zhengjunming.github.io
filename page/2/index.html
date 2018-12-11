@@ -73,13 +73,13 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/Socket的几种实现/" title="Socket的几种实现" itemprop="url">
+    <a href="/2018/08/16/Springboot打包成war包的404问题/" title="Springboot打包成war包的404问题" itemprop="url">
   
-    <h1 itemprop="name">Socket的几种实现</h1>
+    <h1 itemprop="name">Springboot打包成war包的404问题</h1>
     
      
-           <p itemprop="description" >基于TCP协议的网络编程
- TCP/IP通信协议是一种可靠的网络协议，它在通信的两端各建立一个Socket，从而在通信的两端之间形成网络虚拟链路。一旦建立了虚拟的网络链路，两端的成员就可以通过虚拟链路进行通信。Java是对基于TCP协议的网络通信提供了良好的封装，Java使用So</p>
+           <p itemprop="description" >Springboot项目打包一般都是默认打包成jar包，但是最近做了一个小Demo，打包成jar包路径问题没法解决，所以就考虑打包成war包，但是打包成war包又有了访问404的问题，下面是从网上找到的方法，也是找了好多个然后综合起来才解决。
+首先在pom.xml中做出下列修改。</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -115,40 +115,19 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/Java内存区域/" title="Java内存区域" itemprop="url">
+    <a href="/2018/08/16/JVM可回收垃圾判断算法/" title="JVM可回收垃圾判断算法" itemprop="url">
   
-    <h1 itemprop="name">Java内存区域</h1>
+    <h1 itemprop="name">JVM可回收垃圾判断算法</h1>
     
      
-           <p itemprop="description" >1. 运行时数据区域
-  Java虚拟机在执行Java程序的过程中会把所管理的内存划分为若干个不同的数据区域。
+           <p itemprop="description" >GC需要完成的3件事情：
 
+哪些内存需要回收？
+什么时候回收？
+如何回收？
 
-1.1. 程序计数器
-  程序计数器是一块较小的内存区域，它可以看作是当前线程所执行的字节码的行号指示器。字节码解释器工作时就是通过改变这个计数器的值来选取下一条需</p>
-        
-    
-    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2018/08/16/处理自动装配的歧义性/" title="处理自动装配的歧义性" itemprop="url">
-  
-    <h1 itemprop="name">处理自动装配的歧义性</h1>
-    
-     
-           <p itemprop="description" >自动装配能够提供很大的帮助，因为它会减少装配应用程序组件时所需要的显式配置的数量。当不仅有一个bean能够匹配结果的话，这种歧义性会阻碍Spring自动装配属性、构造器参数或方法参数。
-
-例如我们使用@Autowired注解标注了setWord()方法：
-1234@Autowir</p>
+今天这篇文章就是说明哪些内存需要回收。
+在Java内存区域 一篇已经说明Java内存的各个数据区域的特点，其中程序计数器、虚拟机栈、本地方法3个区域随线程而生，随线程而灭，所以这几个区域的内存分配和回收</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -188,6 +167,29 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
+    <a href="/2018/08/16/处理自动装配的歧义性/" title="处理自动装配的歧义性" itemprop="url">
+  
+    <h1 itemprop="name">处理自动装配的歧义性</h1>
+    
+     
+           <p itemprop="description" >自动装配能够提供很大的帮助，因为它会减少装配应用程序组件时所需要的显式配置的数量。当不仅有一个bean能够匹配结果的话，这种歧义性会阻碍Spring自动装配属性、构造器参数或方法参数。
+
+例如我们使用@Autowired注解标注了setWord()方法：
+1234@Autowir</p>
+        
+    
+    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
     <a href="/2018/08/16/多线程之闭锁、栅栏和信号量/" title="多线程之闭锁、栅栏和信号量" itemprop="url">
   
     <h1 itemprop="name">多线程之闭锁、栅栏和信号量</h1>
@@ -195,6 +197,29 @@
      
            <p itemprop="description" >闭锁
   一种同步工具类，可以延迟线程的进度直到其到达终止状态。闭锁的作用相当于一扇门：在闭锁到达结束状态之前，这扇门一直是关闭的，并且没有任何线程通过，当到达结束状态时，这扇门会打开并允许所有的线程通过。当闭锁到达结束状态后，将不会再改变状态，因为这扇门将永远保持打开状态。闭锁</p>
+        
+    
+    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2018/08/16/对象的共享/" title="对象的共享" itemprop="url">
+  
+    <h1 itemprop="name">对象的共享</h1>
+    
+     
+           <p itemprop="description" >上一篇已经介绍了线程的安全性，包括原子性操作和锁机制等内容，如果还没了解此部分内容可参考线程安全性。
+从上一篇线程的安全性我们可以知道同步代码块和同步方法可以确保以原子的方式执行操作，这一篇则是介绍同步的另外一个重要的方面：内存可见性
+可见性
+一个线程对共享变量值得修改，其他线程</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -237,15 +262,13 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/对象的共享/" title="对象的共享" itemprop="url">
+    <a href="/2018/08/16/平衡二叉树之C语言实现/" title="平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码" itemprop="url">
   
-    <h1 itemprop="name">对象的共享</h1>
+    <h1 itemprop="name">平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码</h1>
     
      
-           <p itemprop="description" >上一篇已经介绍了线程的安全性，包括原子性操作和锁机制等内容，如果还没了解此部分内容可参考线程安全性。
-从上一篇线程的安全性我们可以知道同步代码块和同步方法可以确保以原子的方式执行操作，这一篇则是介绍同步的另外一个重要的方面：内存可见性
-可见性
-一个线程对共享变量值得修改，其他线程</p>
+           <p itemprop="description" >平衡二叉树的定义
+平衡二叉查找树( Balanced Binary Sort Tree,BBST)简称平衡二叉树。平衡二又树有很多种,其中最著名的是由前苏联数学家 Adele- Veliki和 Landis在1962年提出的高度平衡的二叉树。根据提出者的英文名字首字母简称为AVL</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -268,27 +291,6 @@
            <p itemprop="description" >当我们希望某个Bean满足了一定的条件才会被创建的时候，我们就可以使用@Conditional注解（Spring 4引入）来实现这种功能。该注解可以用到带有@Bean注解的方法上，如果给定的条件计算结果为true，就会创建这个bean，否则的话，这个bean会被忽略。
 
 常见条件</p>
-        
-    
-    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2018/08/16/平衡二叉树之C语言实现/" title="平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码" itemprop="url">
-  
-    <h1 itemprop="name">平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码</h1>
-    
-     
-           <p itemprop="description" >平衡二叉树的定义
-平衡二叉查找树( Balanced Binary Sort Tree,BBST)简称平衡二叉树。平衡二又树有很多种,其中最著名的是由前苏联数学家 Adele- Veliki和 Landis在1962年提出的高度平衡的二叉树。根据提出者的英文名字首字母简称为AVL</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -479,7 +481,7 @@ member_name
 			
 		
 			
-				<li><a href="/tags/Springboot/" title="Springboot">Springboot<sup>1</sup></a></li>
+				<li><a href="/tags/redis/" title="redis">redis<sup>1</sup></a></li>
 			
 		
 			
@@ -491,11 +493,11 @@ member_name
 			
 		
 			
-				<li><a href="/tags/线程池/" title="线程池">线程池<sup>1</sup></a></li>
+				<li><a href="/tags/NIO/" title="NIO">NIO<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/NIO/" title="NIO">NIO<sup>1</sup></a></li>
+				<li><a href="/tags/线程池/" title="线程池">线程池<sup>1</sup></a></li>
 			
 		
 			
@@ -503,7 +505,11 @@ member_name
 			
 		
 			
-				<li><a href="/tags/redis/" title="redis">redis<sup>1</sup></a></li>
+				<li><a href="/tags/Socket/" title="Socket">Socket<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Springboot/" title="Springboot">Springboot<sup>1</sup></a></li>
 			
 		
 			
@@ -512,10 +518,6 @@ member_name
 		
 			
 				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Socket/" title="Socket">Socket<sup>1</sup></a></li>
 			
 		
 			
