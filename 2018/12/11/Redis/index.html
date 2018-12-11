@@ -19,14 +19,14 @@
 <meta property="og:site_name" content="小铭">
 <meta property="og:description" content="简单动态字符串SDS的定义 1234567891011struct sdshdr &amp;#123;    // 记录buf数组中已使用字节的数量    // 等于SDS所保存字符串的长度    int len;        // 记录buf数组中未使用字节的数量    int free;        // 字节数组，用于保存字符串    char buf[];&amp;#125;;  杜绝缓冲区溢出 空间">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://minsming.com/2018/12/11/Redis/image/空哈希表.png">
-<meta property="og:image" content="http://minsming.com/2018/12/11/Redis/image/压缩列表组成.png">
-<meta property="og:image" content="http://minsming.com/2018/12/11/Redis/image/压缩列表节点.png">
-<meta property="og:updated_time" content="2018-12-11T09:01:34.959Z">
+<meta property="og:image" content="http://minsming.com/img/空哈希表.png">
+<meta property="og:image" content="http://minsming.com/img/压缩列表组成.png">
+<meta property="og:image" content="http://minsming.com/img/压缩列表节点.png">
+<meta property="og:updated_time" content="2018-12-11T10:53:52.866Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redis底层数据结构">
 <meta name="twitter:description" content="简单动态字符串SDS的定义 1234567891011struct sdshdr &amp;#123;    // 记录buf数组中已使用字节的数量    // 等于SDS所保存字符串的长度    int len;        // 记录buf数组中未使用字节的数量    int free;        // 字节数组，用于保存字符串    char buf[];&amp;#125;;  杜绝缓冲区溢出 空间">
-<meta name="twitter:image" content="http://minsming.com/2018/12/11/Redis/image/空哈希表.png">
+<meta name="twitter:image" content="http://minsming.com/img/空哈希表.png">
 
     
     <link rel="alternative" href="/atom.xml" title="小铭" type="application/atom+xml">
@@ -87,7 +87,7 @@
 		<a href="/about" title="ming" target="_blank" itemprop="author">ming</a>
 		
   <p class="article-time">
-    <time datetime="2018-12-11T09:01:34.959Z" itemprop="datePublished"> 发表于 2018-12-11</time>
+    <time datetime="2018-12-11T10:53:52.866Z" itemprop="datePublished"> 发表于 2018-12-11</time>
     
   </p>
 </header>
@@ -131,7 +131,7 @@
 <li>多态</li>
 </ul>
 <h2 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h2><h3 id="哈希表"><a href="#哈希表" class="headerlink" title="哈希表"></a>哈希表</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dictht</span> &#123;</span></span><br><span class="line">    <span class="comment">// 哈希表数组</span></span><br><span class="line">    dictEntry **table;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 哈希表大小</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> size;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 哈希表大小掩码，用于计算索引值</span></span><br><span class="line">    <span class="comment">// 总是等于 size - 1</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> sizemask;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 该哈希表已有节点的数量</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> used;</span><br><span class="line">&#125; dictht;</span><br></pre></td></tr></table></figure>
-<p><img src="./image/空哈希表.png" alt=""></p>
+<p><img src="http://minsming.com/img/空哈希表.png" alt=""></p>
 <h3 id="哈希表节点"><a href="#哈希表节点" class="headerlink" title="哈希表节点"></a>哈希表节点</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dictEntry</span> &#123;</span></span><br><span class="line">    <span class="comment">// 键</span></span><br><span class="line">    <span class="keyword">void</span> *key;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 值</span></span><br><span class="line">    <span class="keyword">union</span> &#123;</span><br><span class="line">        <span class="keyword">void</span> *val;</span><br><span class="line">        <span class="keyword">uint64_t</span> u64;</span><br><span class="line">        <span class="keyword">int64_t</span> s64;</span><br><span class="line">    &#125; v;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 指向下个哈希表节点，形成链表（链地址法）</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">dictEntry</span> *<span class="title">next</span>;</span></span><br><span class="line">&#125; dictEntry;</span><br></pre></td></tr></table></figure>
 <h2 id="字典-1"><a href="#字典-1" class="headerlink" title="字典"></a>字典</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dict</span> &#123;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 类型特定函数</span></span><br><span class="line">    dictType *type;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 私有数据</span></span><br><span class="line">    <span class="keyword">void</span> *privdata;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 哈希表</span></span><br><span class="line">    <span class="comment">// 一般情况下，字典只使用ht[0]哈希表，ht[1]哈希表只会在对ht[0]哈希表进行rehash时使用</span></span><br><span class="line">    dictht ht[<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// rehash 索引</span></span><br><span class="line">    <span class="comment">// 当 rehash 不在进行时，值为 -1</span></span><br><span class="line">    <span class="keyword">int</span> rehashidx; <span class="comment">/* rehashing not in progress if rehashidx == -1 */</span></span><br><span class="line"></span><br><span class="line">&#125; dict;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dictType</span> &#123;</span></span><br><span class="line">    <span class="comment">// 计算哈希值的函数</span></span><br><span class="line">    <span class="function"><span class="keyword">unsigned</span> <span class="title">int</span> <span class="params">(*hashFunction)</span><span class="params">(<span class="keyword">const</span> <span class="keyword">void</span> *key)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 复制键的函数</span></span><br><span class="line">    <span class="keyword">void</span> *(*keyDup)(<span class="keyword">void</span> *privdata, <span class="keyword">const</span> <span class="keyword">void</span> *key);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 复制值的函数</span></span><br><span class="line">    <span class="keyword">void</span> *(*valDup)(<span class="keyword">void</span> *privdata, <span class="keyword">const</span> <span class="keyword">void</span> *obj);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 对比键的函数</span></span><br><span class="line">    <span class="keyword">int</span> (*keyCompare)(<span class="keyword">void</span> *privdata, <span class="keyword">const</span> <span class="keyword">void</span> *key1, <span class="keyword">const</span> <span class="keyword">void</span> *key2);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 销毁键的函数</span></span><br><span class="line">    <span class="keyword">void</span> (*keyDestructor)(<span class="keyword">void</span> *privdata, <span class="keyword">void</span> *key);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 销毁值的函数</span></span><br><span class="line">    <span class="keyword">void</span> (*valDestructor)(<span class="keyword">void</span> *privdata, <span class="keyword">void</span> *obj);</span><br><span class="line">&#125; dictType;</span><br></pre></td></tr></table></figure>
 <h3 id="rehash过程"><a href="#rehash过程" class="headerlink" title="rehash过程"></a>rehash过程</h3><ol>
@@ -195,7 +195,7 @@
 <p>  当一个列表键只包含少量列表项， 并且每个列表项要么就是<strong>小整数值</strong>， 要么就是长度<strong>比较短的字符串</strong>， 那么 Redis 就会使用压缩列表来做列表键的底层实现。</p>
 <p>  当一个哈希键只包含少量键值对， 并且每个键值对的键和值要么就是小整数值， 要么就是长度比较短的字符串， 那么 Redis 就会使用压缩列表来做哈希键的底层实现。</p>
 </blockquote>
-<h3 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h3><p><img src="./image/压缩列表组成.png" alt=""></p>
+<h3 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h3><p><img src="http://minsming.com/img/压缩列表组成.png" alt=""></p>
 <table>
 <thead>
 <tr>
@@ -253,7 +253,7 @@
 <li><code>int32_t</code> 类型整数；</li>
 <li><code>int64_t</code> 类型整数。</li>
 </ol>
-<p><img src="./image/压缩列表节点.png" alt=""></p>
+<p><img src="http://minsming.com/img/压缩列表节点.png" alt=""></p>
 <p><strong>previous_entry_length</strong></p>
 <p>节点的 <code>previous_entry_length</code> 属性以字节为单位， 记录了压缩列表中前一个节点的长度。</p>
 <p><code>previous_entry_length</code> 属性的长度可以是 <code>1</code> 字节或者 <code>5</code> 字节：</p>
@@ -570,9 +570,9 @@
  
 
 <div class="next">
-<a href="/2018/10/02/Ubuntu18.04搭建Hadoop3.0.3/"  title="Ubuntu18.04搭建Hadoop3.0.3">
+<a href="/2018/12/11/LSD & MSD & 三向字符串快速排序/"  title="LSD &amp; MSD &amp; 三向字符串快速排序">
  <strong>下一篇：</strong><br/> 
- <span>Ubuntu18.04搭建Hadoop3.0.3
+ <span>LSD &amp; MSD &amp; 三向字符串快速排序
 </span>
 </a>
 </div>
@@ -617,6 +617,10 @@
 		  
 		
 		  
+			<li><a href="/categories/算法/" title="算法">算法<sup>1</sup></a></li>
+		  
+		
+		  
 			<li><a href="/categories/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
 		  
 		
@@ -654,7 +658,11 @@
 			
 		
 			
-				<li><a href="/tags/redis/" title="redis">redis<sup>1</sup></a></li>
+				<li><a href="/tags/NIO/" title="NIO">NIO<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/sort/" title="sort">sort<sup>1</sup></a></li>
 			
 		
 			
@@ -666,15 +674,23 @@
 			
 		
 			
-				<li><a href="/tags/NIO/" title="NIO">NIO<sup>1</sup></a></li>
+				<li><a href="/tags/HTTP/" title="HTTP">HTTP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/redis/" title="redis">redis<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/war包/" title="war包">war包<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/线程池/" title="线程池">线程池<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/HTTP/" title="HTTP">HTTP<sup>1</sup></a></li>
 			
 		
 			
@@ -683,14 +699,6 @@
 		
 			
 				<li><a href="/tags/Springboot/" title="Springboot">Springboot<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/war包/" title="war包">war包<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
 			
 		
 			
@@ -709,10 +717,6 @@
 				<li><a href="/tags/平衡二叉树/" title="平衡二叉树">平衡二叉树<sup>1</sup></a></li>
 			
 		
-			
-				<li><a href="/tags/Mybatis/" title="Mybatis">Mybatis<sup>1</sup></a></li>
-			
-		
 		</ul>
 </div>
 
@@ -721,7 +725,7 @@
   <div class="tagcloudlist">
     <p class="asidetitle">标签云</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/404/" style="font-size: 12.5px;">404</a> <a href="/tags/B树/" style="font-size: 10px;">B树</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/JVM/" style="font-size: 12.5px;">JVM</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/Mybatis/" style="font-size: 10px;">Mybatis</a> <a href="/tags/NIO/" style="font-size: 10px;">NIO</a> <a href="/tags/Socket/" style="font-size: 10px;">Socket</a> <a href="/tags/Spring/" style="font-size: 17.5px;">Spring</a> <a href="/tags/Springboot/" style="font-size: 10px;">Springboot</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/war包/" style="font-size: 10px;">war包</a> <a href="/tags/单例模式/" style="font-size: 10px;">单例模式</a> <a href="/tags/多线程/" style="font-size: 20px;">多线程</a> <a href="/tags/平衡二叉树/" style="font-size: 10px;">平衡二叉树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/线程池/" style="font-size: 10px;">线程池</a>
+       <a href="/tags/404/" style="font-size: 12.5px;">404</a> <a href="/tags/B树/" style="font-size: 10px;">B树</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/JVM/" style="font-size: 12.5px;">JVM</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/Mybatis/" style="font-size: 10px;">Mybatis</a> <a href="/tags/NIO/" style="font-size: 10px;">NIO</a> <a href="/tags/Socket/" style="font-size: 10px;">Socket</a> <a href="/tags/Spring/" style="font-size: 17.5px;">Spring</a> <a href="/tags/Springboot/" style="font-size: 10px;">Springboot</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/sort/" style="font-size: 10px;">sort</a> <a href="/tags/war包/" style="font-size: 10px;">war包</a> <a href="/tags/单例模式/" style="font-size: 10px;">单例模式</a> <a href="/tags/多线程/" style="font-size: 20px;">多线程</a> <a href="/tags/平衡二叉树/" style="font-size: 10px;">平衡二叉树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/线程池/" style="font-size: 10px;">线程池</a>
     </div>
   </div>
 

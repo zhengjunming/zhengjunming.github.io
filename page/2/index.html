@@ -73,13 +73,37 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/Springboot打包成war包的404问题/" title="Springboot打包成war包的404问题" itemprop="url">
+    <a href="/2018/08/16/B树之C语言实现/" title="B树之C语言实现（包含查找、删除、插入）" itemprop="url">
   
-    <h1 itemprop="name">Springboot打包成war包的404问题</h1>
+    <h1 itemprop="name">B树之C语言实现（包含查找、删除、插入）</h1>
     
      
-           <p itemprop="description" >Springboot项目打包一般都是默认打包成jar包，但是最近做了一个小Demo，打包成jar包路径问题没法解决，所以就考虑打包成war包，但是打包成war包又有了访问404的问题，下面是从网上找到的方法，也是找了好多个然后综合起来才解决。
-首先在pom.xml中做出下列修改。</p>
+           <p itemprop="description" >我在大二上学期的数据结构实验设计中选择了B树这个题目，该B树的数据结构实现采用了C语言。趁现在寒假整理完写一篇博文记录我的学习。文末提供了项目源代码的地址。
+
+B树的定义一棵m阶B树（Balanced Tree of order m），或为空树，或为满足下列特性对的m叉树。
+
+树</p>
+        
+    
+    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2018/08/16/SpringBoot创建工程与运行/" title="SpringBoot创建工程与运行" itemprop="url">
+  
+    <h1 itemprop="name">SpringBoot创建工程与运行</h1>
+    
+     
+           <p itemprop="description" >SpringBoot工程的构建1. 通过官网搭建在浏览器输入http://start.spring.io/ 即可进入以下界面。
+在这里你可以搭建一个最简单的SpringBoot项目，当然你如果想要更多的功能与支持，可以点击里面的Switch to the full version</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -115,19 +139,40 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/JVM可回收垃圾判断算法/" title="JVM可回收垃圾判断算法" itemprop="url">
+    <a href="/2018/08/16/Java内存区域/" title="Java内存区域" itemprop="url">
   
-    <h1 itemprop="name">JVM可回收垃圾判断算法</h1>
+    <h1 itemprop="name">Java内存区域</h1>
     
      
-           <p itemprop="description" >GC需要完成的3件事情：
+           <p itemprop="description" >1. 运行时数据区域
+  Java虚拟机在执行Java程序的过程中会把所管理的内存划分为若干个不同的数据区域。
 
-哪些内存需要回收？
-什么时候回收？
-如何回收？
 
-今天这篇文章就是说明哪些内存需要回收。
-在Java内存区域 一篇已经说明Java内存的各个数据区域的特点，其中程序计数器、虚拟机栈、本地方法3个区域随线程而生，随线程而灭，所以这几个区域的内存分配和回收</p>
+1.1. 程序计数器
+  程序计数器是一块较小的内存区域，它可以看作是当前线程所执行的字节码的行号指示器。字节码解释器工作时就是通过改变这个计数器的值来选取下一条需</p>
+        
+    
+    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2018/08/16/处理自动装配的歧义性/" title="处理自动装配的歧义性" itemprop="url">
+  
+    <h1 itemprop="name">处理自动装配的歧义性</h1>
+    
+     
+           <p itemprop="description" >自动装配能够提供很大的帮助，因为它会减少装配应用程序组件时所需要的显式配置的数量。当不仅有一个bean能够匹配结果的话，这种歧义性会阻碍Spring自动装配属性、构造器参数或方法参数。
+
+例如我们使用@Autowired注解标注了setWord()方法：
+1234@Autowir</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -167,29 +212,6 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/处理自动装配的歧义性/" title="处理自动装配的歧义性" itemprop="url">
-  
-    <h1 itemprop="name">处理自动装配的歧义性</h1>
-    
-     
-           <p itemprop="description" >自动装配能够提供很大的帮助，因为它会减少装配应用程序组件时所需要的显式配置的数量。当不仅有一个bean能够匹配结果的话，这种歧义性会阻碍Spring自动装配属性、构造器参数或方法参数。
-
-例如我们使用@Autowired注解标注了setWord()方法：
-1234@Autowir</p>
-        
-    
-    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
     <a href="/2018/08/16/多线程之闭锁、栅栏和信号量/" title="多线程之闭锁、栅栏和信号量" itemprop="url">
   
     <h1 itemprop="name">多线程之闭锁、栅栏和信号量</h1>
@@ -197,29 +219,6 @@
      
            <p itemprop="description" >闭锁
   一种同步工具类，可以延迟线程的进度直到其到达终止状态。闭锁的作用相当于一扇门：在闭锁到达结束状态之前，这扇门一直是关闭的，并且没有任何线程通过，当到达结束状态时，这扇门会打开并允许所有的线程通过。当闭锁到达结束状态后，将不会再改变状态，因为这扇门将永远保持打开状态。闭锁</p>
-        
-    
-    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2018/08/16/对象的共享/" title="对象的共享" itemprop="url">
-  
-    <h1 itemprop="name">对象的共享</h1>
-    
-     
-           <p itemprop="description" >上一篇已经介绍了线程的安全性，包括原子性操作和锁机制等内容，如果还没了解此部分内容可参考线程安全性。
-从上一篇线程的安全性我们可以知道同步代码块和同步方法可以确保以原子的方式执行操作，这一篇则是介绍同步的另外一个重要的方面：内存可见性
-可见性
-一个线程对共享变量值得修改，其他线程</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -262,13 +261,15 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/平衡二叉树之C语言实现/" title="平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码" itemprop="url">
+    <a href="/2018/08/16/对象的共享/" title="对象的共享" itemprop="url">
   
-    <h1 itemprop="name">平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码</h1>
+    <h1 itemprop="name">对象的共享</h1>
     
      
-           <p itemprop="description" >平衡二叉树的定义
-平衡二叉查找树( Balanced Binary Sort Tree,BBST)简称平衡二叉树。平衡二又树有很多种,其中最著名的是由前苏联数学家 Adele- Veliki和 Landis在1962年提出的高度平衡的二叉树。根据提出者的英文名字首字母简称为AVL</p>
+           <p itemprop="description" >上一篇已经介绍了线程的安全性，包括原子性操作和锁机制等内容，如果还没了解此部分内容可参考线程安全性。
+从上一篇线程的安全性我们可以知道同步代码块和同步方法可以确保以原子的方式执行操作，这一篇则是介绍同步的另外一个重要的方面：内存可见性
+可见性
+一个线程对共享变量值得修改，其他线程</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -305,13 +306,13 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/线程安全性/" title="线程安全性" itemprop="url">
+    <a href="/2018/08/16/平衡二叉树之C语言实现/" title="平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码" itemprop="url">
   
-    <h1 itemprop="name">线程安全性</h1>
+    <h1 itemprop="name">平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码</h1>
     
      
-           <p itemprop="description" >什么是线程安全性
-某个类的行为与其规范完全一致。当多个线程访问某个类时，这个类始终都能表现出正确的行为，那么就称这个类是线程安全的。换句话说就是当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步或协同，这个都能表</p>
+           <p itemprop="description" >平衡二叉树的定义
+平衡二叉查找树( Balanced Binary Sort Tree,BBST)简称平衡二叉树。平衡二又树有很多种,其中最著名的是由前苏联数学家 Adele- Veliki和 Landis在1962年提出的高度平衡的二叉树。根据提出者的英文名字首字母简称为AVL</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -349,6 +350,27 @@ member_name
 
 对应的实体类如下
 12345public class Member &amp;#123;  	private Integer memberId;  	</p>
+        
+    
+    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2018/08/16/线程安全性/" title="线程安全性" itemprop="url">
+  
+    <h1 itemprop="name">线程安全性</h1>
+    
+     
+           <p itemprop="description" >什么是线程安全性
+某个类的行为与其规范完全一致。当多个线程访问某个类时，这个类始终都能表现出正确的行为，那么就称这个类是线程安全的。换句话说就是当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步或协同，这个都能表</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -444,6 +466,10 @@ member_name
 		  
 		
 		  
+			<li><a href="/categories/算法/" title="算法">算法<sup>1</sup></a></li>
+		  
+		
+		  
 			<li><a href="/categories/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
 		  
 		
@@ -481,7 +507,11 @@ member_name
 			
 		
 			
-				<li><a href="/tags/redis/" title="redis">redis<sup>1</sup></a></li>
+				<li><a href="/tags/NIO/" title="NIO">NIO<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/sort/" title="sort">sort<sup>1</sup></a></li>
 			
 		
 			
@@ -493,15 +523,23 @@ member_name
 			
 		
 			
-				<li><a href="/tags/NIO/" title="NIO">NIO<sup>1</sup></a></li>
+				<li><a href="/tags/HTTP/" title="HTTP">HTTP<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/redis/" title="redis">redis<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/war包/" title="war包">war包<sup>1</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/线程池/" title="线程池">线程池<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/HTTP/" title="HTTP">HTTP<sup>1</sup></a></li>
 			
 		
 			
@@ -510,14 +548,6 @@ member_name
 		
 			
 				<li><a href="/tags/Springboot/" title="Springboot">Springboot<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/war包/" title="war包">war包<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
 			
 		
 			
@@ -536,10 +566,6 @@ member_name
 				<li><a href="/tags/平衡二叉树/" title="平衡二叉树">平衡二叉树<sup>1</sup></a></li>
 			
 		
-			
-				<li><a href="/tags/Mybatis/" title="Mybatis">Mybatis<sup>1</sup></a></li>
-			
-		
 		</ul>
 </div>
 
@@ -548,7 +574,7 @@ member_name
   <div class="tagcloudlist">
     <p class="asidetitle">标签云</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/404/" style="font-size: 12.5px;">404</a> <a href="/tags/B树/" style="font-size: 10px;">B树</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/JVM/" style="font-size: 12.5px;">JVM</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/Mybatis/" style="font-size: 10px;">Mybatis</a> <a href="/tags/NIO/" style="font-size: 10px;">NIO</a> <a href="/tags/Socket/" style="font-size: 10px;">Socket</a> <a href="/tags/Spring/" style="font-size: 17.5px;">Spring</a> <a href="/tags/Springboot/" style="font-size: 10px;">Springboot</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/war包/" style="font-size: 10px;">war包</a> <a href="/tags/单例模式/" style="font-size: 10px;">单例模式</a> <a href="/tags/多线程/" style="font-size: 20px;">多线程</a> <a href="/tags/平衡二叉树/" style="font-size: 10px;">平衡二叉树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/线程池/" style="font-size: 10px;">线程池</a>
+       <a href="/tags/404/" style="font-size: 12.5px;">404</a> <a href="/tags/B树/" style="font-size: 10px;">B树</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/HTTP/" style="font-size: 10px;">HTTP</a> <a href="/tags/JVM/" style="font-size: 12.5px;">JVM</a> <a href="/tags/Maven/" style="font-size: 10px;">Maven</a> <a href="/tags/MySQL/" style="font-size: 15px;">MySQL</a> <a href="/tags/Mybatis/" style="font-size: 10px;">Mybatis</a> <a href="/tags/NIO/" style="font-size: 10px;">NIO</a> <a href="/tags/Socket/" style="font-size: 10px;">Socket</a> <a href="/tags/Spring/" style="font-size: 17.5px;">Spring</a> <a href="/tags/Springboot/" style="font-size: 10px;">Springboot</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/redis/" style="font-size: 10px;">redis</a> <a href="/tags/sort/" style="font-size: 10px;">sort</a> <a href="/tags/war包/" style="font-size: 10px;">war包</a> <a href="/tags/单例模式/" style="font-size: 10px;">单例模式</a> <a href="/tags/多线程/" style="font-size: 20px;">多线程</a> <a href="/tags/平衡二叉树/" style="font-size: 10px;">平衡二叉树</a> <a href="/tags/线程/" style="font-size: 10px;">线程</a> <a href="/tags/线程池/" style="font-size: 10px;">线程池</a>
     </div>
   </div>
 
