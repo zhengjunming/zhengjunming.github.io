@@ -94,17 +94,13 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/Java内存区域/" title="Java内存区域" itemprop="url">
+    <a href="/2018/08/16/Thread.stop()为何弃用/" title="Thread.stop()为何弃用" itemprop="url">
   
-    <h1 itemprop="name">Java内存区域</h1>
+    <h1 itemprop="name">Thread.stop()为何弃用</h1>
     
      
-           <p itemprop="description" >1. 运行时数据区域
-  Java虚拟机在执行Java程序的过程中会把所管理的内存划分为若干个不同的数据区域。
-
-
-1.1. 程序计数器
-  程序计数器是一块较小的内存区域，它可以看作是当前线程所执行的字节码的行号指示器。字节码解释器工作时就是通过改变这个计数器的值来选取下一条需</p>
+           <p itemprop="description" >官方给出的说明：
+12345678910111213141516171819/** @deprecated This method is inherently unsafe.  Stopping a thread with  *       Thread.stop causes </p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -119,13 +115,17 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/Thread.stop()为何弃用/" title="Thread.stop()为何弃用" itemprop="url">
+    <a href="/2018/08/16/Java内存区域/" title="Java内存区域" itemprop="url">
   
-    <h1 itemprop="name">Thread.stop()为何弃用</h1>
+    <h1 itemprop="name">Java内存区域</h1>
     
      
-           <p itemprop="description" >官方给出的说明：
-12345678910111213141516171819/** @deprecated This method is inherently unsafe.  Stopping a thread with  *       Thread.stop causes </p>
+           <p itemprop="description" >1. 运行时数据区域
+  Java虚拟机在执行Java程序的过程中会把所管理的内存划分为若干个不同的数据区域。
+
+
+1.1. 程序计数器
+  程序计数器是一块较小的内存区域，它可以看作是当前线程所执行的字节码的行号指示器。字节码解释器工作时就是通过改变这个计数器的值来选取下一条需</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -209,6 +209,34 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
+    <a href="/2018/08/16/对象的组合/" title="对象的组合" itemprop="url">
+  
+    <h1 itemprop="name">对象的组合</h1>
+    
+     
+           <p itemprop="description" >设计线程安全的类设计线程安全类的过程中，需要包括以下三个基本要素：
+
+找出构成对象状态的所有变量
+找出约束状态变量的不可变条件
+建立对象状态的并发访问管理策略
+
+收集同步需求
+确定对象的不可变条件与后验条件，借助原子性与封装性来满足在状态变量的有效值或状态转换上的各种约束条件。
+</p>
+        
+    
+    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
     <a href="/2018/08/16/对象的共享/" title="对象的共享" itemprop="url">
   
     <h1 itemprop="name">对象的共享</h1>
@@ -232,20 +260,14 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/对象的组合/" title="对象的组合" itemprop="url">
+    <a href="/2018/08/16/条件化的Bean——@Conditional注解/" title="条件化的Bean——@Conditional注解" itemprop="url">
   
-    <h1 itemprop="name">对象的组合</h1>
+    <h1 itemprop="name">条件化的Bean——@Conditional注解</h1>
     
      
-           <p itemprop="description" >设计线程安全的类设计线程安全类的过程中，需要包括以下三个基本要素：
+           <p itemprop="description" >当我们希望某个Bean满足了一定的条件才会被创建的时候，我们就可以使用@Conditional注解（Spring 4引入）来实现这种功能。该注解可以用到带有@Bean注解的方法上，如果给定的条件计算结果为true，就会创建这个bean，否则的话，这个bean会被忽略。
 
-找出构成对象状态的所有变量
-找出约束状态变量的不可变条件
-建立对象状态的并发访问管理策略
-
-收集同步需求
-确定对象的不可变条件与后验条件，借助原子性与封装性来满足在状态变量的有效值或状态转换上的各种约束条件。
-</p>
+常见条件</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -281,14 +303,13 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/条件化的Bean——@Conditional注解/" title="条件化的Bean——@Conditional注解" itemprop="url">
+    <a href="/2018/08/16/线程安全性/" title="线程安全性" itemprop="url">
   
-    <h1 itemprop="name">条件化的Bean——@Conditional注解</h1>
+    <h1 itemprop="name">线程安全性</h1>
     
      
-           <p itemprop="description" >当我们希望某个Bean满足了一定的条件才会被创建的时候，我们就可以使用@Conditional注解（Spring 4引入）来实现这种功能。该注解可以用到带有@Bean注解的方法上，如果给定的条件计算结果为true，就会创建这个bean，否则的话，这个bean会被忽略。
-
-常见条件</p>
+           <p itemprop="description" >什么是线程安全性
+某个类的行为与其规范完全一致。当多个线程访问某个类时，这个类始终都能表现出正确的行为，那么就称这个类是线程安全的。换句话说就是当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步或协同，这个都能表</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -350,27 +371,6 @@ member_name
 但我在访问资源的时候出现了下面这种情况的404页面，显示以下的文字
 
 404 Not foundThe page you tried to access (/manager/addnews</p>
-        
-    
-    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2018/08/16/线程安全性/" title="线程安全性" itemprop="url">
-  
-    <h1 itemprop="name">线程安全性</h1>
-    
-     
-           <p itemprop="description" >什么是线程安全性
-某个类的行为与其规范完全一致。当多个线程访问某个类时，这个类始终都能表现出正确的行为，那么就称这个类是线程安全的。换句话说就是当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步或协同，这个都能表</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -479,11 +479,11 @@ member_name
 			
 		
 			
-				<li><a href="/tags/redis/" title="redis">redis<sup>1</sup></a></li>
+				<li><a href="/tags/Springboot/" title="Springboot">Springboot<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
+				<li><a href="/tags/Maven/" title="Maven">Maven<sup>1</sup></a></li>
 			
 		
 			
@@ -503,7 +503,7 @@ member_name
 			
 		
 			
-				<li><a href="/tags/Springboot/" title="Springboot">Springboot<sup>1</sup></a></li>
+				<li><a href="/tags/redis/" title="redis">redis<sup>1</sup></a></li>
 			
 		
 			
@@ -511,7 +511,7 @@ member_name
 			
 		
 			
-				<li><a href="/tags/Maven/" title="Maven">Maven<sup>1</sup></a></li>
+				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
 			
 		
 			
@@ -519,11 +519,11 @@ member_name
 			
 		
 			
-				<li><a href="/tags/hadoop/" title="hadoop">hadoop<sup>1</sup></a></li>
+				<li><a href="/tags/线程/" title="线程">线程<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/线程/" title="线程">线程<sup>1</sup></a></li>
+				<li><a href="/tags/hadoop/" title="hadoop">hadoop<sup>1</sup></a></li>
 			
 		
 			
