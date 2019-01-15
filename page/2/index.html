@@ -73,17 +73,40 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/Java内存区域/" title="Java内存区域" itemprop="url">
+    <a href="/2018/08/16/JVM可回收垃圾判断算法/" title="JVM可回收垃圾判断算法" itemprop="url">
   
-    <h1 itemprop="name">Java内存区域</h1>
+    <h1 itemprop="name">JVM可回收垃圾判断算法</h1>
     
      
-           <p itemprop="description" >1. 运行时数据区域
-  Java虚拟机在执行Java程序的过程中会把所管理的内存划分为若干个不同的数据区域。
+           <p itemprop="description" >GC需要完成的3件事情：
+
+哪些内存需要回收？
+什么时候回收？
+如何回收？
+
+今天这篇文章就是说明哪些内存需要回收。
+在Java内存区域 一篇已经说明Java内存的各个数据区域的特点，其中程序计数器、虚拟机栈、本地方法3个区域随线程而生，随线程而灭，所以这几个区域的内存分配和回收</p>
+        
+    
+    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
+  </a>
+</section>
 
 
-1.1. 程序计数器
-  程序计数器是一块较小的内存区域，它可以看作是当前线程所执行的字节码的行号指示器。字节码解释器工作时就是通过改变这个计数器的值来选取下一条需</p>
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2018/08/16/Thread.stop()为何弃用/" title="Thread.stop()为何弃用" itemprop="url">
+  
+    <h1 itemprop="name">Thread.stop()为何弃用</h1>
+    
+     
+           <p itemprop="description" >官方给出的说明：
+12345678910111213141516171819/** @deprecated This method is inherently unsafe.  Stopping a thread with  *       Thread.stop causes </p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -146,13 +169,20 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/多线程之闭锁、栅栏和信号量/" title="多线程之闭锁、栅栏和信号量" itemprop="url">
+    <a href="/2018/08/16/对象的组合/" title="对象的组合" itemprop="url">
   
-    <h1 itemprop="name">多线程之闭锁、栅栏和信号量</h1>
+    <h1 itemprop="name">对象的组合</h1>
     
      
-           <p itemprop="description" >闭锁
-  一种同步工具类，可以延迟线程的进度直到其到达终止状态。闭锁的作用相当于一扇门：在闭锁到达结束状态之前，这扇门一直是关闭的，并且没有任何线程通过，当到达结束状态时，这扇门会打开并允许所有的线程通过。当闭锁到达结束状态后，将不会再改变状态，因为这扇门将永远保持打开状态。闭锁</p>
+           <p itemprop="description" >设计线程安全的类设计线程安全类的过程中，需要包括以下三个基本要素：
+
+找出构成对象状态的所有变量
+找出约束状态变量的不可变条件
+建立对象状态的并发访问管理策略
+
+收集同步需求
+确定对象的不可变条件与后验条件，借助原子性与封装性来满足在状态变量的有效值或状态转换上的各种约束条件。
+</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -167,18 +197,13 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/Java多线程之线程池/" title="Java多线程之线程池" itemprop="url">
+    <a href="/2018/08/16/多线程之闭锁、栅栏和信号量/" title="多线程之闭锁、栅栏和信号量" itemprop="url">
   
-    <h1 itemprop="name">Java多线程之线程池</h1>
+    <h1 itemprop="name">多线程之闭锁、栅栏和信号量</h1>
     
      
-           <p itemprop="description" >线程池的一些好处
-
-通过重用线程池中的线程，来减少每个线程创建和销毁的性能开销。
-对线程进行一些维护和管理，比如定时开始，周期执行，并发数控制等等。
-
-Executor框架用于任务执行，接口有一个execute方法，用于提交任务。
-123public interface Exec</p>
+           <p itemprop="description" >闭锁
+  一种同步工具类，可以延迟线程的进度直到其到达终止状态。闭锁的作用相当于一扇门：在闭锁到达结束状态之前，这扇门一直是关闭的，并且没有任何线程通过，当到达结束状态时，这扇门会打开并允许所有的线程通过。当闭锁到达结束状态后，将不会再改变状态，因为这扇门将永远保持打开状态。闭锁</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -216,63 +241,13 @@ Executor框架用于任务执行，接口有一个execute方法，用于提交�
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/对象的组合/" title="对象的组合" itemprop="url">
+    <a href="/2018/08/16/线程安全性/" title="线程安全性" itemprop="url">
   
-    <h1 itemprop="name">对象的组合</h1>
+    <h1 itemprop="name">线程安全性</h1>
     
      
-           <p itemprop="description" >设计线程安全的类设计线程安全类的过程中，需要包括以下三个基本要素：
-
-找出构成对象状态的所有变量
-找出约束状态变量的不可变条件
-建立对象状态的并发访问管理策略
-
-收集同步需求
-确定对象的不可变条件与后验条件，借助原子性与封装性来满足在状态变量的有效值或状态转换上的各种约束条件。
-</p>
-        
-    
-    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2018/08/16/平衡二叉树之C语言实现/" title="平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码" itemprop="url">
-  
-    <h1 itemprop="name">平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码</h1>
-    
-     
-           <p itemprop="description" >平衡二叉树的定义
-平衡二叉查找树( Balanced Binary Sort Tree,BBST)简称平衡二叉树。平衡二又树有很多种,其中最著名的是由前苏联数学家 Adele- Veliki和 Landis在1962年提出的高度平衡的二叉树。根据提出者的英文名字首字母简称为AVL</p>
-        
-    
-    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2018/08/16/条件化的Bean——@Conditional注解/" title="条件化的Bean——@Conditional注解" itemprop="url">
-  
-    <h1 itemprop="name">条件化的Bean——@Conditional注解</h1>
-    
-     
-           <p itemprop="description" >当我们希望某个Bean满足了一定的条件才会被创建的时候，我们就可以使用@Conditional注解（Spring 4引入）来实现这种功能。该注解可以用到带有@Bean注解的方法上，如果给定的条件计算结果为true，就会创建这个bean，否则的话，这个bean会被忽略。
-
-常见条件</p>
+           <p itemprop="description" >什么是线程安全性
+某个类的行为与其规范完全一致。当多个线程访问某个类时，这个类始终都能表现出正确的行为，那么就称这个类是线程安全的。换句话说就是当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步或协同，这个都能表</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -324,13 +299,35 @@ member_name
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/线程安全性/" title="线程安全性" itemprop="url">
+    <a href="/2018/08/16/条件化的Bean——@Conditional注解/" title="条件化的Bean——@Conditional注解" itemprop="url">
   
-    <h1 itemprop="name">线程安全性</h1>
+    <h1 itemprop="name">条件化的Bean——@Conditional注解</h1>
     
      
-           <p itemprop="description" >什么是线程安全性
-某个类的行为与其规范完全一致。当多个线程访问某个类时，这个类始终都能表现出正确的行为，那么就称这个类是线程安全的。换句话说就是当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步或协同，这个都能表</p>
+           <p itemprop="description" >当我们希望某个Bean满足了一定的条件才会被创建的时候，我们就可以使用@Conditional注解（Spring 4引入）来实现这种功能。该注解可以用到带有@Bean注解的方法上，如果给定的条件计算结果为true，就会创建这个bean，否则的话，这个bean会被忽略。
+
+常见条件</p>
+        
+    
+    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2018/08/16/平衡二叉树之C语言实现/" title="平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码" itemprop="url">
+  
+    <h1 itemprop="name">平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码</h1>
+    
+     
+           <p itemprop="description" >平衡二叉树的定义
+平衡二叉查找树( Balanced Binary Sort Tree,BBST)简称平衡二叉树。平衡二又树有很多种,其中最著名的是由前苏联数学家 Adele- Veliki和 Landis在1962年提出的高度平衡的二叉树。根据提出者的英文名字首字母简称为AVL</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -390,19 +387,18 @@ member_name
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/Java多线程基础/" title="Java多线程基础" itemprop="url">
+    <a href="/2018/08/16/Java多线程之线程池/" title="Java多线程之线程池" itemprop="url">
   
-    <h1 itemprop="name">Java多线程基础</h1>
+    <h1 itemprop="name">Java多线程之线程池</h1>
     
      
-           <p itemprop="description" >说到线程，一般就离不开进程的概念。
-进程：一个正在执行的程序
-线程：进程中负责程序执行的执行单元，一个进程中至少有一个线程
+           <p itemprop="description" >线程池的一些好处
 
-Java创建多线程的方法
-继承Thread类，重写该类的run()方法。
+通过重用线程池中的线程，来减少每个线程创建和销毁的性能开销。
+对线程进行一些维护和管理，比如定时开始，周期执行，并发数控制等等。
 
-123456public class MyThread extends Thr</p>
+Executor框架用于任务执行，接口有一个execute方法，用于提交任务。
+123public interface Exec</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -417,13 +413,15 @@ Java创建多线程的方法
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/HTTP协议/" title="HTTP协议" itemprop="url">
+    <a href="/2018/08/16/Profile详解/" title="Profile详解" itemprop="url">
   
-    <h1 itemprop="name">HTTP协议</h1>
+    <h1 itemprop="name">Profile详解</h1>
     
      
-           <p itemprop="description" >HTTP协议
-HTTP协议是Hyper Text Transfer Protocol（超文本传输协议）的缩写,是用于从万维网（WWW:World Wide Web ）服务器传输超文本到本地浏览器的传送协议。HTTP是一个基于TCP/IP通信协议来传递数据（HTML 文件, 图片文</p>
+           <p itemprop="description" >在项目开发的过程中，我们在不同阶段可能需要不同的配置，而我们不可能花费两个项目去实现这样的功能，但Spring就提供了一个很好的特性，利用profile进行配置可以实现此目的。
+
+配置Profile Bean例如我们在开发和生产的过程中使用不同的数据库
+一、通过JavaConfi</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -503,27 +501,15 @@ HTTP协议是Hyper Text Transfer Protocol（超文本传输协议）的缩写,�
 			
 		
 			
+				<li><a href="/tags/redis/" title="redis">redis<sup>2</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/JVM/" title="JVM">JVM<sup>2</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/404/" title="404">404<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/redis/" title="redis">redis<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/线程池/" title="线程池">线程池<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/NIO/" title="NIO">NIO<sup>1</sup></a></li>
 			
 		
 			
@@ -535,23 +521,27 @@ HTTP协议是Hyper Text Transfer Protocol（超文本传输协议）的缩写,�
 			
 		
 			
-				<li><a href="/tags/war包/" title="war包">war包<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/HTTP/" title="HTTP">HTTP<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Maven/" title="Maven">Maven<sup>1</sup></a></li>
+				<li><a href="/tags/NIO/" title="NIO">NIO<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/线程/" title="线程">线程<sup>1</sup></a></li>
+				<li><a href="/tags/线程池/" title="线程池">线程池<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/单例模式/" title="单例模式">单例模式<sup>1</sup></a></li>
+				<li><a href="/tags/Springboot/" title="Springboot">Springboot<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/war包/" title="war包">war包<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
 			
 		
 			
@@ -559,7 +549,15 @@ HTTP协议是Hyper Text Transfer Protocol（超文本传输协议）的缩写,�
 			
 		
 			
-				<li><a href="/tags/平衡二叉树/" title="平衡二叉树">平衡二叉树<sup>1</sup></a></li>
+				<li><a href="/tags/线程/" title="线程">线程<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Maven/" title="Maven">Maven<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/单例模式/" title="单例模式">单例模式<sup>1</sup></a></li>
 			
 		
 			
@@ -567,7 +565,7 @@ HTTP协议是Hyper Text Transfer Protocol（超文本传输协议）的缩写,�
 			
 		
 			
-				<li><a href="/tags/Springboot/" title="Springboot">Springboot<sup>1</sup></a></li>
+				<li><a href="/tags/平衡二叉树/" title="平衡二叉树">平衡二叉树<sup>1</sup></a></li>
 			
 		
 		</ul>

@@ -163,13 +163,19 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/Thread.stop()为何弃用/" title="Thread.stop()为何弃用" itemprop="url">
+    <a href="/2018/08/16/Java多线程基础/" title="Java多线程基础" itemprop="url">
   
-    <h1 itemprop="name">Thread.stop()为何弃用</h1>
+    <h1 itemprop="name">Java多线程基础</h1>
     
      
-           <p itemprop="description" >官方给出的说明：
-12345678910111213141516171819/** @deprecated This method is inherently unsafe.  Stopping a thread with  *       Thread.stop causes </p>
+           <p itemprop="description" >说到线程，一般就离不开进程的概念。
+进程：一个正在执行的程序
+线程：进程中负责程序执行的执行单元，一个进程中至少有一个线程
+
+Java创建多线程的方法
+继承Thread类，重写该类的run()方法。
+
+123456public class MyThread extends Thr</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -285,15 +291,17 @@ mediumint
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/Profile详解/" title="Profile详解" itemprop="url">
+    <a href="/2018/08/16/Java内存区域/" title="Java内存区域" itemprop="url">
   
-    <h1 itemprop="name">Profile详解</h1>
+    <h1 itemprop="name">Java内存区域</h1>
     
      
-           <p itemprop="description" >在项目开发的过程中，我们在不同阶段可能需要不同的配置，而我们不可能花费两个项目去实现这样的功能，但Spring就提供了一个很好的特性，利用profile进行配置可以实现此目的。
+           <p itemprop="description" >1. 运行时数据区域
+  Java虚拟机在执行Java程序的过程中会把所管理的内存划分为若干个不同的数据区域。
 
-配置Profile Bean例如我们在开发和生产的过程中使用不同的数据库
-一、通过JavaConfi</p>
+
+1.1. 程序计数器
+  程序计数器是一块较小的内存区域，它可以看作是当前线程所执行的字节码的行号指示器。字节码解释器工作时就是通过改变这个计数器的值来选取下一条需</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -308,19 +316,16 @@ mediumint
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/JVM可回收垃圾判断算法/" title="JVM可回收垃圾判断算法" itemprop="url">
+    <a href="/2018/08/16/B树之C语言实现/" title="B树之C语言实现（包含查找、删除、插入）" itemprop="url">
   
-    <h1 itemprop="name">JVM可回收垃圾判断算法</h1>
+    <h1 itemprop="name">B树之C语言实现（包含查找、删除、插入）</h1>
     
      
-           <p itemprop="description" >GC需要完成的3件事情：
+           <p itemprop="description" >我在大二上学期的数据结构实验设计中选择了B树这个题目，该B树的数据结构实现采用了C语言。趁现在寒假整理完写一篇博文记录我的学习。文末提供了项目源代码的地址。
 
-哪些内存需要回收？
-什么时候回收？
-如何回收？
+B树的定义一棵m阶B树（Balanced Tree of order m），或为空树，或为满足下列特性对的m叉树。
 
-今天这篇文章就是说明哪些内存需要回收。
-在Java内存区域 一篇已经说明Java内存的各个数据区域的特点，其中程序计数器、虚拟机栈、本地方法3个区域随线程而生，随线程而灭，所以这几个区域的内存分配和回收</p>
+树</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -344,6 +349,27 @@ mediumint
 
 DML（数据操作语句）：用于添加、删除、更新和查询数据库记录，并检查数据完整性。常用关键字有 insert、update、delete和select等。
 DDL（数据定义语句）：用于定义了不同的数据段、数据库、表、列、索引等数据库对</p>
+        
+    
+    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2018/08/16/HTTP协议/" title="HTTP协议" itemprop="url">
+  
+    <h1 itemprop="name">HTTP协议</h1>
+    
+     
+           <p itemprop="description" >HTTP协议
+HTTP协议是Hyper Text Transfer Protocol（超文本传输协议）的缩写,是用于从万维网（WWW:World Wide Web ）服务器传输超文本到本地浏览器的传送协议。HTTP是一个基于TCP/IP通信协议来传递数据（HTML 文件, 图片文</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -407,30 +433,6 @@ DDL（数据定义语句）：用于定义了不同的数据段、数据库、�
      
            <p itemprop="description" >Springboot项目打包一般都是默认打包成jar包，但是最近做了一个小Demo，打包成jar包路径问题没法解决，所以就考虑打包成war包，但是打包成war包又有了访问404的问题，下面是从网上找到的方法，也是找了好多个然后综合起来才解决。
 首先在pom.xml中做出下列修改。</p>
-        
-    
-    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2018/08/16/B树之C语言实现/" title="B树之C语言实现（包含查找、删除、插入）" itemprop="url">
-  
-    <h1 itemprop="name">B树之C语言实现（包含查找、删除、插入）</h1>
-    
-     
-           <p itemprop="description" >我在大二上学期的数据结构实验设计中选择了B树这个题目，该B树的数据结构实现采用了C语言。趁现在寒假整理完写一篇博文记录我的学习。文末提供了项目源代码的地址。
-
-B树的定义一棵m阶B树（Balanced Tree of order m），或为空树，或为满足下列特性对的m叉树。
-
-树</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -510,27 +512,15 @@ B树的定义一棵m阶B树（Balanced Tree of order m），或为空树，或�
 			
 		
 			
+				<li><a href="/tags/redis/" title="redis">redis<sup>2</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/JVM/" title="JVM">JVM<sup>2</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/404/" title="404">404<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/redis/" title="redis">redis<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/线程池/" title="线程池">线程池<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/NIO/" title="NIO">NIO<sup>1</sup></a></li>
 			
 		
 			
@@ -542,23 +532,27 @@ B树的定义一棵m阶B树（Balanced Tree of order m），或为空树，或�
 			
 		
 			
-				<li><a href="/tags/war包/" title="war包">war包<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/HTTP/" title="HTTP">HTTP<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Maven/" title="Maven">Maven<sup>1</sup></a></li>
+				<li><a href="/tags/NIO/" title="NIO">NIO<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/线程/" title="线程">线程<sup>1</sup></a></li>
+				<li><a href="/tags/线程池/" title="线程池">线程池<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/单例模式/" title="单例模式">单例模式<sup>1</sup></a></li>
+				<li><a href="/tags/Springboot/" title="Springboot">Springboot<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/war包/" title="war包">war包<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
 			
 		
 			
@@ -566,7 +560,15 @@ B树的定义一棵m阶B树（Balanced Tree of order m），或为空树，或�
 			
 		
 			
-				<li><a href="/tags/平衡二叉树/" title="平衡二叉树">平衡二叉树<sup>1</sup></a></li>
+				<li><a href="/tags/线程/" title="线程">线程<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Maven/" title="Maven">Maven<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/单例模式/" title="单例模式">单例模式<sup>1</sup></a></li>
 			
 		
 			
@@ -574,7 +576,7 @@ B树的定义一棵m阶B树（Balanced Tree of order m），或为空树，或�
 			
 		
 			
-				<li><a href="/tags/Springboot/" title="Springboot">Springboot<sup>1</sup></a></li>
+				<li><a href="/tags/平衡二叉树/" title="平衡二叉树">平衡二叉树<sup>1</sup></a></li>
 			
 		
 		</ul>
