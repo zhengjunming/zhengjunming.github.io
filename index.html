@@ -163,13 +163,13 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/Springboot打包成war包的404问题/" title="Springboot打包成war包的404问题" itemprop="url">
+    <a href="/2018/08/16/Thread.stop()为何弃用/" title="Thread.stop()为何弃用" itemprop="url">
   
-    <h1 itemprop="name">Springboot打包成war包的404问题</h1>
+    <h1 itemprop="name">Thread.stop()为何弃用</h1>
     
      
-           <p itemprop="description" >Springboot项目打包一般都是默认打包成jar包，但是最近做了一个小Demo，打包成jar包路径问题没法解决，所以就考虑打包成war包，但是打包成war包又有了访问404的问题，下面是从网上找到的方法，也是找了好多个然后综合起来才解决。
-首先在pom.xml中做出下列修改。</p>
+           <p itemprop="description" >官方给出的说明：
+12345678910111213141516171819/** @deprecated This method is inherently unsafe.  Stopping a thread with  *       Thread.stop causes </p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -311,29 +311,6 @@ Java创建多线程的方法
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/Profile详解/" title="Profile详解" itemprop="url">
-  
-    <h1 itemprop="name">Profile详解</h1>
-    
-     
-           <p itemprop="description" >在项目开发的过程中，我们在不同阶段可能需要不同的配置，而我们不可能花费两个项目去实现这样的功能，但Spring就提供了一个很好的特性，利用profile进行配置可以实现此目的。
-
-配置Profile Bean例如我们在开发和生产的过程中使用不同的数据库
-一、通过JavaConfi</p>
-        
-    
-    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
     <a href="/2018/08/16/Maven导入本地包/" title="Maven导入本地包" itemprop="url">
   
     <h1 itemprop="name">Maven导入本地包</h1>
@@ -342,29 +319,6 @@ Java创建多线程的方法
            <p itemprop="description" >项目开发的包基本都可以通过Maven来管理，包的依赖一般可以在https://mvnrepository.com/ 这个网站中找到，但是有一些包并没有上传到该网站上，这时候就需要导入本地包让Maven进行管理。
 首先先看一下包依赖的结构（以druid为例）
 12345&amp;lt;de</p>
-        
-    
-    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2018/08/16/SQL语句/" title="SQL基础语句" itemprop="url">
-  
-    <h1 itemprop="name">SQL基础语句</h1>
-    
-     
-           <p itemprop="description" >SQL分类SQL语句主要可以划分为3个类别。
-
-DML（数据操作语句）：用于添加、删除、更新和查询数据库记录，并检查数据完整性。常用关键字有 insert、update、delete和select等。
-DDL（数据定义语句）：用于定义了不同的数据段、数据库、表、列、索引等数据库对</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -406,6 +360,55 @@ DDL（数据定义语句）：用于定义了不同的数据段、数据库、�
   
 <section class="post" itemscope itemprop="blogitem">
   
+    <a href="/2018/08/16/SQL语句/" title="SQL基础语句" itemprop="url">
+  
+    <h1 itemprop="name">SQL基础语句</h1>
+    
+     
+           <p itemprop="description" >SQL分类SQL语句主要可以划分为3个类别。
+
+DML（数据操作语句）：用于添加、删除、更新和查询数据库记录，并检查数据完整性。常用关键字有 insert、update、delete和select等。
+DDL（数据定义语句）：用于定义了不同的数据段、数据库、表、列、索引等数据库对</p>
+        
+    
+    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2018/08/16/Java多线程之线程池/" title="Java多线程之线程池" itemprop="url">
+  
+    <h1 itemprop="name">Java多线程之线程池</h1>
+    
+     
+           <p itemprop="description" >线程池的一些好处
+
+通过重用线程池中的线程，来减少每个线程创建和销毁的性能开销。
+对线程进行一些维护和管理，比如定时开始，周期执行，并发数控制等等。
+
+Executor框架用于任务执行，接口有一个execute方法，用于提交任务。
+123public interface Exec</p>
+        
+    
+    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
     <a href="/2018/08/16/Socket的几种实现/" title="Socket的几种实现" itemprop="url">
   
     <h1 itemprop="name">Socket的几种实现</h1>
@@ -427,13 +430,13 @@ DDL（数据定义语句）：用于定义了不同的数据段、数据库、�
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/SpringBoot创建工程与运行/" title="SpringBoot创建工程与运行" itemprop="url">
+    <a href="/2018/08/16/Springboot打包成war包的404问题/" title="Springboot打包成war包的404问题" itemprop="url">
   
-    <h1 itemprop="name">SpringBoot创建工程与运行</h1>
+    <h1 itemprop="name">Springboot打包成war包的404问题</h1>
     
      
-           <p itemprop="description" >SpringBoot工程的构建1. 通过官网搭建在浏览器输入http://start.spring.io/ 即可进入以下界面。
-在这里你可以搭建一个最简单的SpringBoot项目，当然你如果想要更多的功能与支持，可以点击里面的Switch to the full version</p>
+           <p itemprop="description" >Springboot项目打包一般都是默认打包成jar包，但是最近做了一个小Demo，打包成jar包路径问题没法解决，所以就考虑打包成war包，但是打包成war包又有了访问404的问题，下面是从网上找到的方法，也是找了好多个然后综合起来才解决。
+首先在pom.xml中做出下列修改。</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -513,11 +516,11 @@ DDL（数据定义语句）：用于定义了不同的数据段、数据库、�
 			
 		
 			
-				<li><a href="/tags/redis/" title="redis">redis<sup>2</sup></a></li>
+				<li><a href="/tags/JVM/" title="JVM">JVM<sup>2</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/JVM/" title="JVM">JVM<sup>2</sup></a></li>
+				<li><a href="/tags/redis/" title="redis">redis<sup>2</sup></a></li>
 			
 		
 			
@@ -525,7 +528,7 @@ DDL（数据定义语句）：用于定义了不同的数据段、数据库、�
 			
 		
 			
-				<li><a href="/tags/NIO/" title="NIO">NIO<sup>1</sup></a></li>
+				<li><a href="/tags/Socket/" title="Socket">Socket<sup>1</sup></a></li>
 			
 		
 			
@@ -533,23 +536,15 @@ DDL（数据定义语句）：用于定义了不同的数据段、数据库、�
 			
 		
 			
-				<li><a href="/tags/线程池/" title="线程池">线程池<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/Maven/" title="Maven">Maven<sup>1</sup></a></li>
 			
 		
 			
+				<li><a href="/tags/线程池/" title="线程池">线程池<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Socket/" title="Socket">Socket<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/Springboot/" title="Springboot">Springboot<sup>1</sup></a></li>
 			
 		
 			
@@ -562,6 +557,14 @@ DDL（数据定义语句）：用于定义了不同的数据段、数据库、�
 		
 			
 				<li><a href="/tags/线程/" title="线程">线程<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/NIO/" title="NIO">NIO<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Springboot/" title="Springboot">Springboot<sup>1</sup></a></li>
 			
 		
 			
