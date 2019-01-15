@@ -100,78 +100,18 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/Thread.stop()为何弃用/" title="Thread.stop()为何弃用" itemprop="url">
+    <a href="/2018/08/16/Java多线程之线程池/" title="Java多线程之线程池" itemprop="url">
   
-    <h1 itemprop="name">Thread.stop()为何弃用</h1>
+    <h1 itemprop="name">Java多线程之线程池</h1>
     
      
-           <p itemprop="description" >官方给出的说明：
-12345678910111213141516171819/** @deprecated This method is inherently unsafe.  Stopping a thread with  *       Thread.stop causes </p>
-        
-    
-    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
-  </a>
-</section>
+           <p itemprop="description" >线程池的一些好处
 
+通过重用线程池中的线程，来减少每个线程创建和销毁的性能开销。
+对线程进行一些维护和管理，比如定时开始，周期执行，并发数控制等等。
 
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2018/08/16/HTTP协议/" title="HTTP协议" itemprop="url">
-  
-    <h1 itemprop="name">HTTP协议</h1>
-    
-     
-           <p itemprop="description" >HTTP协议
-HTTP协议是Hyper Text Transfer Protocol（超文本传输协议）的缩写,是用于从万维网（WWW:World Wide Web ）服务器传输超文本到本地浏览器的传送协议。HTTP是一个基于TCP/IP通信协议来传递数据（HTML 文件, 图片文</p>
-        
-    
-    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2018/08/16/处理自动装配的歧义性/" title="处理自动装配的歧义性" itemprop="url">
-  
-    <h1 itemprop="name">处理自动装配的歧义性</h1>
-    
-     
-           <p itemprop="description" >自动装配能够提供很大的帮助，因为它会减少装配应用程序组件时所需要的显式配置的数量。当不仅有一个bean能够匹配结果的话，这种歧义性会阻碍Spring自动装配属性、构造器参数或方法参数。
-
-例如我们使用@Autowired注解标注了setWord()方法：
-1234@Autowir</p>
-        
-    
-    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2018/08/16/Socket的几种实现/" title="Socket的几种实现" itemprop="url">
-  
-    <h1 itemprop="name">Socket的几种实现</h1>
-    
-     
-           <p itemprop="description" >基于TCP协议的网络编程
- TCP/IP通信协议是一种可靠的网络协议，它在通信的两端各建立一个Socket，从而在通信的两端之间形成网络虚拟链路。一旦建立了虚拟的网络链路，两端的成员就可以通过虚拟链路进行通信。Java是对基于TCP协议的网络通信提供了良好的封装，Java使用So</p>
+Executor框架用于任务执行，接口有一个execute方法，用于提交任务。
+123public interface Exec</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -197,6 +137,29 @@ HTTP协议是Hyper Text Transfer Protocol（超文本传输协议）的缩写,�
 
 
 经典单例实现123456789101112public class Singleton &amp;#123;    private static Singleton uniqueInstan</p>
+        
+    
+    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2018/08/16/处理自动装配的歧义性/" title="处理自动装配的歧义性" itemprop="url">
+  
+    <h1 itemprop="name">处理自动装配的歧义性</h1>
+    
+     
+           <p itemprop="description" >自动装配能够提供很大的帮助，因为它会减少装配应用程序组件时所需要的显式配置的数量。当不仅有一个bean能够匹配结果的话，这种歧义性会阻碍Spring自动装配属性、构造器参数或方法参数。
+
+例如我们使用@Autowired注解标注了setWord()方法：
+1234@Autowir</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -283,13 +246,14 @@ HTTP协议是Hyper Text Transfer Protocol（超文本传输协议）的缩写,�
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/平衡二叉树之C语言实现/" title="平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码" itemprop="url">
+    <a href="/2018/08/16/条件化的Bean——@Conditional注解/" title="条件化的Bean——@Conditional注解" itemprop="url">
   
-    <h1 itemprop="name">平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码</h1>
+    <h1 itemprop="name">条件化的Bean——@Conditional注解</h1>
     
      
-           <p itemprop="description" >平衡二叉树的定义
-平衡二叉查找树( Balanced Binary Sort Tree,BBST)简称平衡二叉树。平衡二又树有很多种,其中最著名的是由前苏联数学家 Adele- Veliki和 Landis在1962年提出的高度平衡的二叉树。根据提出者的英文名字首字母简称为AVL</p>
+           <p itemprop="description" >当我们希望某个Bean满足了一定的条件才会被创建的时候，我们就可以使用@Conditional注解（Spring 4引入）来实现这种功能。该注解可以用到带有@Bean注解的方法上，如果给定的条件计算结果为true，就会创建这个bean，否则的话，这个bean会被忽略。
+
+常见条件</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -304,14 +268,34 @@ HTTP协议是Hyper Text Transfer Protocol（超文本传输协议）的缩写,�
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/条件化的Bean——@Conditional注解/" title="条件化的Bean——@Conditional注解" itemprop="url">
+    <a href="/2018/08/16/线程安全性/" title="线程安全性" itemprop="url">
   
-    <h1 itemprop="name">条件化的Bean——@Conditional注解</h1>
+    <h1 itemprop="name">线程安全性</h1>
     
      
-           <p itemprop="description" >当我们希望某个Bean满足了一定的条件才会被创建的时候，我们就可以使用@Conditional注解（Spring 4引入）来实现这种功能。该注解可以用到带有@Bean注解的方法上，如果给定的条件计算结果为true，就会创建这个bean，否则的话，这个bean会被忽略。
+           <p itemprop="description" >什么是线程安全性
+某个类的行为与其规范完全一致。当多个线程访问某个类时，这个类始终都能表现出正确的行为，那么就称这个类是线程安全的。换句话说就是当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步或协同，这个都能表</p>
+        
+    
+    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
+  </a>
+</section>
 
-常见条件</p>
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2018/08/16/平衡二叉树之C语言实现/" title="平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码" itemprop="url">
+  
+    <h1 itemprop="name">平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码</h1>
+    
+     
+           <p itemprop="description" >平衡二叉树的定义
+平衡二叉查找树( Balanced Binary Sort Tree,BBST)简称平衡二叉树。平衡二又树有很多种,其中最著名的是由前苏联数学家 Adele- Veliki和 Landis在1962年提出的高度平衡的二叉树。根据提出者的英文名字首字母简称为AVL</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -363,27 +347,6 @@ member_name
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/线程安全性/" title="线程安全性" itemprop="url">
-  
-    <h1 itemprop="name">线程安全性</h1>
-    
-     
-           <p itemprop="description" >什么是线程安全性
-某个类的行为与其规范完全一致。当多个线程访问某个类时，这个类始终都能表现出正确的行为，那么就称这个类是线程安全的。换句话说就是当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步或协同，这个都能表</p>
-        
-    
-    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
     <a href="/2018/08/16/解决Web项目因访问URL与Tomcat服务器文件夹相同导致404页面的问题/" title="解决Web项目因访问URL与Tomcat服务器文件夹相同导致404页面的问题" itemprop="url">
   
     <h1 itemprop="name">解决Web项目因访问URL与Tomcat服务器文件夹相同导致404页面的问题</h1>
@@ -408,6 +371,29 @@ member_name
   
 <section class="post" itemscope itemprop="blogitem">
   
+    <a href="/2018/08/16/Profile详解/" title="Profile详解" itemprop="url">
+  
+    <h1 itemprop="name">Profile详解</h1>
+    
+     
+           <p itemprop="description" >在项目开发的过程中，我们在不同阶段可能需要不同的配置，而我们不可能花费两个项目去实现这样的功能，但Spring就提供了一个很好的特性，利用profile进行配置可以实现此目的。
+
+配置Profile Bean例如我们在开发和生产的过程中使用不同的数据库
+一、通过JavaConfi</p>
+        
+    
+    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
     <a href="/2018/08/16/运行时值注入Bean/" title="运行时值注入Bean" itemprop="url">
   
     <h1 itemprop="name">运行时值注入Bean</h1>
@@ -415,6 +401,40 @@ member_name
      
            <p itemprop="description" >bean装配的另外一个方面指的是将一个值注入到bean的属性或者构造器参数中。但如果是下面这种装配bean的话注入的值就是硬编码了。
 123456@Beanpublic Student student() &amp;#123;    return new Student(    	&#34;zh</p>
+        
+    
+    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2018/08/16/MySQL逻辑运算符/" title="MySQL中的运算符" itemprop="url">
+  
+    <h1 itemprop="name">MySQL中的运算符</h1>
+    
+     
+           <p itemprop="description" >算数运算符
++：加法
+-：减法
+*：乘法
+/， DIV：除法
+%，MOD：模运算
+
+比较运算符
+当使用SELECT语句进行查询时，MySQL允许用户对表达式的左边操作数和右边的操作数进行比较，比较结果真，则返回1，为加则返回0，比较结果不确定则返回NULL。 
+
+
+
+
+运算符
+作</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -506,7 +526,7 @@ member_name
 			
 		
 			
-				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
+				<li><a href="/tags/Springboot/" title="Springboot">Springboot<sup>1</sup></a></li>
 			
 		
 			
@@ -514,19 +534,15 @@ member_name
 			
 		
 			
-				<li><a href="/tags/线程池/" title="线程池">线程池<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/NIO/" title="NIO">NIO<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/HTTP/" title="HTTP">HTTP<sup>1</sup></a></li>
+				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Springboot/" title="Springboot">Springboot<sup>1</sup></a></li>
+				<li><a href="/tags/线程池/" title="线程池">线程池<sup>1</sup></a></li>
 			
 		
 			
@@ -534,7 +550,7 @@ member_name
 			
 		
 			
-				<li><a href="/tags/Maven/" title="Maven">Maven<sup>1</sup></a></li>
+				<li><a href="/tags/HTTP/" title="HTTP">HTTP<sup>1</sup></a></li>
 			
 		
 			
@@ -542,15 +558,19 @@ member_name
 			
 		
 			
-				<li><a href="/tags/hadoop/" title="hadoop">hadoop<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/Socket/" title="Socket">Socket<sup>1</sup></a></li>
 			
 		
 			
+				<li><a href="/tags/hadoop/" title="hadoop">hadoop<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/单例模式/" title="单例模式">单例模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Maven/" title="Maven">Maven<sup>1</sup></a></li>
 			
 		
 			
