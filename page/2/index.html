@@ -26,11 +26,11 @@
     <link rel="alternative" href="/atom.xml" title="小铭" type="application/atom+xml">
     
     
-    <link rel="icon" href="/img/apple.jpg">
+    <link rel="icon" href="/img/apple.jpeg">
     
     
-    <link rel="apple-touch-icon" href="/img/apple.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/apple.jpg">
+    <link rel="apple-touch-icon" href="/img/apple.jpeg">
+    <link rel="apple-touch-icon-precomposed" href="/img/apple.jpeg">
     
     <link rel="stylesheet" href="/css/style.css">
 </head>
@@ -41,7 +41,7 @@
 <div>
 		
 			<div id="imglogo">
-				<a href="/"><img src="/img/apple.jpg" alt="小铭" title="小铭"/></a>
+				<a href="/"><img src="/img/apple.jpeg" alt="小铭" title="小铭"/></a>
 			</div>
 			
 			<div id="textlogo">
@@ -73,19 +73,13 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/JVM可回收垃圾判断算法/" title="JVM可回收垃圾判断算法" itemprop="url">
+    <a href="/2018/08/16/HTTP协议/" title="HTTP协议" itemprop="url">
   
-    <h1 itemprop="name">JVM可回收垃圾判断算法</h1>
+    <h1 itemprop="name">HTTP协议</h1>
     
      
-           <p itemprop="description" >GC需要完成的3件事情：
-
-哪些内存需要回收？
-什么时候回收？
-如何回收？
-
-今天这篇文章就是说明哪些内存需要回收。
-在Java内存区域 一篇已经说明Java内存的各个数据区域的特点，其中程序计数器、虚拟机栈、本地方法3个区域随线程而生，随线程而灭，所以这几个区域的内存分配和回收</p>
+           <p itemprop="description" >HTTP协议
+HTTP协议是Hyper Text Transfer Protocol（超文本传输协议）的缩写,是用于从万维网（WWW:World Wide Web ）服务器传输超文本到本地浏览器的传送协议。HTTP是一个基于TCP/IP通信协议来传递数据（HTML 文件, 图片文</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -107,6 +101,53 @@
      
            <p itemprop="description" >官方给出的说明：
 12345678910111213141516171819/** @deprecated This method is inherently unsafe.  Stopping a thread with  *       Thread.stop causes </p>
+        
+    
+    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2018/08/16/Socket的几种实现/" title="Socket的几种实现" itemprop="url">
+  
+    <h1 itemprop="name">Socket的几种实现</h1>
+    
+     
+           <p itemprop="description" >基于TCP协议的网络编程
+ TCP/IP通信协议是一种可靠的网络协议，它在通信的两端各建立一个Socket，从而在通信的两端之间形成网络虚拟链路。一旦建立了虚拟的网络链路，两端的成员就可以通过虚拟链路进行通信。Java是对基于TCP协议的网络通信提供了良好的封装，Java使用So</p>
+        
+    
+    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2018/08/16/Java多线程之线程池/" title="Java多线程之线程池" itemprop="url">
+  
+    <h1 itemprop="name">Java多线程之线程池</h1>
+    
+     
+           <p itemprop="description" >线程池的一些好处
+
+通过重用线程池中的线程，来减少每个线程创建和销毁的性能开销。
+对线程进行一些维护和管理，比如定时开始，周期执行，并发数控制等等。
+
+Executor框架用于任务执行，接口有一个execute方法，用于提交任务。
+123public interface Exec</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -169,34 +210,6 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/对象的组合/" title="对象的组合" itemprop="url">
-  
-    <h1 itemprop="name">对象的组合</h1>
-    
-     
-           <p itemprop="description" >设计线程安全的类设计线程安全类的过程中，需要包括以下三个基本要素：
-
-找出构成对象状态的所有变量
-找出约束状态变量的不可变条件
-建立对象状态的并发访问管理策略
-
-收集同步需求
-确定对象的不可变条件与后验条件，借助原子性与封装性来满足在状态变量的有效值或状态转换上的各种约束条件。
-</p>
-        
-    
-    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
     <a href="/2018/08/16/多线程之闭锁、栅栏和信号量/" title="多线程之闭锁、栅栏和信号量" itemprop="url">
   
     <h1 itemprop="name">多线程之闭锁、栅栏和信号量</h1>
@@ -227,6 +240,77 @@
 从上一篇线程的安全性我们可以知道同步代码块和同步方法可以确保以原子的方式执行操作，这一篇则是介绍同步的另外一个重要的方面：内存可见性
 可见性
 一个线程对共享变量值得修改，其他线程</p>
+        
+    
+    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2018/08/16/对象的组合/" title="对象的组合" itemprop="url">
+  
+    <h1 itemprop="name">对象的组合</h1>
+    
+     
+           <p itemprop="description" >设计线程安全的类设计线程安全类的过程中，需要包括以下三个基本要素：
+
+找出构成对象状态的所有变量
+找出约束状态变量的不可变条件
+建立对象状态的并发访问管理策略
+
+收集同步需求
+确定对象的不可变条件与后验条件，借助原子性与封装性来满足在状态变量的有效值或状态转换上的各种约束条件。
+</p>
+        
+    
+    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2018/08/16/条件化的Bean——@Conditional注解/" title="条件化的Bean——@Conditional注解" itemprop="url">
+  
+    <h1 itemprop="name">条件化的Bean——@Conditional注解</h1>
+    
+     
+           <p itemprop="description" >当我们希望某个Bean满足了一定的条件才会被创建的时候，我们就可以使用@Conditional注解（Spring 4引入）来实现这种功能。该注解可以用到带有@Bean注解的方法上，如果给定的条件计算结果为true，就会创建这个bean，否则的话，这个bean会被忽略。
+
+常见条件</p>
+        
+    
+    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2018/08/16/平衡二叉树之C语言实现/" title="平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码" itemprop="url">
+  
+    <h1 itemprop="name">平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码</h1>
+    
+     
+           <p itemprop="description" >平衡二叉树的定义
+平衡二叉查找树( Balanced Binary Sort Tree,BBST)简称平衡二叉树。平衡二又树有很多种,其中最著名的是由前苏联数学家 Adele- Veliki和 Landis在1962年提出的高度平衡的二叉树。根据提出者的英文名字首字母简称为AVL</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -299,49 +383,6 @@ member_name
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/条件化的Bean——@Conditional注解/" title="条件化的Bean——@Conditional注解" itemprop="url">
-  
-    <h1 itemprop="name">条件化的Bean——@Conditional注解</h1>
-    
-     
-           <p itemprop="description" >当我们希望某个Bean满足了一定的条件才会被创建的时候，我们就可以使用@Conditional注解（Spring 4引入）来实现这种功能。该注解可以用到带有@Bean注解的方法上，如果给定的条件计算结果为true，就会创建这个bean，否则的话，这个bean会被忽略。
-
-常见条件</p>
-        
-    
-    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2018/08/16/平衡二叉树之C语言实现/" title="平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码" itemprop="url">
-  
-    <h1 itemprop="name">平衡二叉树之C语言实现（插入、删除，分裂、合并）附源代码</h1>
-    
-     
-           <p itemprop="description" >平衡二叉树的定义
-平衡二叉查找树( Balanced Binary Sort Tree,BBST)简称平衡二叉树。平衡二又树有很多种,其中最著名的是由前苏联数学家 Adele- Veliki和 Landis在1962年提出的高度平衡的二叉树。根据提出者的英文名字首字母简称为AVL</p>
-        
-    
-    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
     <a href="/2018/08/16/解决Web项目因访问URL与Tomcat服务器文件夹相同导致404页面的问题/" title="解决Web项目因访问URL与Tomcat服务器文件夹相同导致404页面的问题" itemprop="url">
   
     <h1 itemprop="name">解决Web项目因访问URL与Tomcat服务器文件夹相同导致404页面的问题</h1>
@@ -373,55 +414,6 @@ member_name
      
            <p itemprop="description" >bean装配的另外一个方面指的是将一个值注入到bean的属性或者构造器参数中。但如果是下面这种装配bean的话注入的值就是硬编码了。
 123456@Beanpublic Student student() &amp;#123;    return new Student(    	&#34;zh</p>
-        
-    
-    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2018/08/16/Java多线程之线程池/" title="Java多线程之线程池" itemprop="url">
-  
-    <h1 itemprop="name">Java多线程之线程池</h1>
-    
-     
-           <p itemprop="description" >线程池的一些好处
-
-通过重用线程池中的线程，来减少每个线程创建和销毁的性能开销。
-对线程进行一些维护和管理，比如定时开始，周期执行，并发数控制等等。
-
-Executor框架用于任务执行，接口有一个execute方法，用于提交任务。
-123public interface Exec</p>
-        
-    
-    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2018/08/16/Profile详解/" title="Profile详解" itemprop="url">
-  
-    <h1 itemprop="name">Profile详解</h1>
-    
-     
-           <p itemprop="description" >在项目开发的过程中，我们在不同阶段可能需要不同的配置，而我们不可能花费两个项目去实现这样的功能，但Spring就提供了一个很好的特性，利用profile进行配置可以实现此目的。
-
-配置Profile Bean例如我们在开发和生产的过程中使用不同的数据库
-一、通过JavaConfi</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -513,7 +505,7 @@ Executor框架用于任务执行，接口有一个execute方法，用于提交�
 			
 		
 			
-				<li><a href="/tags/Socket/" title="Socket">Socket<sup>1</sup></a></li>
+				<li><a href="/tags/Maven/" title="Maven">Maven<sup>1</sup></a></li>
 			
 		
 			
@@ -521,7 +513,7 @@ Executor框架用于任务执行，接口有一个execute方法，用于提交�
 			
 		
 			
-				<li><a href="/tags/HTTP/" title="HTTP">HTTP<sup>1</sup></a></li>
+				<li><a href="/tags/线程池/" title="线程池">线程池<sup>1</sup></a></li>
 			
 		
 			
@@ -529,7 +521,7 @@ Executor框架用于任务执行，接口有一个execute方法，用于提交�
 			
 		
 			
-				<li><a href="/tags/线程池/" title="线程池">线程池<sup>1</sup></a></li>
+				<li><a href="/tags/HTTP/" title="HTTP">HTTP<sup>1</sup></a></li>
 			
 		
 			
@@ -545,15 +537,15 @@ Executor框架用于任务执行，接口有一个execute方法，用于提交�
 			
 		
 			
-				<li><a href="/tags/hadoop/" title="hadoop">hadoop<sup>1</sup></a></li>
-			
-		
-			
 				<li><a href="/tags/线程/" title="线程">线程<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Maven/" title="Maven">Maven<sup>1</sup></a></li>
+				<li><a href="/tags/Socket/" title="Socket">Socket<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/hadoop/" title="hadoop">hadoop<sup>1</sup></a></li>
 			
 		
 			
@@ -561,11 +553,11 @@ Executor框架用于任务执行，接口有一个execute方法，用于提交�
 			
 		
 			
-				<li><a href="/tags/Mybatis/" title="Mybatis">Mybatis<sup>1</sup></a></li>
+				<li><a href="/tags/平衡二叉树/" title="平衡二叉树">平衡二叉树<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/平衡二叉树/" title="平衡二叉树">平衡二叉树<sup>1</sup></a></li>
+				<li><a href="/tags/Mybatis/" title="Mybatis">Mybatis<sup>1</sup></a></li>
 			
 		
 		</ul>
