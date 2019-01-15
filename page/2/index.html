@@ -73,13 +73,19 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/HTTP协议/" title="HTTP协议" itemprop="url">
+    <a href="/2018/08/16/JVM可回收垃圾判断算法/" title="JVM可回收垃圾判断算法" itemprop="url">
   
-    <h1 itemprop="name">HTTP协议</h1>
+    <h1 itemprop="name">JVM可回收垃圾判断算法</h1>
     
      
-           <p itemprop="description" >HTTP协议
-HTTP协议是Hyper Text Transfer Protocol（超文本传输协议）的缩写,是用于从万维网（WWW:World Wide Web ）服务器传输超文本到本地浏览器的传送协议。HTTP是一个基于TCP/IP通信协议来传递数据（HTML 文件, 图片文</p>
+           <p itemprop="description" >GC需要完成的3件事情：
+
+哪些内存需要回收？
+什么时候回收？
+如何回收？
+
+今天这篇文章就是说明哪些内存需要回收。
+在Java内存区域 一篇已经说明Java内存的各个数据区域的特点，其中程序计数器、虚拟机栈、本地方法3个区域随线程而生，随线程而灭，所以这几个区域的内存分配和回收</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -115,39 +121,13 @@ HTTP协议是Hyper Text Transfer Protocol（超文本传输协议）的缩写,�
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/Socket的几种实现/" title="Socket的几种实现" itemprop="url">
+    <a href="/2018/08/16/HTTP协议/" title="HTTP协议" itemprop="url">
   
-    <h1 itemprop="name">Socket的几种实现</h1>
+    <h1 itemprop="name">HTTP协议</h1>
     
      
-           <p itemprop="description" >基于TCP协议的网络编程
- TCP/IP通信协议是一种可靠的网络协议，它在通信的两端各建立一个Socket，从而在通信的两端之间形成网络虚拟链路。一旦建立了虚拟的网络链路，两端的成员就可以通过虚拟链路进行通信。Java是对基于TCP协议的网络通信提供了良好的封装，Java使用So</p>
-        
-    
-    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2018/08/16/Java多线程之线程池/" title="Java多线程之线程池" itemprop="url">
-  
-    <h1 itemprop="name">Java多线程之线程池</h1>
-    
-     
-           <p itemprop="description" >线程池的一些好处
-
-通过重用线程池中的线程，来减少每个线程创建和销毁的性能开销。
-对线程进行一些维护和管理，比如定时开始，周期执行，并发数控制等等。
-
-Executor框架用于任务执行，接口有一个execute方法，用于提交任务。
-123public interface Exec</p>
+           <p itemprop="description" >HTTP协议
+HTTP协议是Hyper Text Transfer Protocol（超文本传输协议）的缩写,是用于从万维网（WWW:World Wide Web ）服务器传输超文本到本地浏览器的传送协议。HTTP是一个基于TCP/IP通信协议来传递数据（HTML 文件, 图片文</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -171,6 +151,27 @@ Executor框架用于任务执行，接口有一个execute方法，用于提交�
 
 例如我们使用@Autowired注解标注了setWord()方法：
 1234@Autowir</p>
+        
+    
+    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2018/08/16/Socket的几种实现/" title="Socket的几种实现" itemprop="url">
+  
+    <h1 itemprop="name">Socket的几种实现</h1>
+    
+     
+           <p itemprop="description" >基于TCP协议的网络编程
+ TCP/IP通信协议是一种可靠的网络协议，它在通信的两端各建立一个Socket，从而在通信的两端之间形成网络虚拟链路。一旦建立了虚拟的网络链路，两端的成员就可以通过虚拟链路进行通信。Java是对基于TCP协议的网络通信提供了良好的封装，Java使用So</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -231,29 +232,6 @@ Executor框架用于任务执行，接口有一个execute方法，用于提交�
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/对象的共享/" title="对象的共享" itemprop="url">
-  
-    <h1 itemprop="name">对象的共享</h1>
-    
-     
-           <p itemprop="description" >上一篇已经介绍了线程的安全性，包括原子性操作和锁机制等内容，如果还没了解此部分内容可参考线程安全性。
-从上一篇线程的安全性我们可以知道同步代码块和同步方法可以确保以原子的方式执行操作，这一篇则是介绍同步的另外一个重要的方面：内存可见性
-可见性
-一个线程对共享变量值得修改，其他线程</p>
-        
-    
-    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
     <a href="/2018/08/16/对象的组合/" title="对象的组合" itemprop="url">
   
     <h1 itemprop="name">对象的组合</h1>
@@ -282,14 +260,15 @@ Executor框架用于任务执行，接口有一个execute方法，用于提交�
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/条件化的Bean——@Conditional注解/" title="条件化的Bean——@Conditional注解" itemprop="url">
+    <a href="/2018/08/16/对象的共享/" title="对象的共享" itemprop="url">
   
-    <h1 itemprop="name">条件化的Bean——@Conditional注解</h1>
+    <h1 itemprop="name">对象的共享</h1>
     
      
-           <p itemprop="description" >当我们希望某个Bean满足了一定的条件才会被创建的时候，我们就可以使用@Conditional注解（Spring 4引入）来实现这种功能。该注解可以用到带有@Bean注解的方法上，如果给定的条件计算结果为true，就会创建这个bean，否则的话，这个bean会被忽略。
-
-常见条件</p>
+           <p itemprop="description" >上一篇已经介绍了线程的安全性，包括原子性操作和锁机制等内容，如果还没了解此部分内容可参考线程安全性。
+从上一篇线程的安全性我们可以知道同步代码块和同步方法可以确保以原子的方式执行操作，这一篇则是介绍同步的另外一个重要的方面：内存可见性
+可见性
+一个线程对共享变量值得修改，其他线程</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -325,13 +304,14 @@ Executor框架用于任务执行，接口有一个execute方法，用于提交�
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/线程安全性/" title="线程安全性" itemprop="url">
+    <a href="/2018/08/16/条件化的Bean——@Conditional注解/" title="条件化的Bean——@Conditional注解" itemprop="url">
   
-    <h1 itemprop="name">线程安全性</h1>
+    <h1 itemprop="name">条件化的Bean——@Conditional注解</h1>
     
      
-           <p itemprop="description" >什么是线程安全性
-某个类的行为与其规范完全一致。当多个线程访问某个类时，这个类始终都能表现出正确的行为，那么就称这个类是线程安全的。换句话说就是当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步或协同，这个都能表</p>
+           <p itemprop="description" >当我们希望某个Bean满足了一定的条件才会被创建的时候，我们就可以使用@Conditional注解（Spring 4引入）来实现这种功能。该注解可以用到带有@Bean注解的方法上，如果给定的条件计算结果为true，就会创建这个bean，否则的话，这个bean会被忽略。
+
+常见条件</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -369,6 +349,27 @@ member_name
 
 对应的实体类如下
 12345public class Member &amp;#123;  	private Integer memberId;  	</p>
+        
+    
+    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2018/08/16/线程安全性/" title="线程安全性" itemprop="url">
+  
+    <h1 itemprop="name">线程安全性</h1>
+    
+     
+           <p itemprop="description" >什么是线程安全性
+某个类的行为与其规范完全一致。当多个线程访问某个类时，这个类始终都能表现出正确的行为，那么就称这个类是线程安全的。换句话说就是当多个线程访问某个类时，不管运行时环境采用何种调度方式或者这些线程将如何交替执行，并且在主调代码中不需要任何额外的同步或协同，这个都能表</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -505,7 +506,7 @@ member_name
 			
 		
 			
-				<li><a href="/tags/Maven/" title="Maven">Maven<sup>1</sup></a></li>
+				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
 			
 		
 			
@@ -533,7 +534,7 @@ member_name
 			
 		
 			
-				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
+				<li><a href="/tags/Maven/" title="Maven">Maven<sup>1</sup></a></li>
 			
 		
 			
@@ -541,11 +542,11 @@ member_name
 			
 		
 			
-				<li><a href="/tags/Socket/" title="Socket">Socket<sup>1</sup></a></li>
+				<li><a href="/tags/hadoop/" title="hadoop">hadoop<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/hadoop/" title="hadoop">hadoop<sup>1</sup></a></li>
+				<li><a href="/tags/Socket/" title="Socket">Socket<sup>1</sup></a></li>
 			
 		
 			

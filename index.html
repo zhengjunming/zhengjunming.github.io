@@ -184,19 +184,14 @@
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/Java多线程基础/" title="Java多线程基础" itemprop="url">
+    <a href="/2018/08/16/Maven导入本地包/" title="Maven导入本地包" itemprop="url">
   
-    <h1 itemprop="name">Java多线程基础</h1>
+    <h1 itemprop="name">Maven导入本地包</h1>
     
      
-           <p itemprop="description" >说到线程，一般就离不开进程的概念。
-进程：一个正在执行的程序
-线程：进程中负责程序执行的执行单元，一个进程中至少有一个线程
-
-Java创建多线程的方法
-继承Thread类，重写该类的run()方法。
-
-123456public class MyThread extends Thr</p>
+           <p itemprop="description" >项目开发的包基本都可以通过Maven来管理，包的依赖一般可以在https://mvnrepository.com/ 这个网站中找到，但是有一些包并没有上传到该网站上，这时候就需要导入本地包让Maven进行管理。
+首先先看一下包依赖的结构（以druid为例）
+12345&amp;lt;de</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -211,14 +206,19 @@ Java创建多线程的方法
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/Maven导入本地包/" title="Maven导入本地包" itemprop="url">
+    <a href="/2018/08/16/Java多线程基础/" title="Java多线程基础" itemprop="url">
   
-    <h1 itemprop="name">Maven导入本地包</h1>
+    <h1 itemprop="name">Java多线程基础</h1>
     
      
-           <p itemprop="description" >项目开发的包基本都可以通过Maven来管理，包的依赖一般可以在https://mvnrepository.com/ 这个网站中找到，但是有一些包并没有上传到该网站上，这时候就需要导入本地包让Maven进行管理。
-首先先看一下包依赖的结构（以druid为例）
-12345&amp;lt;de</p>
+           <p itemprop="description" >说到线程，一般就离不开进程的概念。
+进程：一个正在执行的程序
+线程：进程中负责程序执行的执行单元，一个进程中至少有一个线程
+
+Java创建多线程的方法
+继承Thread类，重写该类的run()方法。
+
+123456public class MyThread extends Thr</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -359,19 +359,43 @@ B树的定义一棵m阶B树（Balanced Tree of order m），或为空树，或�
   
 <section class="post" itemscope itemprop="blogitem">
   
-    <a href="/2018/08/16/JVM可回收垃圾判断算法/" title="JVM可回收垃圾判断算法" itemprop="url">
+    <a href="/2018/08/16/Java内存区域/" title="Java内存区域" itemprop="url">
   
-    <h1 itemprop="name">JVM可回收垃圾判断算法</h1>
+    <h1 itemprop="name">Java内存区域</h1>
     
      
-           <p itemprop="description" >GC需要完成的3件事情：
+           <p itemprop="description" >1. 运行时数据区域
+  Java虚拟机在执行Java程序的过程中会把所管理的内存划分为若干个不同的数据区域。
 
-哪些内存需要回收？
-什么时候回收？
-如何回收？
 
-今天这篇文章就是说明哪些内存需要回收。
-在Java内存区域 一篇已经说明Java内存的各个数据区域的特点，其中程序计数器、虚拟机栈、本地方法3个区域随线程而生，随线程而灭，所以这几个区域的内存分配和回收</p>
+1.1. 程序计数器
+  程序计数器是一块较小的内存区域，它可以看作是当前线程所执行的字节码的行号指示器。字节码解释器工作时就是通过改变这个计数器的值来选取下一条需</p>
+        
+    
+    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2018/08/16/Java多线程之线程池/" title="Java多线程之线程池" itemprop="url">
+  
+    <h1 itemprop="name">Java多线程之线程池</h1>
+    
+     
+           <p itemprop="description" >线程池的一些好处
+
+通过重用线程池中的线程，来减少每个线程创建和销毁的性能开销。
+对线程进行一些维护和管理，比如定时开始，周期执行，并发数控制等等。
+
+Executor框架用于任务执行，接口有一个execute方法，用于提交任务。
+123public interface Exec</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -395,31 +419,6 @@ B树的定义一棵m阶B树（Balanced Tree of order m），或为空树，或�
 
 DML（数据操作语句）：用于添加、删除、更新和查询数据库记录，并检查数据完整性。常用关键字有 insert、update、delete和select等。
 DDL（数据定义语句）：用于定义了不同的数据段、数据库、表、列、索引等数据库对</p>
-        
-    
-    <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
-  </a>
-</section>
-
-
-
-
-
-
-  
-<section class="post" itemscope itemprop="blogitem">
-  
-    <a href="/2018/08/16/Java内存区域/" title="Java内存区域" itemprop="url">
-  
-    <h1 itemprop="name">Java内存区域</h1>
-    
-     
-           <p itemprop="description" >1. 运行时数据区域
-  Java虚拟机在执行Java程序的过程中会把所管理的内存划分为若干个不同的数据区域。
-
-
-1.1. 程序计数器
-  程序计数器是一块较小的内存区域，它可以看作是当前线程所执行的字节码的行号指示器。字节码解释器工作时就是通过改变这个计数器的值来选取下一条需</p>
         
     
     <time datetime="2018-08-16T06:02:20.876Z" itemprop="datePublished">2018-08-16</time>
@@ -532,7 +531,7 @@ DDL（数据定义语句）：用于定义了不同的数据段、数据库、�
 			
 		
 			
-				<li><a href="/tags/Maven/" title="Maven">Maven<sup>1</sup></a></li>
+				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
 			
 		
 			
@@ -560,7 +559,7 @@ DDL（数据定义语句）：用于定义了不同的数据段、数据库、�
 			
 		
 			
-				<li><a href="/tags/B树/" title="B树">B树<sup>1</sup></a></li>
+				<li><a href="/tags/Maven/" title="Maven">Maven<sup>1</sup></a></li>
 			
 		
 			
@@ -568,11 +567,11 @@ DDL（数据定义语句）：用于定义了不同的数据段、数据库、�
 			
 		
 			
-				<li><a href="/tags/Socket/" title="Socket">Socket<sup>1</sup></a></li>
+				<li><a href="/tags/hadoop/" title="hadoop">hadoop<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/hadoop/" title="hadoop">hadoop<sup>1</sup></a></li>
+				<li><a href="/tags/Socket/" title="Socket">Socket<sup>1</sup></a></li>
 			
 		
 			
